@@ -18,8 +18,7 @@ public class GameChair : NetworkBehaviour
         return isFree.Value;
     }
     
-    [Rpc(SendTo.Server)]
-    public void SitDownRPC()
+    public void SitDown()
     {
         var player = NetworkManager.Singleton.LocalClient.ClientId;
         Debug.Log("SitDown: " + player);
@@ -28,9 +27,20 @@ public class GameChair : NetworkBehaviour
         {
             return;
         }
+        
+        m_anchor.RequestTeleport();
+        this.RegisterChairRpc(player);
+    }
+    
+    [Rpc(SendTo.Server)]
+    public void RegisterChairRpc(ulong player)
+    {
+        if (!IsFree())
+        {
+            return;
+        }
 
         isFree.Value = false;
         m_gameManager.AddPlayer(player);
-        m_anchor.RequestTeleport();
     }
 }

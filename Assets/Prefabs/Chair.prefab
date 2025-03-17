@@ -176,13 +176,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6836234116900710604, guid: c4a645c929982ea41a52b5037ee7d94d,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6836234116900710604, guid: c4a645c929982ea41a52b5037ee7d94d,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4245624843846203348}
     - target: {fileID: 6836234116900710604, guid: c4a645c929982ea41a52b5037ee7d94d,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SitDownRPC
+      value: SitDown
       objectReference: {fileID: 0}
     - target: {fileID: 6836234116900710604, guid: c4a645c929982ea41a52b5037ee7d94d,
         type: 3}
