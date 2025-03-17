@@ -7558,6 +7558,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5083478308499189722, guid: 1793edc7f4b44374aa0f52840574557d,
         type: 3}
+      propertyPath: m_PersistentPanel.dispenserSlots.Array.data[0].freezeOnSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083478308499189722, guid: 1793edc7f4b44374aa0f52840574557d,
+        type: 3}
+      propertyPath: m_PersistentPanel.dispenserSlots.Array.data[0].distanceToSpawnNew
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083478308499189722, guid: 1793edc7f4b44374aa0f52840574557d,
+        type: 3}
+      propertyPath: m_PersistentPanel.dispenserSlots.Array.data[0].currentInteractable
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5083478308499189722, guid: 1793edc7f4b44374aa0f52840574557d,
+        type: 3}
       propertyPath: m_Panels.Array.data[0].dispenserSlots.Array.data[0].currentInteractable
       value: 
       objectReference: {fileID: 0}
