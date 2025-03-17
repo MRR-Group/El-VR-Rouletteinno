@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : NetworkBehaviour
 {
     [SerializeField]
     private NetworkVariable<GameState> gameState = new (GameState.PREPARE);
+
+    [SerializeField] private InputActionReference moveAction;
     
     private NetworkVariable<int> participated_players = new (0);
     
@@ -34,8 +37,7 @@ public class GameManager : NetworkBehaviour
 
         if (players >= MAX_PLAYERS || players == NetworkManager.Singleton.ConnectedClients.Count)
         {
-            Debug.Log("IN_PROGRESS ");
-            gameState.Value = GameState.IN_PROGRESS;
+            StartGame();
         }
     }
     
@@ -43,5 +45,12 @@ public class GameManager : NetworkBehaviour
     {
         Debug.Log("Added player " + player);
         participated_players.Value += 1;
+    }
+
+    private void StartGame()
+    {
+        Debug.Log("Starting game");
+        gameState.Value = GameState.IN_PROGRESS;
+        moveAction.action.Disable();
     }
 }
