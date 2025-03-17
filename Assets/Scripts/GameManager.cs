@@ -27,6 +27,11 @@ public class GameManager : NetworkBehaviour
             return;
         }
 
+        if (!NetworkManager.Singleton.IsServer)
+        {
+            return;
+        }
+
         if (players >= MAX_PLAYERS || players == NetworkManager.Singleton.ConnectedClients.Count)
         {
             Debug.Log("IN_PROGRESS ");
