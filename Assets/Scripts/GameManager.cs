@@ -27,13 +27,11 @@ public class GameManager : NetworkBehaviour
             return;
         }
 
-        if (players == MAX_PLAYERS)
+        if (players >= MAX_PLAYERS || players == NetworkManager.Singleton.ConnectedClients.Count)
         {
-            return;
+            Debug.Log("IN_PROGRESS ");
+            gameState.Value = GameState.IN_PROGRESS;
         }
-        
-        Debug.Log("IN_PROGRESS ");
-        gameState.Value = GameState.IN_PROGRESS;
     }
     
     public void AddPlayer(ulong player)
