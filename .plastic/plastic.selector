@@ -1,3 +1,0 @@
-repository "VR Roulette/VR Roulette@7972453750914@cloud"
-  path "/"
-    smartbranch "/main/game scene" changeset "10"   

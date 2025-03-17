@@ -7626,6 +7626,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Object Dispenser UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7091188045298399573, guid: 1793edc7f4b44374aa0f52840574557d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7180996715828680734, guid: 1793edc7f4b44374aa0f52840574557d,
         type: 3}
       propertyPath: GlobalObjectIdHash
