@@ -23,7 +23,7 @@ public class GameChair : NetworkBehaviour
         var player = NetworkManager.Singleton.LocalClient.ClientId;
         Debug.Log("SitDown: " + player);
 
-        if (!IsFree())
+        if (!IsFree() && m_gameManager.GameState != GameState.PREPARE)
         {
             return;
         }
@@ -35,7 +35,7 @@ public class GameChair : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RegisterChairRpc(ulong player)
     {
-        if (!IsFree())
+        if (!IsFree() && m_gameManager.GameState != GameState.PREPARE)
         {
             return;
         }

@@ -15,6 +15,8 @@ public class GameManager : NetworkBehaviour
     
     private const int MAX_PLAYERS = 4;
 
+    public GameState GameState => gameState.Value;
+    
     public override void OnNetworkSpawn()
     {
         Debug.Log("Init even");
