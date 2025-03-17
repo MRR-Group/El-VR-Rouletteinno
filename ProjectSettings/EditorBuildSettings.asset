@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_amon/working_scene.unity
     guid: 1f428756e18441641b60bef5c973ac92
+  - enabled: 1
+    path: Assets/_cookman/working_scene.unity
+    guid: ea2fea3d34d706c44863504612dba815
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e3aee76b9372917449aef639e2f74814,
       type: 2}
