@@ -95,6 +95,8 @@ public class GameManager : NetworkSingleton<GameManager>
     {
         playersIds.Value.Add(player);
         playersIds.CheckDirtyState();
+        
+        Debug.Log("Player added!");
     }
     
     [Rpc(SendTo.Server)]
