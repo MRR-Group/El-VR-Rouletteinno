@@ -4,55 +4,104 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameManager : NetworkBehaviour
+public class GameManager : NetworkSingleton<GameManager>
 {
     [SerializeField]
     private NetworkVariable<GameState> gameState = new (GameState.PREPARE);
+    public GameState GameState => gameState.Value;
+    public event EventHandler<GameStateChangedArgs> GameStateChanged;
+    public class GameStateChangedArgs : EventArgs
+    {
+        public GameState State;
+    }
+    
 
     [SerializeField] private InputActionReference moveAction;
     
-    private NetworkVariable<int> participated_players = new (0);
+    public NetworkVariable<List<ulong>> playersIds = new (new List<ulong>());
+    public List<Player> players = new List<Player>();
     
     private const int MAX_PLAYERS = 4;
+    private const int MIN_PLAYERS = 2;
 
-    public GameState GameState => gameState.Value;
+    public Game game;
+    public Round round;
+    public Turn turn;
     
     public override void OnNetworkSpawn()
     {
-        Debug.Log("Init even");
-        this.participated_players.OnValueChanged += OnPlayerValueChanged;
+        playersIds.OnValueChanged += OnPlayersIdsValueChanged;
+        gameState.OnValueChanged += OnGameStateChanged;
     }
-
-    private void OnPlayerValueChanged(int _, int players)
+    
+    private void OnPlayersIdsValueChanged(List<ulong> _, List<ulong> newPlayerList)
     {
-        Debug.Log("OnPlayerValueChanged " + players);
-        
         if (gameState.Value != GameState.PREPARE)
         {
             return;
         }
 
+        players.Clear();
+        
+        foreach (var id in newPlayerList)
+        {
+            players.Add(PlayerManager.Instance.Player[id]);
+        }
+        
         if (!NetworkManager.Singleton.IsServer)
         {
             return;
         }
 
-        if (players >= MAX_PLAYERS || players == NetworkManager.Singleton.ConnectedClients.Count)
+        if (players.Count < MIN_PLAYERS)
+        {
+            return;
+        }
+
+        if (players.Count >= MAX_PLAYERS || players.Count == NetworkManager.Singleton.ConnectedClients.Count)
         {
             StartGame();
         }
     }
     
-    public void AddPlayer(ulong player)
-    {
-        Debug.Log("Added player " + player);
-        participated_players.Value += 1;
-    }
-
     private void StartGame()
     {
-        Debug.Log("Starting game");
         gameState.Value = GameState.IN_PROGRESS;
-        moveAction.action.Disable();
+    }
+    
+    private void OnGameStateChanged(GameState _, GameState value)
+    {
+        GameStateChanged?.Invoke(this, new GameStateChangedArgs { State =  value });
+        
+        switch (value)
+        {
+            case GameState.PREPARE: 
+                moveAction.action.Enable();
+                break;
+            
+            case GameState.IN_PROGRESS:
+                moveAction.action.Disable();
+                break;
+            
+            case GameState.FINISHED:
+                moveAction.action.Enable();
+                break;
+            
+            default:
+                throw new ArgumentOutOfRangeException(nameof(value), value, null);
+        }
+    }
+    
+    [Rpc(SendTo.Server)]
+    public void AddPlayerRpc(ulong player)
+    {
+        playersIds.Value.Add(player);
+        playersIds.CheckDirtyState();
+    }
+    
+    [Rpc(SendTo.Server)]
+    public void EndGameRpc()
+    {
+        gameState.Value = GameState.FINISHED;
     }
 }
