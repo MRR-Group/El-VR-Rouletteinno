@@ -3,9 +3,11 @@ using UnityEngine;
 
 public class DamageAnimation : MonoBehaviour
 {
-    [SerializeField] private Player m_player;
+    [SerializeField] 
+    private Player m_player;
     
-    [SerializeField] private ParticleSystem m_particles;
+    [SerializeField] 
+    private ParticleSystem m_particles;
 
     public void Start()
     {
