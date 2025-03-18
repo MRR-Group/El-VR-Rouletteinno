@@ -41,9 +41,10 @@ public class GameManager : NetworkSingleton<GameManager>
             return;
         }
 
+        players.Clear();
+        
         foreach (var id in newPlayerList)
         {
-            players.Clear();
             players.Add(PlayerManager.Instance.Player[id]);
         }
         
@@ -91,7 +92,8 @@ public class GameManager : NetworkSingleton<GameManager>
         }
     }
     
-    public void AddPlayer(ulong player)
+    [Rpc(SendTo.Server)]
+    public void AddPlayerRpc(ulong player)
     {
         playersIds.Value.Add(player);
         playersIds.CheckDirtyState();

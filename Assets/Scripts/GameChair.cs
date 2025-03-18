@@ -42,7 +42,7 @@ public class GameChair : NetworkBehaviour
         }
 
         isFree.Value = false;
-        GameManager.Instance.AddPlayer(player);
+        GameManager.Instance.AddPlayerRpc(player);
         
         Debug.Log("Player sit down server success");
     }
