@@ -10,6 +10,7 @@ public class Player : NetworkBehaviour
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
     {
+        public int Delta;
         public int Health;
     }
     
@@ -20,7 +21,7 @@ public class Player : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         PlayerManager.Instance.Player.Add(PlayerId, this);
-        health.OnValueChanged += (_, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value });
+        health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
     }
 
     public bool IsDead()

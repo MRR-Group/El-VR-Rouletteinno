@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Random = UnityEngine.Random;
 
 public class Gun : NetworkItem
@@ -12,6 +13,9 @@ public class Gun : NetworkItem
     [SerializeField]
     private uint m_minAmmo = 2;
 
+    [SerializeField]
+    private Transform m_raycastStart;
+    
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
 
     public event EventHandler AmmoChanged;
@@ -34,12 +38,35 @@ public class Gun : NetworkItem
         ammo.CheckDirtyState();
     }
 
+    public void PullTrigger()
+    {
+        if (!CanUse())
+        {
+            return;
+        }
+
+        var target = StartRayCast();
+        
+        if (target != null)
+        {
+            ShootRpc(target.PlayerId);
+        }
+    }
+
     public override void Use(ulong target)
     {
         if (CanUse())
         {
             ShootRpc(target);
         }
+    }
+
+    private Player StartRayCast()
+    {
+        RaycastHit hit;
+        var success = Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+        
+        return success ? hit.transform.GetComponent<Player>() : null;
     }
 
     [Rpc(SendTo.Server)]

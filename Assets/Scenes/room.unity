@@ -1681,7 +1681,7 @@ GameObject:
   - component: {fileID: 212071189}
   - component: {fileID: 212071188}
   m_Layer: 0
-  m_Name: collision
+  m_Name: Collision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4634,7 +4634,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b0399751973a8ec4fafffcf4d6c801dc,
         type: 3}
       propertyPath: m_Name
-      value: presentation
+      value: Presentation
       objectReference: {fileID: 0}
     - target: {fileID: 7927188712033035710, guid: b0399751973a8ec4fafffcf4d6c801dc,
         type: 3}
@@ -8255,7 +8255,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1829538130}
   m_Layer: 0
-  m_Name: attach_point
+  m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8276,6 +8276,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7205950749937095971}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &1851940821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1851940822}
+  m_Layer: 0
+  m_Name: RayCastStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1851940822
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1851940821}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1551, y: 0.0616, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7205950749937095971}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1852822410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10150,7 +10181,19 @@ MonoBehaviour:
       m_Calls: []
   m_Activated:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7607204965593957471}
+        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
+        m_MethodName: PullTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
@@ -10246,6 +10289,7 @@ Transform:
   - {fileID: 941002922}
   - {fileID: 1829538130}
   - {fileID: 212071187}
+  - {fileID: 1851940822}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7607204965593957470
@@ -10290,6 +10334,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   m_maxAmmo: 6
   m_minAmmo: 2
+  m_raycastStart: {fileID: 1851940822}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
