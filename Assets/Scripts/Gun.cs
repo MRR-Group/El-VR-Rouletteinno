@@ -15,6 +15,9 @@ public class Gun : NetworkItem
     [SerializeField]
     private Transform m_raycastStart;
     
+    [SerializeField]
+    private ParticleSystem m_shootParticles;
+    
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
 
     public event EventHandler AmmoChanged;
@@ -39,13 +42,16 @@ public class Gun : NetworkItem
 
     public void PullTrigger()
     {
+        Debug.Log("Clicked!");
+        
         if (!CanUse())
         {
             return;
         }
 
         var target = StartRayCast();
-        
+        Debug.Log("Target: " + target);
+
         if (target != null)
         {
             ShootRpc(target.PlayerId);
@@ -83,6 +89,8 @@ public class Gun : NetworkItem
         if (isBulletLive)
         {
             PlayerManager.Instance.Player[target].DealDamageRpc(1);
+            m_shootParticles.time = 0;
+            m_shootParticles.Play();
         }
 
         if (isBulletLive || !GameManager.Instance.turn.IsPlayerTurn(target))
