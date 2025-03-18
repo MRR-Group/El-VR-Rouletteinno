@@ -36,7 +36,6 @@ public class Turn : NetworkBehaviour
         var index = players.IndexOf(currentPlayerTurn.Value);
         var next = index + 1 >= players.Count ? 0 : index + 1;
         
-        Debug.Log("index: " + index + ", next: " + next);
         currentPlayerTurn.Value = players[next];
     }
 }

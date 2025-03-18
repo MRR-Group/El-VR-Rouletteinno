@@ -30,15 +30,14 @@ public class GameManager : NetworkSingleton<GameManager>
     
     public override void OnNetworkSpawn()
     {
-        this.playersIds.OnValueChanged += OnPlayersIdsValueChanged;
-        this.gameState.OnValueChanged += OnGameStateChanged;
+        playersIds.OnValueChanged += OnPlayersIdsValueChanged;
+        gameState.OnValueChanged += OnGameStateChanged;
     }
     
     private void OnPlayersIdsValueChanged(List<ulong> _, List<ulong> newPlayerList)
     {
         if (gameState.Value != GameState.PREPARE)
         {
-            Debug.Log("Bad gamestate " + gameState.Value);
             return;
         }
 
@@ -47,26 +46,20 @@ public class GameManager : NetworkSingleton<GameManager>
         foreach (var id in newPlayerList)
         {
             players.Add(PlayerManager.Instance.Player[id]);
-            Debug.Log("Add player " + id);
         }
-        
-        Debug.Log("Updated players list");
         
         if (!NetworkManager.Singleton.IsServer)
         {
-            Debug.Log("You are not server!");
             return;
         }
 
         if (players.Count < MIN_PLAYERS)
         {
-            Debug.Log("To low players!");
             return;
         }
 
         if (players.Count >= MAX_PLAYERS || players.Count == NetworkManager.Singleton.ConnectedClients.Count)
         {
-            Debug.Log("sTARTING GASMEEE!!!!");
             StartGame();
         }
     }
@@ -104,8 +97,6 @@ public class GameManager : NetworkSingleton<GameManager>
     {
         playersIds.Value.Add(player);
         playersIds.CheckDirtyState();
-        
-        Debug.Log("Player added! " + player);
     }
     
     [Rpc(SendTo.Server)]
