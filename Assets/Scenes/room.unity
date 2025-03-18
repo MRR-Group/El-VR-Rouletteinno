@@ -10019,13 +10019,25 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SyncActivate: 1
-  m_UseActivateEvents: 0
+  m_UseActivateEvents: 1
   ActivateNetworkedEventServer:
     m_PersistentCalls:
       m_Calls: []
   ActivateNetworkedEventAll:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7607204965593957471}
+        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
+        m_MethodName: PullTrigger
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_FoldoutValues: 010101
   m_AllowCollisionOwnershipExchange: 1
   m_MinExchangeVelocityMagitude: 0.025
@@ -10181,19 +10193,7 @@ MonoBehaviour:
       m_Calls: []
   m_Activated:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7607204965593957471}
-        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
-        m_MethodName: PullTrigger
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_Deactivated:
     m_PersistentCalls:
       m_Calls: []
