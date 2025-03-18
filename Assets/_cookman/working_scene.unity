@@ -3216,6 +3216,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2236892579103908260, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+        type: 3}
+      propertyPath: m_ScaleMultiplier
+      value: 0.21854776
+      objectReference: {fileID: 0}
     - target: {fileID: 2754860511939026108, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3271,6 +3276,21 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3277043197764098498, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+        type: 3}
+      propertyPath: m_MovementType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277043197764098498, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+        type: 3}
+      propertyPath: m_UseDynamicAttach
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3277043197764098498, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+        type: 3}
+      propertyPath: m_RetainTransformParent
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4100228238024372736, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
         type: 3}
       propertyPath: m_Name
@@ -3295,10 +3315,71 @@ PrefabInstance:
     - {fileID: 3206928946167550014, guid: 8c5533bad0f11744a9fa9cf2215d45bf, type: 3}
     - {fileID: 8468509580767720145, guid: 8c5533bad0f11744a9fa9cf2215d45bf, type: 3}
     - {fileID: 8193447020835428404, guid: 8c5533bad0f11744a9fa9cf2215d45bf, type: 3}
+    - {fileID: 6690674682653322327, guid: 8c5533bad0f11744a9fa9cf2215d45bf, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4100228238024372736, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 661890648}
   m_SourcePrefab: {fileID: 100100000, guid: 8c5533bad0f11744a9fa9cf2215d45bf, type: 3}
+--- !u!1 &661890635 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4100228238024372736, guid: 8c5533bad0f11744a9fa9cf2215d45bf,
+    type: 3}
+  m_PrefabInstance: {fileID: 649110351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &661890648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 661890635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb1cca572c123384bbcd5da9749cf9b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowOverrideOwnership: 0
+  m_InteractionCheckTime: 2
+  m_IgnoreSocketSelectedCallback: 1
+  m_ResetObjectOnDisconnect: 1
+  m_RelinquishOwnershipAfterTime: 1
+  m_RelinquishOwnershipTime: 5
+  m_UseInteractingChangedEvent: 0
+  OnInteractingChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SyncHover: 0
+  m_UseHoverEvents: 0
+  HoverNetworkedEventServer:
+    m_PersistentCalls:
+      m_Calls: []
+  HoverNetworkedEventAll:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SyncSelect: 1
+  m_UseSelectEvents: 0
+  SelectNetworkedEventServer:
+    m_PersistentCalls:
+      m_Calls: []
+  SelectNetworkedEventAll:
+    m_PersistentCalls:
+      m_Calls: []
+  m_SyncActivate: 1
+  m_UseActivateEvents: 0
+  ActivateNetworkedEventServer:
+    m_PersistentCalls:
+      m_Calls: []
+  ActivateNetworkedEventAll:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FoldoutValues: 010101
+  m_AllowCollisionOwnershipExchange: 1
+  m_MinExchangeVelocityMagitude: 0.025
+  spawnLocked: 1
 --- !u!1001 &693856244
 PrefabInstance:
   m_ObjectHideFlags: 0
