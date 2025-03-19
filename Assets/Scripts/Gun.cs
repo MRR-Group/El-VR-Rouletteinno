@@ -1,11 +1,16 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Random = UnityEngine.Random;
 
 public class Gun : NetworkItem
 {
+    
     [SerializeField]
     private uint m_maxAmmo = 6;
 
@@ -19,9 +24,6 @@ public class Gun : NetworkItem
     private ParticleSystem m_shootParticles;
     
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
-
-    [SerializeField]
-    private Transform m_spawnPoint;
     
     public event EventHandler AmmoChanged;
     
@@ -45,17 +47,19 @@ public class Gun : NetworkItem
 
     public void PullTrigger()
     {
-        if (!CanUse())
-        {
-            return;
-        }
-
-        var target = StartRayCast();
-
-        if (target != null)
-        {
-            ShootRpc(target.PlayerId);
-        }
+        ForceDrop();
+        
+        // if (!CanUse())
+        // {
+        //     return;
+        // }
+        //
+        // var target = StartRayCast();
+        //
+        // if (target != null)
+        // {
+        //     ShootRpc(target.PlayerId);
+        // }
     }
 
     public override void Use(ulong target)
@@ -102,8 +106,6 @@ public class Gun : NetworkItem
         {
             GameManager.Instance.round.StartRoundRpc();
         }
-
-        transform.position = m_spawnPoint.position;
     }
 
     private bool IsMagazineEmpty()
