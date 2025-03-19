@@ -21,7 +21,7 @@ public class Gun : NetworkItem
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
 
     [SerializeField]
-    private GameObject m_bullet;
+    private Transform m_spawnPoint;
     
     public event EventHandler AmmoChanged;
     
@@ -45,15 +45,12 @@ public class Gun : NetworkItem
 
     public void PullTrigger()
     {
-        Debug.Log("Clicked!");
-        
-        // if (!CanUse())
-        // {
-        //     return;
-        // }
+        if (!CanUse())
+        {
+            return;
+        }
 
         var target = StartRayCast();
-        Debug.Log("Target: " + target + " player id " + target?.PlayerId);
 
         if (target != null)
         {
@@ -73,9 +70,8 @@ public class Gun : NetworkItem
     {
         RaycastHit hit;
         var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity);
-        Debug.Log("RayCast success: " + success + " target " + hit.transform?.gameObject.name);
 
-        return success ? hit.transform?.GetComponent<Player>() : null;
+        return success ? hit.transform?.GetComponentInParent<Player>() : null;
     }
 
     [Rpc(SendTo.Server)]
@@ -106,6 +102,8 @@ public class Gun : NetworkItem
         {
             GameManager.Instance.round.StartRoundRpc();
         }
+
+        transform.position = m_spawnPoint.position;
     }
 
     private bool IsMagazineEmpty()

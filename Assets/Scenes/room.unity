@@ -1253,6 +1253,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5, y: 4.6851273, z: 0.088493586}
   m_Center: {x: -2.5, y: 2.0719004, z: 0.010627866}
+--- !u!1 &113887855
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 113887856}
+  m_Layer: 0
+  m_Name: GunSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &113887856
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113887855}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.384, y: 0.9735, z: -0.624}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &128736509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10661,7 +10692,7 @@ MonoBehaviour:
   m_minAmmo: 2
   m_raycastStart: {fileID: 1851940822}
   m_shootParticles: {fileID: 2011081349}
-  m_bullet: {fileID: 0}
+  m_spawnPoint: {fileID: 113887856}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -10671,6 +10702,7 @@ SceneRoots:
   - {fileID: 61110748}
   - {fileID: 128736509}
   - {fileID: 1664448429}
+  - {fileID: 113887856}
   - {fileID: 7205950749937095971}
   - {fileID: 1403515885}
   - {fileID: 441378033}
