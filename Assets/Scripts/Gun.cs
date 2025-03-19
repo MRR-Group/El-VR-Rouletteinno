@@ -22,6 +22,9 @@ public class Gun : NetworkItem
     
     [SerializeField]
     private ParticleSystem m_shootParticles;
+
+    [SerializeField] 
+    private LayerMask m_layermask;
     
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
     
@@ -73,7 +76,7 @@ public class Gun : NetworkItem
     private Player StartRayCast()
     {
         RaycastHit hit;
-        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity);
+        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity, m_layermask);
 
         return success ? hit.transform?.GetComponentInParent<Player>() : null;
     }
