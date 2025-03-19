@@ -15,8 +15,8 @@ public class GameManager : NetworkSingleton<GameManager>
         public GameState State;
     }
     
-
-    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] 
+    private InputActionReference moveAction;
     
     public NetworkVariable<List<ulong>> playersIds = new (new List<ulong>());
     public List<Player> players = new List<Player>();
