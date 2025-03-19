@@ -1388,7 +1388,7 @@ PrefabInstance:
     - target: {fileID: 2775886668140037905, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
       propertyPath: m_Name
-      value: Chair (2)
+      value: Chair (RB)
       objectReference: {fileID: 0}
     - target: {fileID: 4245624843846203348, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
@@ -1511,7 +1511,7 @@ PrefabInstance:
     - target: {fileID: 2775886668140037905, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
       propertyPath: m_Name
-      value: Chair (1)
+      value: Chair (LB)
       objectReference: {fileID: 0}
     - target: {fileID: 4245624843846203348, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
@@ -2774,6 +2774,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &476633568 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7254462380987610819, guid: 24f98fb132626444a9d03aa89a8ddf6f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1176019010}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &494748655 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 193654, guid: 48904ac029cf0f8478666c43b7e018b3,
@@ -3346,11 +3352,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_menu
       value: 
-      objectReference: {fileID: 1931147559}
+      objectReference: {fileID: 476633568}
     - target: {fileID: 2775886668140037905, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
       propertyPath: m_Name
-      value: Chair (3)
+      value: Chair (RF)
       objectReference: {fileID: 0}
     - target: {fileID: 4245624843846203348, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
@@ -3956,7 +3962,7 @@ PrefabInstance:
     - target: {fileID: 7254462380987610819, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
       propertyPath: m_Name
-      value: Debug Panel UI (3)
+      value: Debug Panel UI (RB)
       objectReference: {fileID: 0}
     - target: {fileID: 8991119762090048508, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
@@ -5310,7 +5316,7 @@ PrefabInstance:
     - target: {fileID: 7254462380987610819, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
       propertyPath: m_Name
-      value: Debug Panel UI
+      value: Debug Panel UI (RF)
       objectReference: {fileID: 0}
     - target: {fileID: 8991119762090048508, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
@@ -6686,7 +6692,7 @@ PrefabInstance:
     - target: {fileID: 7254462380987610819, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
       propertyPath: m_Name
-      value: Debug Panel UI (1)
+      value: Debug Panel UI (LF)
       objectReference: {fileID: 0}
     - target: {fileID: 8991119762090048508, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
@@ -6741,7 +6747,7 @@ PrefabInstance:
     - target: {fileID: 2775886668140037905, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
       propertyPath: m_Name
-      value: Chair
+      value: Chair (LF)
       objectReference: {fileID: 0}
     - target: {fileID: 4245624843846203348, guid: 04d5a085d6803f54aac7e7bbb56ba822,
         type: 3}
@@ -7527,7 +7533,7 @@ PrefabInstance:
     - target: {fileID: 7254462380987610819, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
       propertyPath: m_Name
-      value: Debug Panel UI (2)
+      value: Debug Panel UI (LB)
       objectReference: {fileID: 0}
     - target: {fileID: 8991119762090048508, guid: 24f98fb132626444a9d03aa89a8ddf6f,
         type: 3}
@@ -9205,12 +9211,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1931147563}
   m_SourcePrefab: {fileID: 100100000, guid: 95bd29654e15ad844be6210374a75967, type: 3}
---- !u!1 &1931147559 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8769490601588493923, guid: 95bd29654e15ad844be6210374a75967,
-    type: 3}
-  m_PrefabInstance: {fileID: 1931147558}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1931147560 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8211786623534212846, guid: 95bd29654e15ad844be6210374a75967,
@@ -9223,7 +9223,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1931147558}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931147559}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85c6e0a207dcbdd46980e3b8242c0f51, type: 3}
@@ -10130,9 +10130,9 @@ SceneRoots:
   - {fileID: 1272787335}
   - {fileID: 504767870}
   - {fileID: 1442149156}
+  - {fileID: 633997597}
   - {fileID: 171904275}
   - {fileID: 159062667}
-  - {fileID: 633997597}
   - {fileID: 1447044538}
   - {fileID: 2088588085}
   - {fileID: 468443369}

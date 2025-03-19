@@ -28,7 +28,7 @@ public class HideOtherPlayerUi : MonoBehaviour
  
         if (e.State == GameState.IN_PROGRESS)
         {
-            m_menu.SetActive(chair.Player.IsCurrentPlayer());
+            m_menu.SetActive(chair.Player?.IsCurrentPlayer() ?? false);
         }
     }
 }
