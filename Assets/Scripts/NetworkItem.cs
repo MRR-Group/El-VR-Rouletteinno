@@ -48,10 +48,11 @@ public abstract class NetworkItem : NetworkBehaviour
     protected void HandleDrop()
     {
         Debug.Log("Dropped");
-        TeleportToSpawn();
+        TeleportToSpawnRpc();
     }
 
-    public void TeleportToSpawn()
+    [Rpc(SendTo.Owner)]
+    public void TeleportToSpawnRpc()
     {
         rigidbody.MovePosition(m_spawnPoint.position);
     }

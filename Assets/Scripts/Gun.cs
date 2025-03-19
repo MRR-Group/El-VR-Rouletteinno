@@ -47,19 +47,17 @@ public class Gun : NetworkItem
 
     public void PullTrigger()
     {
-        ForceDrop();
+        if (!CanUse())
+        {
+            return;
+        }
         
-        // if (!CanUse())
-        // {
-        //     return;
-        // }
-        //
-        // var target = StartRayCast();
-        //
-        // if (target != null)
-        // {
-        //     ShootRpc(target.PlayerId);
-        // }
+        var target = StartRayCast();
+        
+        if (target != null)
+        {
+            ShootRpc(target.PlayerId);
+        }
     }
 
     public override void Use(ulong target)
@@ -106,6 +104,8 @@ public class Gun : NetworkItem
         {
             GameManager.Instance.round.StartRoundRpc();
         }
+        
+        ForceDrop();
     }
 
     private bool IsMagazineEmpty()
