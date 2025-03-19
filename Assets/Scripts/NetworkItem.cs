@@ -62,5 +62,10 @@ public abstract class NetworkItem : NetworkBehaviour
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.turn.IsClientTurn();
     }
 
+    public void DestroyItem()
+    {
+        Destroy(rigidbody.gameObject);
+    }
+    
     public abstract void Use(ulong target);
 }

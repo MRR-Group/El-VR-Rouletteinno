@@ -45,4 +45,10 @@ public class Player : NetworkBehaviour
             GameManager.Instance.game.RemoveDeadPlayerRpc(PlayerId);
         }
     }
+
+    [Rpc(SendTo.Server)]
+    public void AddHealthRpc(int amount)
+    {
+        health.Value += amount;
+    }
 }
