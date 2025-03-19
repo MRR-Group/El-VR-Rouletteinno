@@ -27,11 +27,19 @@ public class Gun : NetworkItem
     
     public event EventHandler AmmoChanged;
     
+    private bool wasUsedInThisTurn = false;
+    
     public override void OnNetworkSpawn()
     {
         ammo.OnValueChanged += (_, __) => AmmoChanged?.Invoke(null, null);
+        GameManager.Instance.turn.TurnChanged += GameManager_TurnOnTurnChanged;
     }
-    
+
+    private void GameManager_TurnOnTurnChanged(object sender, EventArgs e)
+    {
+        wasUsedInThisTurn = false;
+    }
+
     [Rpc(SendTo.Server)]
     public void ChangeMagazineRpc()
     {
@@ -79,10 +87,12 @@ public class Gun : NetworkItem
     [Rpc(SendTo.Server)]
     private void ShootRpc(ulong target)
     {
-        if (IsMagazineEmpty())
+        if (IsMagazineEmpty() || wasUsedInThisTurn)
         {
             return;
         }
+
+        wasUsedInThisTurn = true;
         
         var isBulletLive = ammo.Value[0];
         ammo.Value.RemoveAt(0);
@@ -93,11 +103,19 @@ public class Gun : NetworkItem
             PlayerManager.Instance.Player[target].DealDamageRpc(1);
             m_shootParticles.time = 0;
             m_shootParticles.Play();
+            GameManager.Instance.turn.NextTurnRpc();
         }
 
-        if (isBulletLive || !GameManager.Instance.turn.IsPlayerTurn(target))
+        if (!isBulletLive)
         {
-            GameManager.Instance.turn.NextTurnRpc();
+            if (GameManager.Instance.turn.IsPlayerTurn(target))
+            {
+                wasUsedInThisTurn = false;
+            }
+            else
+            {
+                GameManager.Instance.turn.NextTurnRpc();
+            }
         }
         
         if (IsMagazineEmpty())
