@@ -17,7 +17,12 @@ public class Player : NetworkBehaviour
     public ulong PlayerId => OwnerClientId;
     
     public int Health => health.Value;
-    
+
+    public bool IsCurrentPlayer()
+    {
+        return PlayerId == NetworkManager.Singleton.LocalClientId;
+    }
+
     public override void OnNetworkSpawn()
     {
         PlayerManager.Instance.Player.Add(PlayerId, this);

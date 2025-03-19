@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 
 public class Gun : NetworkItem
 {
-    
     [SerializeField]
     private uint m_maxAmmo = 6;
 
