@@ -47,10 +47,10 @@ public class Gun : NetworkItem
     {
         Debug.Log("Clicked!");
         
-        if (!CanUse())
-        {
-            return;
-        }
+        // if (!CanUse())
+        // {
+        //     return;
+        // }
 
         var target = StartRayCast();
         Debug.Log("Target: " + target + " player id " + target?.PlayerId);
@@ -73,8 +73,9 @@ public class Gun : NetworkItem
     {
         RaycastHit hit;
         var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity);
-        
-        return success ? hit.transform.GetComponent<Player>() : null;
+        Debug.Log("RayCast success: " + success + " target " + hit.transform?.gameObject.name);
+
+        return success ? hit.transform?.GetComponent<Player>() : null;
     }
 
     [Rpc(SendTo.Server)]
