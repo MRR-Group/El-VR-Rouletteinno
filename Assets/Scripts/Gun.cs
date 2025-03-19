@@ -65,6 +65,7 @@ public class Gun : NetworkItem
         if (target != null)
         {
             ShootRpc(target.PlayerId);
+            ForceDrop();
         }
     }
 
@@ -73,6 +74,7 @@ public class Gun : NetworkItem
         if (CanUse())
         {
             ShootRpc(target);
+            ForceDrop();
         }
     }
 
@@ -122,8 +124,6 @@ public class Gun : NetworkItem
         {
             GameManager.Instance.round.StartRoundRpc();
         }
-        
-        ForceDrop();
     }
 
     private bool IsMagazineEmpty()
