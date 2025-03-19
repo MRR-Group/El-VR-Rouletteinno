@@ -20,6 +20,9 @@ public class Gun : NetworkItem
     
     private NetworkVariable<List<bool>> ammo = new (new List<bool>());
 
+    [SerializeField]
+    private GameObject m_bullet;
+    
     public event EventHandler AmmoChanged;
     
     public override void OnNetworkSpawn()
@@ -44,13 +47,13 @@ public class Gun : NetworkItem
     {
         Debug.Log("Clicked!");
         
-        if (!CanUse())
-        {
-            return;
-        }
+        // if (!CanUse())
+        // {
+        //     return;
+        // }
 
         var target = StartRayCast();
-        Debug.Log("Target: " + target);
+        Debug.Log("Target: " + target + " player id " + target.PlayerId);
 
         if (target != null)
         {
@@ -69,7 +72,7 @@ public class Gun : NetworkItem
     private Player StartRayCast()
     {
         RaycastHit hit;
-        var success = Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity);
+        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity);
         
         return success ? hit.transform.GetComponent<Player>() : null;
     }
@@ -77,31 +80,31 @@ public class Gun : NetworkItem
     [Rpc(SendTo.Server)]
     private void ShootRpc(ulong target)
     {
-        if (IsMagazineEmpty())
-        {
-            return;
-        }
+        // if (IsMagazineEmpty())
+        // {
+        //     return;
+        // }
         
-        var isBulletLive = ammo.Value[0];
-        ammo.Value.RemoveAt(0);
-        ammo.CheckDirtyState();
+        // var isBulletLive = ammo.Value[0];
+        // ammo.Value.RemoveAt(0);
+        // ammo.CheckDirtyState();
         
-        if (isBulletLive)
-        {
+        // if (isBulletLive)
+        // {
             PlayerManager.Instance.Player[target].DealDamageRpc(1);
             m_shootParticles.time = 0;
             m_shootParticles.Play();
-        }
+        // }
 
-        if (isBulletLive || !GameManager.Instance.turn.IsPlayerTurn(target))
-        {
-            GameManager.Instance.turn.NextTurnRpc();
-        }
-
-        if (IsMagazineEmpty())
-        {
-            GameManager.Instance.round.StartRoundRpc();
-        }
+        // if (isBulletLive || !GameManager.Instance.turn.IsPlayerTurn(target))
+        // {
+        //     GameManager.Instance.turn.NextTurnRpc();
+        // }
+        //
+        // if (IsMagazineEmpty())
+        // {
+        //     GameManager.Instance.round.StartRoundRpc();
+        // }
     }
 
     private bool IsMagazineEmpty()
