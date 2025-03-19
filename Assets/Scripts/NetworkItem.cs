@@ -59,8 +59,6 @@ public abstract class NetworkItem : NetworkBehaviour
     
     protected bool CanUse()
     {
-        return true;
-        
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.turn.IsClientTurn();
     }
 
