@@ -43,6 +43,20 @@ public class Player : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void DealDamageRpc(int damage)
     {
+        if (damage < 0)
+        {
+            health.Value = 0;
+        }
+        else if (damage > 5)
+        {
+            health.Value = 5;
+        }
+        else
+        {
+            health.Value = damage;
+        }
+
+
         health.Value -= damage;
         
         if (IsDead())
