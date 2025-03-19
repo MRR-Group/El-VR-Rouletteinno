@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6719931530535647573}
   - component: {fileID: 1872240859568195397}
   - component: {fileID: 4245624843846203348}
+  - component: {fileID: 2151397541794295001}
   m_Layer: 0
   m_Name: Chair
   m_TagString: Untagged
@@ -47,8 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2525601985
+  GlobalObjectIdHash: 930363853
   InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
   ActiveSceneSynchronization: 0
@@ -56,6 +59,8 @@ MonoBehaviour:
   SpawnWithObservers: 1
   DontDestroyWithOwner: 0
   AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &4245624843846203348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,8 +73,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7ca0e4318fe4d359fdd12e3a1e12c48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_gameManager: {fileID: 0}
+  ShowTopMostFoldoutHeaderGroup: 1
   m_anchor: {fileID: 3208080395259812812}
+--- !u!114 &2151397541794295001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2775886668140037905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41fdb52e60e0778438d4b2d51332c1d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_menu: {fileID: 0}
 --- !u!1001 &954391177092270363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80,11 +98,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 192956, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
       propertyPath: m_Name
-      value: SO_Chair09 (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
-      propertyPath: m_RootOrder
-      value: 27
+      value: Visual
       objectReference: {fileID: 0}
     - target: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
       propertyPath: m_LocalPosition.x
@@ -115,46 +129,22 @@ PrefabInstance:
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 223.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 192956, guid: 29218c2b4faa60446976f795b1a7ad61,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 361879904962619133}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29218c2b4faa60446976f795b1a7ad61, type: 3}
---- !u!1 &954391177092200615 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 192956, guid: 29218c2b4faa60446976f795b1a7ad61,
-    type: 3}
-  m_PrefabInstance: {fileID: 954391177092270363}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &361879904962619133
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954391177092200615}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: e060c94585d69ec428fa132f5cafa3bb, type: 3}
 --- !u!4 &954391177092412971 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 409392, guid: 29218c2b4faa60446976f795b1a7ad61,

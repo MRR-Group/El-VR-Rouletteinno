@@ -9,7 +9,10 @@ public class GameChair : NetworkBehaviour
     private TeleportationAnchor m_anchor;
     
     private NetworkVariable<bool> isFree = new (true);
+    private NetworkVariable<ulong> playerId = new ();
 
+    public Player Player => isFree.Value ? null : PlayerManager.Instance.Player[playerId.Value];
+    
     public bool IsFree()
     {
         return isFree.Value;
@@ -38,5 +41,6 @@ public class GameChair : NetworkBehaviour
 
         isFree.Value = false;
         GameManager.Instance.AddPlayerRpc(player);
+        playerId.Value = player;
     }
 }
