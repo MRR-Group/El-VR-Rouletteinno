@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 409392}
   - component: {fileID: 3334718}
   - component: {fileID: 2311916}
-  - component: {fileID: 7033798178171565674}
+  - component: {fileID: 7088476935291411247}
   m_Layer: 0
   m_Name: SO_Chair04
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &409392
 Transform:
@@ -87,7 +87,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &7033798178171565674
+--- !u!64 &7088476935291411247
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
