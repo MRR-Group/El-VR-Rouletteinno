@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2738107526418177759}
   - component: {fileID: 9208948035579849765}
   - component: {fileID: 2833063691120635449}
+  - component: {fileID: 3895332423620955863}
   m_Layer: 0
   m_Name: Vape
   m_TagString: Untagged
@@ -337,6 +338,21 @@ MonoBehaviour:
   m_AllowCollisionOwnershipExchange: 1
   m_MinExchangeVelocityMagitude: 0.025
   spawnLocked: 0
+--- !u!114 &3895332423620955863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371973704486377483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab76f7a533d2cd64a931c1bc22acd0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_spawnPoint: {fileID: 0}
+  m_interactionManager: {fileID: 0}
 --- !u!1 &5116464577937585125
 GameObject:
   m_ObjectHideFlags: 0
