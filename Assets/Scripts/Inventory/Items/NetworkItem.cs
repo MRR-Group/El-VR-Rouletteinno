@@ -17,9 +17,6 @@ public abstract class NetworkItem : NetworkBehaviour
     [SerializeField]
     protected Transform m_spawnPoint;
     
-    [SerializeField]
-    protected XRInteractionManager m_interactionManager;
-
     private const string ITEM_BOX_TAG = "ItemBox";
 
     private bool isInBox = false;
@@ -87,7 +84,7 @@ public abstract class NetworkItem : NetworkBehaviour
 
     protected void ForceDrop()
     {
-        m_interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
+        GameManager.Instance.InteractionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
     }
 
     protected void HandleDrop(SelectExitEventArgs _)

@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : NetworkSingleton<GameManager>
 {
     [SerializeField]
     private NetworkVariable<GameState> gameState = new (GameState.PREPARE);
     public GameState GameState => gameState.Value;
+    
     public event EventHandler<GameStateChangedArgs> GameStateChanged;
     public class GameStateChangedArgs : EventArgs
     {
@@ -27,6 +29,10 @@ public class GameManager : NetworkSingleton<GameManager>
     [SerializeField]
     private int m_minPlayers = 2;
 
+    [SerializeField]
+    protected XRInteractionManager m_interactionManager;
+    public XRInteractionManager InteractionManager => m_interactionManager;
+    
     public Game game;
     public Round round;
     public Turn turn;

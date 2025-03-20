@@ -36,6 +36,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4821736783814901020}
   - {fileID: 1765435259511723100}
   - {fileID: 4925310941080779033}
   m_Father: {fileID: 0}
@@ -106,7 +107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
   m_Colliders:
-  - {fileID: 0}
+  - {fileID: 6201867002462907794}
   m_InteractionLayers:
     m_Bits: 1
   m_DistanceCalculationMode: 1
@@ -165,7 +166,7 @@ MonoBehaviour:
   m_StartingHoverFilters: []
   m_StartingSelectFilters: []
   m_StartingInteractionStrengthFilters: []
-  m_AttachTransform: {fileID: 0}
+  m_AttachTransform: {fileID: 4821736783814901020}
   m_SecondaryAttachTransform: {fileID: 0}
   m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
@@ -322,9 +323,9 @@ MonoBehaviour:
   ActivateNetworkedEventAll:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Gun, Assembly-CSharp
-        m_MethodName: PullTrigger
+      - m_Target: {fileID: 3895332423620955863}
+        m_TargetAssemblyTypeName: Vape, Assembly-CSharp
+        m_MethodName: Use
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -351,8 +352,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_spawnPoint: {fileID: 0}
-  m_interactionManager: {fileID: 0}
+  m_spawnPoint: {fileID: 4821736783814901020}
+  m_healAmout: 1
 --- !u!1 &5116464577937585125
 GameObject:
   m_ObjectHideFlags: 0
@@ -364,7 +365,7 @@ GameObject:
   - component: {fileID: 4925310941080779033}
   - component: {fileID: 6201867002462907794}
   m_Layer: 0
-  m_Name: Collision
+  m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,6 +407,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.032761157, y: 0.16765255, z: 0.081866026}
   m_Center: {x: 0.0001078248, y: 0.03275922, z: -0.004778743}
+--- !u!1 &5410422254063640506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4821736783814901020}
+  m_Layer: 0
+  m_Name: Attach Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4821736783814901020
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5410422254063640506}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4374687166238179509}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1001 &2236793123656709047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -487,7 +519,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_Name
-      value: low_poly_vaper
+      value: Model
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
