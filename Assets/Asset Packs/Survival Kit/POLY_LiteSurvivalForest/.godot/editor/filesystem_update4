@@ -1,0 +1,48 @@
+res://unidot_asset_database.res
+res://Assets/POLY- Lite Survival Forest/Materials/Ground.material
+res://Assets/POLY- Lite Survival Forest/Materials/Birch_green.material
+res://Assets/POLY- Lite Survival Forest/Materials/Maple_Green.material
+res://Assets/POLY- Lite Survival Forest/Materials/Small_Rocks.material
+res://Assets/POLY- Lite Survival Forest/Materials/Maple_red_M.material
+res://Assets/POLY- Lite Survival Forest/Materials/MainMaterial.material
+res://Assets/POLY- Lite Survival Forest/Materials/Sky.material
+res://Assets/POLY- Lite Survival Forest/Materials/Grass.material
+res://Assets/POLY- Lite Survival Forest/Materials/Tree_02.material
+res://Assets/POLY- Lite Survival Forest/Materials/Tree_01.material
+res://Assets/POLY- Lite Survival Forest/Materials/Birch_red.material
+res://Assets/POLY- Lite Survival Forest/Materials/Water.material
+res://Assets/POLY- Lite Survival Forest/Terrain/TerrainLayer/LiteGrassLayer.terrainlayer.res
+res://Assets/POLY- Lite Survival Forest/PPData__Camera_03.res
+res://Assets/POLY- Lite Survival Forest/Terrain/TerrainLayer/LiteDirtLayer.terrainlayer.res
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Grass.default.material
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Grass.SM_Grass_Simple_002.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Large_Rock_Round_05.default.material
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Large_Rock_Round_05.SM_Large_Rock_Round_05.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.default.material
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.Birch_03_LOD0.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.SM_Birch_03_LOD0.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.SM_Birch_03_LOD1.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.Birch_03_LOD1.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.SM_Birch_03_LOD2.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Birch_03_LOD.Birch_03_LOD2.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.default.material
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.Maple_LOD0.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.Maple_LOD1.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.Maple_LOD2.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.SM_Maple_LOD0.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.SM_Maple_LOD1.mesh
+res://Assets/POLY- Lite Survival Forest/Models/extracted/SM_Maple_LOD.SM_Maple_LOD2.mesh
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Birch_03_Red.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Birch_03_Green_Yellow.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Large_Rock_Round_05.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Maple_Green.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Maple_Green_Yellow.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Grass.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Maple_Red.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Prefab/SM_Birch_03_Green.prefab.scn
+res://Assets/POLY- Lite Survival Forest/Terrain/New Terrain.terrain.terrain.material
+res://Assets/POLY- Lite Survival Forest/Terrain/New Terrain.terrain.terrain.mesh
+res://Assets/POLY- Lite Survival Forest/Terrain/New Terrain.terrain.terrain.shape
+res://Assets/POLY- Lite Survival Forest/Terrain/New Terrain.terrain.splatmap.res
+res://Assets/POLY- Lite Survival Forest/Terrain/New Terrain.terrain.scn
+res://Assets/POLY- Lite Survival Forest/Scene/Demo.scn
