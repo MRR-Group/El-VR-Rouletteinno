@@ -24,6 +24,11 @@ public class Player : NetworkBehaviour
         health.Value = m_MaxHealth;
     }
 
+    public bool IsCurrentPlayer()
+    {
+        return PlayerId == NetworkManager.Singleton.LocalClientId;
+    }
+
     public override void OnNetworkSpawn()
     {
         PlayerManager.Instance.Player.Add(PlayerId, this);

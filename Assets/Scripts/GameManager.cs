@@ -35,6 +35,7 @@ public class GameManager : NetworkSingleton<GameManager>
     {
         playersIds.OnValueChanged += OnPlayersIdsValueChanged;
         gameState.OnValueChanged += OnGameStateChanged;
+        GameStateChanged?.Invoke(this, new GameStateChangedArgs { State = gameState.Value});
     }
     
     private void OnPlayersIdsValueChanged(List<ulong> _, List<ulong> newPlayerList)
