@@ -7,6 +7,12 @@ public class Turn : NetworkBehaviour
     private NetworkVariable<ulong> currentPlayerTurn = new ();
     public event EventHandler TurnChanged;
     
+    [SerializeField]
+    private int m_minAlivePlayers = 1;
+
+    [SerializeField]
+    private bool m_disableAliveChecker = false;
+    
     public override void OnNetworkSpawn()
     {
         currentPlayerTurn.OnValueChanged += (_, __) => TurnChanged?.Invoke(null, null);
@@ -27,7 +33,7 @@ public class Turn : NetworkBehaviour
     {
         var players = GameManager.Instance.game.players.Value;
         
-        if (players.Count <= 1) {
+        if (ShouldEndGame(players.Count)) {
             GameManager.Instance.game.PlayerWinGameRpc(currentPlayerTurn.Value);
             
             return;
@@ -37,5 +43,10 @@ public class Turn : NetworkBehaviour
         var next = index + 1 >= players.Count ? 0 : index + 1;
         
         currentPlayerTurn.Value = players[next];
+    }
+
+    private bool ShouldEndGame(int alivePlayers)
+    {
+        return alivePlayers <= m_minAlivePlayers && !m_disableAliveChecker;
     }
 }

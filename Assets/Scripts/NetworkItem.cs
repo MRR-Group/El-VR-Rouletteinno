@@ -1,6 +1,7 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -11,29 +12,34 @@ public abstract class NetworkItem : NetworkBehaviour
 {
     protected Rigidbody rigidbody;
     protected XRGrabInteractable interactable;
-
+    protected NetworkObject networkObject;
+    
     [SerializeField]
     protected Transform m_spawnPoint;
     
     [SerializeField]
     protected XRInteractionManager m_interactionManager;
-
+    
     protected void Awake()
     {
         interactable = GetComponent<XRGrabInteractable>();
         rigidbody = GetComponent<Rigidbody>();
+        networkObject = GetComponent<NetworkObject>();
     }
-
     protected void Start()
     {
-        interactable.selectEntered.AddListener((_) => HandleGrab());
-        interactable.selectExited.AddListener((_) => HandleDrop());
+        interactable.selectEntered.AddListener(HandleGrab);
+        interactable.selectExited.AddListener(HandleDrop);
+    }
+    
+    public override void OnDestroy()
+    {
+        interactable.selectEntered.RemoveListener(HandleGrab);
+        interactable.selectExited.RemoveListener(HandleDrop);
     }
 
-    protected void HandleGrab()
+    private void HandleGrab(SelectEnterEventArgs _)
     {
-        Debug.Log("Grabed");
-        
         if (!CanUse())
         {
             ForceDrop();
@@ -45,9 +51,8 @@ public abstract class NetworkItem : NetworkBehaviour
         m_interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
     }
 
-    protected void HandleDrop()
+    protected void HandleDrop(SelectExitEventArgs _)
     {
-        Debug.Log("Dropped");
         TeleportToSpawnRpc();
     }
 
@@ -61,10 +66,11 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.turn.IsClientTurn();
     }
-
-    public void DestroyItem()
+    
+    [Rpc(SendTo.Server)]
+    public void DestroyItemRpc()
     {
-        Destroy(rigidbody.gameObject);
+        networkObject.Despawn();
     }
     
     public abstract void Use(ulong target);

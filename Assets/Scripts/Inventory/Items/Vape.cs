@@ -3,34 +3,36 @@ using Unity.Netcode;
 
 public class Vape : NetworkItem
 {
-    private const int HEAL_AMOUNT = 1;
+    [SerializeField]
+    private int m_healAmout = 1;
+    
+    public void Use()
+    {
+        Use(NetworkManager.Singleton.LocalClientId);
+    }
     
     public override void Use(ulong target)
     {
         Debug.Log("MaxHealth " + PlayerManager.Instance.Player[target].GetMaxHealth());
         Debug.Log("health " + PlayerManager.Instance.Player[target].Health);
-        if (!CanUse()) return;
-        if (!CanHeal(target)) return;
-
+        
+        if (!CanUse() || !CanHeal(target))
+        {
+            return;
+        }
+        
         HealPlayer(target);
-        DestroyItem();
+        DestroyItemRpc();
     }
-
-    public void Use()
-    {
-        Use(NetworkManager.Singleton.LocalClientId);
-    }
-
+    
     private void HealPlayer(ulong target)
     {
-        PlayerManager.Instance.Player[target].AddHealthRpc(HEAL_AMOUNT);
+        PlayerManager.Instance.Player[target].AddHealthRpc(m_healAmout);
     }
-
+    
     private bool CanHeal(ulong target)
     {
-        int healthAfterHeal = PlayerManager.Instance.Player[target].Health + HEAL_AMOUNT;
-        int maxHealth = PlayerManager.Instance.Player[target].GetMaxHealth();
-        
-        return healthAfterHeal <= maxHealth;
+        var player = PlayerManager.Instance.Player[target];
+        return player.Health + m_healAmout <= player.GetMaxHealth();
     }
 }

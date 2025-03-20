@@ -270,6 +270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  m_minAlivePlayers: 2
+  m_disableAliveChecker: 1
 --- !u!114 &26018721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +321,8 @@ MonoBehaviour:
   playersIds:
     m_InternalValue: 
   players: []
+  m_maxPlayers: 4
+  m_minPlayers: 1
   game: {fileID: 26018722}
   round: {fileID: 26018721}
   turn: {fileID: 26018720}
@@ -2234,7 +2238,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &264855197
 Transform:
   m_ObjectHideFlags: 0
@@ -10319,7 +10323,7 @@ PrefabInstance:
     - target: {fileID: 963754139483383979, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1143648548
+      value: 1982118997
       objectReference: {fileID: 0}
     - target: {fileID: 963754139483383979, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
