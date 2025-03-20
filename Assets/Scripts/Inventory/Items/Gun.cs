@@ -114,4 +114,10 @@ public class Gun : NetworkItem
     {
         return _ammo.Value.ToArray();
     }
+
+    public void RemoveCurrentBullet()
+    {
+        _ammo.Value.RemoveAt(0);
+        _ammo.CheckDirtyState();
+    }
 }

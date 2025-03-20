@@ -5,7 +5,7 @@ public class Round : NetworkBehaviour
 {
     public event EventHandler RoundStared;
 
-    public Gun Gun { get; }
+    public Gun Gun;
 
     [Rpc(SendTo.Server)]
     public void StartRoundRpc()

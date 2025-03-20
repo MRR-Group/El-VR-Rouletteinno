@@ -31,10 +31,12 @@ public class GameManager : NetworkSingleton<GameManager>
     [SerializeField]
     protected XRInteractionManager m_interactionManager;
     public XRInteractionManager InteractionManager => m_interactionManager;
-    
-    public Game Game { get; }
-    public Round Round { get; }
-    public Turn Turn { get; }
+
+    public Game Game;
+
+    public Round Round;
+
+    public Turn Turn;
 
     public override void OnNetworkSpawn()
     {
