@@ -88,8 +88,7 @@ public class Gun : NetworkItem
         }
         
         var isBulletLive = ammo.Value[0];
-        ammo.Value.RemoveAt(0);
-        ammo.CheckDirtyState();
+        RemoveFirstBullet();
         
         if (isBulletLive)
         {
@@ -117,5 +116,11 @@ public class Gun : NetworkItem
     public bool[] Magazine()
     {
         return ammo.Value.ToArray();
+    }
+
+    public void RemoveFirstBullet()
+    {
+        ammo.Value.RemoveAt(0);
+        ammo.CheckDirtyState();
     }
 }
