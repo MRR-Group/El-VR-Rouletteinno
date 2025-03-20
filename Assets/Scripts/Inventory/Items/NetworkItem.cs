@@ -2,10 +2,15 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Transformers;
+using XRMultiplayer;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(NetworkObject))]
 [RequireComponent(typeof(XRGrabInteractable))]
+[RequireComponent(typeof(XRGeneralGrabTransformer))]
+[RequireComponent(typeof(NetworkPhysicsInteractable))]
+[RequireComponent(typeof(ClientNetworkTransform))]
 public abstract class NetworkItem : NetworkBehaviour
 {
     protected Rigidbody _rigidbody;

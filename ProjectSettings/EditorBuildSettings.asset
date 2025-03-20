@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScene.unity
     guid: 106f234c8f7e13f4eb118fe473586d00
+  - enabled: 1
+    path: Assets/_cookman/GameScene.unity
+    guid: 5bb802df56691184ca8c1edba5102b77
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: e3aee76b9372917449aef639e2f74814,
       type: 2}

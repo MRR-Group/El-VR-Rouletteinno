@@ -16,7 +16,7 @@ public class EnergyDrink : NetworkItem
         {
             return;
         }
-        GameManager.Instance.round.gun.RemoveFirstBullet();
+        GameManager.Instance.Round.Gun.RemoveCurrentBullet();
         
         Debug.Log("Use EnergyDrink");
         
