@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(XRGrabInteractable))]
 public abstract class NetworkItem : NetworkBehaviour
 {
-    protected Rigidbody rigidbody;
+    protected Rigidbody rb;
     protected XRGrabInteractable interactable;
 
     [SerializeField]
@@ -18,10 +18,15 @@ public abstract class NetworkItem : NetworkBehaviour
     [SerializeField]
     protected XRInteractionManager m_interactionManager;
 
+    private const string ITEM_BOX_TAG = "ItemBox";
+
+    private bool isInBox = false;
+    private bool isGrabbed;
+    
     protected void Awake()
     {
         interactable = GetComponent<XRGrabInteractable>();
-        rigidbody = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     protected void Start()
@@ -30,9 +35,41 @@ public abstract class NetworkItem : NetworkBehaviour
         interactable.selectExited.AddListener((_) => HandleDrop());
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(ITEM_BOX_TAG))
+        {
+            isInBox = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag(ITEM_BOX_TAG))
+        {
+            return;
+        }
+        
+        isInBox = false;
+        
+        ReturnToSpawnIfDropped();
+    }
+
+    private void ReturnToSpawnIfDropped()
+    {
+        if (isGrabbed || isInBox)
+        {
+            return;
+        }
+        
+        TeleportToSpawnRpc();
+    }
+
     protected void HandleGrab()
     {
         Debug.Log("Grabed");
+        
+        isGrabbed = true;
         
         if (!CanUse())
         {
@@ -48,13 +85,15 @@ public abstract class NetworkItem : NetworkBehaviour
     protected void HandleDrop()
     {
         Debug.Log("Dropped");
-        TeleportToSpawnRpc();
+        isGrabbed = false;
+        ReturnToSpawnIfDropped();
     }
 
     [Rpc(SendTo.Owner)]
     public void TeleportToSpawnRpc()
     {
-        rigidbody.MovePosition(m_spawnPoint.position);
+        rb.MovePosition(m_spawnPoint.position);
+        rb.MoveRotation(Quaternion.identity);
     }
     
     protected bool CanUse()
@@ -64,7 +103,7 @@ public abstract class NetworkItem : NetworkBehaviour
 
     public void DestroyItem()
     {
-        Destroy(rigidbody.gameObject);
+        Destroy(rb.gameObject);
     }
     
     public abstract void Use(ulong target);
