@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
@@ -8,21 +7,17 @@ public class GameChair : NetworkBehaviour
     [SerializeField]
     private TeleportationAnchor m_anchor;
     
-    private NetworkVariable<bool> isFree = new (true);
-    private NetworkVariable<ulong> playerId = new ();
+    private NetworkVariable<bool> net_isFree = new (true);
+    private NetworkVariable<ulong> net_playerId = new ();
 
-    public Player Player => isFree.Value ? null : PlayerManager.Instance.Player[playerId.Value];
-    
-    public bool IsFree()
-    {
-        return isFree.Value;
-    }
-    
+    public bool IsFree => net_isFree.Value;
+    public Player Player => IsFree ? null : PlayerManager.Instance.ById(net_playerId.Value);
+ 
     public void SitDown()
     {
         var player = NetworkManager.Singleton.LocalClient.ClientId;
 
-        if (!IsFree() && GameManager.Instance.GameState != GameState.PREPARE)
+        if (!IsFree && GameManager.Instance.GameState != GameState.PREPARE)
         {
             return;
         }
@@ -34,13 +29,13 @@ public class GameChair : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void RegisterChairRpc(ulong player)
     {
-        if (!IsFree() || GameManager.Instance.GameState != GameState.PREPARE)
+        if (!IsFree || GameManager.Instance.GameState != GameState.PREPARE)
         {
             return;
         }
 
-        isFree.Value = false;
+        net_isFree.Value = false;
         GameManager.Instance.AddPlayerRpc(player);
-        playerId.Value = player;
+        net_playerId.Value = player;
     }
 }

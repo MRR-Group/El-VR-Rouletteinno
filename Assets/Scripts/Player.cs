@@ -5,8 +5,9 @@ using UnityEngine;
 public class Player : NetworkBehaviour
 {
     [SerializeField]
-    private int m_MaxHealth = 5;
-    private NetworkVariable<int> health = new ();
+    private int m_maxHealth = 5;
+
+    private NetworkVariable<int> net_health = new ();
 
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
@@ -17,11 +18,11 @@ public class Player : NetworkBehaviour
     
     public ulong PlayerId => OwnerClientId;
     
-    public int Health => health.Value;
+    public int Health => net_health.Value;
 
     public void Awake()
     {
-        health.Value = m_MaxHealth;
+        net_health.Value = m_maxHealth;
     }
 
     public bool IsCurrentPlayer()
@@ -31,8 +32,8 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        PlayerManager.Instance.Player.Add(PlayerId, this);
-        health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
+        PlayerManager.Instance.RegisterPlayer(PlayerId, this);
+        net_health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
     }
 
     public bool IsDead()
@@ -43,28 +44,33 @@ public class Player : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void ResetHealthRpc()
     {
-        health.Value = m_MaxHealth;
+        net_health.Value = m_maxHealth;
     }
 
     [Rpc(SendTo.Server)]
     public void DealDamageRpc(int damage)
     {
-        health.Value = Math.Clamp(health.Value - damage, 0, m_MaxHealth);
+        net_health.Value = Math.Clamp(net_health.Value - damage, 0, m_maxHealth);
         
         if (IsDead())
         {
-            GameManager.Instance.game.RemoveDeadPlayerRpc(PlayerId);
+            GameManager.Instance.Game.RemoveDeadPlayerRpc(PlayerId);
         }
     }
 
     [Rpc(SendTo.Server)]
-    public void AddHealthRpc(int amount)
+    public void HealRpc(int amount)
     {
-        health.Value = Math.Clamp(health.Value + amount, 0, m_MaxHealth);
+        net_health.Value = Math.Clamp(net_health.Value + amount, 0, m_maxHealth);
     }
 
     public int GetMaxHealth()
     {
-        return m_MaxHealth;
+        return m_maxHealth;
+    }
+    
+    public bool CanBeHealed(int healAmount)
+    {
+        return Health + healAmount <= GetMaxHealth();
     }
 }

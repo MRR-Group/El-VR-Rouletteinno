@@ -1,21 +1,14 @@
 using System;
 using Unity.Netcode;
-using UnityEngine;
 
 public class Turn : NetworkBehaviour
 {
-    private NetworkVariable<ulong> currentPlayerTurn = new ();
+    private NetworkVariable<ulong> net_currentPlayerTurn = new ();
     public event EventHandler TurnChanged;
-    
-    [SerializeField]
-    private int m_minAlivePlayers = 1;
-
-    [SerializeField]
-    private bool m_disableAliveChecker = false;
     
     public override void OnNetworkSpawn()
     {
-        currentPlayerTurn.OnValueChanged += (_, __) => TurnChanged?.Invoke(null, null);
+        net_currentPlayerTurn.OnValueChanged += (_, __) => TurnChanged?.Invoke(null, null);
     }
     
     public bool IsClientTurn()
@@ -25,28 +18,19 @@ public class Turn : NetworkBehaviour
     
     public bool IsPlayerTurn(ulong player)
     {
-        return currentPlayerTurn.Value == player;
+        return net_currentPlayerTurn.Value == player;
     }
 
     [Rpc(SendTo.Server)]
     public void NextTurnRpc()
     {
-        var players = GameManager.Instance.game.players.Value;
+        var game = GameManager.Instance.Game;
         
-        if (ShouldEndGame(players.Count)) {
-            GameManager.Instance.game.PlayerWinGameRpc(currentPlayerTurn.Value);
-            
+        if (game.ShouldEndGame()) {
+            game.PlayerWinGameRpc(net_currentPlayerTurn.Value);
             return;
         }
-
-        var index = players.IndexOf(currentPlayerTurn.Value);
-        var next = index + 1 >= players.Count ? 0 : index + 1;
         
-        currentPlayerTurn.Value = players[next];
-    }
-
-    private bool ShouldEndGame(int alivePlayers)
-    {
-        return alivePlayers <= m_minAlivePlayers && !m_disableAliveChecker;
+        net_currentPlayerTurn.Value = game.GetNextPlayer(net_currentPlayerTurn.Value);
     }
 }

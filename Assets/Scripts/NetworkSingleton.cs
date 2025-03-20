@@ -3,38 +3,38 @@ using UnityEngine;
 
 public class NetworkSingleton<T> : NetworkBehaviour where T : NetworkBehaviour
 {
-    private static T instance;
+    private static T _instance;
 
     public static T Instance
     {
         get
         {
-            if (instance != null)
+            if (_instance != null)
             {
-                return instance;
+                return _instance;
             }
             
-            instance = FindFirstObjectByType<T>();
+            _instance = FindFirstObjectByType<T>();
             
-            if (instance != null)
+            if (_instance != null)
             {
-                return instance;
+                return _instance;
             }
             
             var singletonObject = new GameObject(typeof(T).Name);
             
-            instance = singletonObject.AddComponent<T>();
+            _instance = singletonObject.AddComponent<T>();
             DontDestroyOnLoad(singletonObject);
             
-            return instance;
+            return _instance;
         }
     }
 
     protected virtual void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this as T;
+            _instance = this as T;
             DontDestroyOnLoad(gameObject);
         }
         else

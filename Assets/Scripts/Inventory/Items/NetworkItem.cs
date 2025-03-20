@@ -1,7 +1,5 @@
-using System;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -10,41 +8,41 @@ using UnityEngine.XR.Interaction.Toolkit.Interactables;
 [RequireComponent(typeof(XRGrabInteractable))]
 public abstract class NetworkItem : NetworkBehaviour
 {
-    protected Rigidbody rb;
-    protected XRGrabInteractable interactable;
-    protected NetworkObject networkObject;
+    protected Rigidbody _rigidbody;
+    protected XRGrabInteractable _interactable;
+    protected NetworkObject _networkObject;
     
     [SerializeField]
     protected Transform m_spawnPoint;
     
     private const string ITEM_BOX_TAG = "ItemBox";
 
-    private bool isInBox = false;
-    private bool isGrabbed;
+    private bool _isInBox = false;
+    private bool _isGrabbed;
     
     protected void Awake()
     {
-        interactable = GetComponent<XRGrabInteractable>();
-        rb = GetComponent<Rigidbody>();
-        networkObject = GetComponent<NetworkObject>();
+        _interactable = GetComponent<XRGrabInteractable>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _networkObject = GetComponent<NetworkObject>();
     }
     protected void Start()
     {
-        interactable.selectEntered.AddListener(HandleGrab);
-        interactable.selectExited.AddListener(HandleDrop);
+        _interactable.selectEntered.AddListener(HandleGrab);
+        _interactable.selectExited.AddListener(HandleDrop);
     }
     
     public override void OnDestroy()
     {
-        interactable.selectEntered.RemoveListener(HandleGrab);
-        interactable.selectExited.RemoveListener(HandleDrop);
+        _interactable.selectEntered.RemoveListener(HandleGrab);
+        _interactable.selectExited.RemoveListener(HandleDrop);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(ITEM_BOX_TAG))
         {
-            isInBox = true;
+            _isInBox = true;
         }
     }
 
@@ -55,14 +53,14 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
         
-        isInBox = false;
+        _isInBox = false;
         
         ReturnToSpawnIfDropped();
     }
 
     private void ReturnToSpawnIfDropped()
     {
-        if (isGrabbed || isInBox)
+        if (_isGrabbed || _isInBox)
         {
             return;
         }
@@ -72,9 +70,7 @@ public abstract class NetworkItem : NetworkBehaviour
 
     protected void HandleGrab(SelectEnterEventArgs _)
     {
-        Debug.Log("Grabed");
-        
-        isGrabbed = true;
+        _isGrabbed = true;
         
         if (!CanUse())
         {
@@ -84,32 +80,31 @@ public abstract class NetworkItem : NetworkBehaviour
 
     protected void ForceDrop()
     {
-        GameManager.Instance.InteractionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
+        GameManager.Instance.InteractionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
     }
 
     protected void HandleDrop(SelectExitEventArgs _)
     {
-        Debug.Log("Dropped");
-        isGrabbed = false;
+        _isGrabbed = false;
         ReturnToSpawnIfDropped();
     }
 
     [Rpc(SendTo.Owner)]
     public void TeleportToSpawnRpc()
     {
-        rb.MovePosition(m_spawnPoint.position);
-        rb.MoveRotation(Quaternion.identity);
+        _rigidbody.MovePosition(m_spawnPoint.position);
+        _rigidbody.MoveRotation(Quaternion.identity);
     }
     
     protected bool CanUse()
     {
-        return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.turn.IsClientTurn();
+        return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.Turn.IsClientTurn();
     }
     
     [Rpc(SendTo.Server)]
     public void DestroyItemRpc()
     {
-        networkObject.Despawn();
+        _networkObject.Despawn();
     }
     
     public abstract void Use(ulong target);

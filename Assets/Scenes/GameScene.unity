@@ -276,8 +276,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_minAlivePlayers: 1
-  m_disableAliveChecker: 1
 --- !u!114 &26018721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +289,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  gun: {fileID: 7607204965593957471}
 --- !u!114 &26018722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,8 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  players:
-    m_InternalValue: 
+  m_minAlivePlayers: 2
+  m_disableAliveChecker: 0
 --- !u!114 &26018723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,19 +317,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  gameState:
-    m_InternalValue: 0
-  moveAction: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f,
-    type: 3}
-  playersIds:
-    m_InternalValue: 
-  players: []
+  m_moveAction: {fileID: 0}
   m_maxPlayers: 4
   m_minPlayers: 1
   m_interactionManager: {fileID: 685566213}
-  game: {fileID: 26018722}
-  round: {fileID: 26018721}
-  turn: {fileID: 26018720}
 --- !u!114 &26018724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2193,6 +2181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2826762484
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147132325784699105, guid: 8a2d1c3ab5bf3d244a46385b0bdaff22,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 4074941396
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

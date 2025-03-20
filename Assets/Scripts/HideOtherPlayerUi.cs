@@ -1,17 +1,16 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(GameChair))]
 public class HideOtherPlayerUi : MonoBehaviour
 {
-    private GameChair chair;
+    private GameChair _chair;
     
     [SerializeField]
     private GameObject m_menu;
 
     private void Awake()
     {
-        chair = GetComponent<GameChair>();
+        _chair = GetComponent<GameChair>();
     }
 
     private void Start()
@@ -28,7 +27,7 @@ public class HideOtherPlayerUi : MonoBehaviour
  
         if (e.State == GameState.IN_PROGRESS)
         {
-            m_menu.SetActive(chair.Player?.IsCurrentPlayer() ?? false);
+            m_menu.SetActive(_chair.Player?.IsCurrentPlayer() ?? false);
         }
     }
 }

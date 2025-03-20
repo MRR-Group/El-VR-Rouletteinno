@@ -28,10 +28,10 @@ public class DebugPanelUI : MonoBehaviour
     public void Start()
     {
         GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
-        GameManager.Instance.game.Win += Game_OnWinChanged;
-        GameManager.Instance.turn.TurnChanged += Turn_OnTurnChanged;
-        GameManager.Instance.round.gun.AmmoChanged += Gun_OnAmmoChanged;
-        GameManager.Instance.round.RoundStared += Gun_OnAmmoChanged;
+        GameManager.Instance.Game.Win += Game_OnWinChanged;
+        GameManager.Instance.Turn.TurnChanged += Turn_OnTurnChanged;
+        GameManager.Instance.Round.Gun.AmmoChanged += Gun_OnAmmoChanged;
+        GameManager.Instance.Round.RoundStared += Gun_OnAmmoChanged;
 
         NetworkManager.Singleton.OnConnectionEvent += (_, __) => PlayerManager.Instance.Client().HealthChanged += Player_OnHealthChanged;
     }
@@ -48,24 +48,28 @@ public class DebugPanelUI : MonoBehaviour
 
     private void Turn_OnTurnChanged(object sender, EventArgs e)
     {
-        m_isMyTurn.text = GameManager.Instance.turn.IsClientTurn() ? "true" : "false";
+        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
     }
 
     private void Game_OnWinChanged(object sender, EventArgs e)
     {
-        m_wins.text = GameManager.Instance.game.GetPlayerWins(NetworkManager.Singleton.LocalClientId).ToString();
+        m_wins.text = GameManager.Instance.Game.GetPlayerWins(NetworkManager.Singleton.LocalClientId).ToString();
     }
 
     private void GameManager_OnGameStateChanged(object sender, GameManager.GameStateChangedArgs e)
     {
         m_gameState.text = e.State.ToString();
-        m_isMyTurn.text = GameManager.Instance.turn.IsClientTurn() ? "true" : "false";
+        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
     }
 
     public void ShootEnemy()
     {
-        var target = GameManager.Instance.game.players.Value.Find((id) => id != NetworkManager.Singleton.LocalClientId);
-        m_gun.Use(target);
+        var target = GameManager.Instance.Game.GetRandomPlayer(new [] { NetworkManager.Singleton.LocalClientId });
+
+        if (target)
+        {
+            m_gun.Use(target.PlayerId);
+        }
     }
     
     public void ShootSelf()

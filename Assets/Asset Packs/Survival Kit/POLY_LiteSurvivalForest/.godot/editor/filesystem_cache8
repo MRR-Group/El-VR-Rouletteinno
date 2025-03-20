@@ -1,0 +1,132 @@
+2a60927148abd1d33b818b535e306557
+::res://::1736715441
+icon.svg::CompressedTexture2D::4320851799716276947::1736715395::1736715402::1::::<><>::
+unidot_asset_database.res::Resource::5509927247790396034::1736715468::0::1::::<><>::res://addons/unidot/asset_database.gd<>res://addons/unidot/asset_meta.gd<>uid://bkabifcqqmsyl
+_sentinel_file.png::::-1::1736715441::1736715441::0::::<><>::
+::res://addons/::1736715360
+::res://addons/unidot/::1736715360
+aligned_byte_buffer.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+asset_adapter.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+asset_database.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+asset_meta.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+bone_map_editor_plugin.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+convert_scene.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+import_worker.gd::GDScript::-1::1717056534::0::1::::<><>::
+LICENSE.txt::TextFile::-1::1717056534::0::1::::<><>::
+meta_worker.gd::GDScript::-1::1717056534::0::1::::<><>::
+monoscript.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+object_adapter.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+package_file.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+package_import_dialog.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+plugin.cfg::TextFile::-1::1717056534::0::1::::<><>::
+plugin.gd::GDScript::-1::1717056534::0::1::::<>EditorPlugin<>::
+post_import_model.gd::GDScript::-1::1717056534::0::1::::<>EditorScenePostImport<>::
+queue_lib.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+raw_parsed_asset.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+README.md::TextFile::-1::1717056534::0::1::::<><>::
+scene_node_state.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+static_preload.gd::GDScript::-1::1717056534::0::1::::<>Resource<>::
+tarfile.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+thread_worker.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+unidot_example.jpg::::-1::1717056534::1717056534::1::::<><>::
+unidot_instructions.png::::-1::1717056534::1717056534::1::::<><>::
+unidot_utils.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+vrm_integration.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+yaml_parser.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+::res://addons/unidot/deresuteme/::1736715360
+decode.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+::res://addons/unidot/humanoid/::1736715360
+human_trait.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+transform_util.gd::GDScript::-1::1717056534::0::1::::<>RefCounted<>::
+::res://addons/unidot/runtime/::1736715360
+anim_tree.gd::GDScript::-1::1717056534::0::1::::<>AnimationTree<>::
+::res://addons/unidot/skeleton_merge_tool/::1736715360
+LICENSE.md::TextFile::-1::1717056534::0::1::::<><>::
+merged_skeleton.gd::GDScript::-1::1717056534::0::1::::<>Skeleton3D<>::
+plugin.cfg::TextFile::-1::1717056534::0::1::::<><>::
+skeleton_merge_tool_plugin.gd::GDScript::-1::1717056534::0::1::::<>EditorPlugin<>::
+::res://addons/unidot/test/::1736715360
+::res://Assets/::1736715429
+::res://Assets/POLY- Lite Survival Forest/::1736715429
+LUT2.png::CompressedTexture2D::9098658529344417443::1736715429::1736715443::1::::<><>::
+PPData__Camera_03.res::Environment::3652168584474593580::1736715446::0::1::::<><>::
+::res://Assets/POLY- Lite Survival Forest/Materials/::1736715429
+Ground.material::StandardMaterial3D::6633034139223356320::1736715445::0::1::::<><>::
+Birch_green.material::StandardMaterial3D::4365462868407961739::1736715445::0::1::::<><>::uid://cmhlpqrrk1b26
+Maple_Green.material::StandardMaterial3D::315967518402661492::1736715445::0::1::::<><>::uid://cmhlpqrrk1b26
+Maple_red_M.material::StandardMaterial3D::6423760073735816649::1736715445::0::1::::<><>::uid://3366i5x0dpyw
+MainMaterial.material::StandardMaterial3D::187417568887920384::1736715445::0::1::::<><>::uid://buxtquo1oui8c
+Grass.material::StandardMaterial3D::2502534073158328805::1736715445::0::1::::<><>::uid://co5m5bngoqedo
+Birch_red.material::StandardMaterial3D::5966519942117579760::1736715445::0::1::::<><>::uid://cmhlpqrrk1b26
+Water.material::StandardMaterial3D::6401763918943654628::1736715445::0::1::::<><>::uid://cmhlpqrrk1b26
+Tree_01.material::StandardMaterial3D::8979094207294748785::1736715445::0::1::::<><>::uid://bmun6ioenofsi
+Tree_02.material::StandardMaterial3D::4454261337025445747::1736715445::0::1::::<><>::uid://b813jau0jg57d
+Sky.material::StandardMaterial3D::835383875430959301::1736715445::0::1::::<><>::
+Small_Rocks.material::StandardMaterial3D::6082393220118989273::1736715445::0::1::::<><>::uid://dt04xp6wptn8y
+::res://Assets/POLY- Lite Survival Forest/Models/::1736715441
+Aspen_green 4k.png::::-1::0::0::1::::<><>::
+Birch_green 4k.png::::-1::0::0::1::::<><>::
+Birch_green_M.png::::-1::0::0::1::::<><>::
+Grass_simple.png::::-1::0::0::1::::<><>::
+Maple_Green_M.png::::-1::0::0::1::::<><>::
+New Palitra.jpg::::-1::0::0::1::::<><>::
+SM_Birch_03_LOD.gltf::PackedScene::3513632791664839952::1736715435::1736715449::1::::<><>::uid://dk76ifg6kea07<>uid://cn61fr01r8tvt<>uid://b8fvpqi5on68m<>uid://b3wb5vorslpmm<>uid://c8o0jimyxb1if<>uid://pkkfyrn71i2t
+SM_Grass.gltf::PackedScene::1516800352381936943::1736715435::1736715447::1::::<><>::uid://mwkineugppq7
+SM_Large_Rock_Round_05.gltf::PackedScene::8830767183554716045::1736715435::1736715448::1::::<><>::uid://dnnlk8h7ohyxm
+SM_Maple_LOD.gltf::PackedScene::2455213800451039981::1736715435::1736715450::1::::<><>::uid://dcjsswq1rfuai<>uid://b0i0qn4grj5je<>uid://c8dsxikw7xlre<>uid://dpdbfjlygn4md<>uid://cu03tache58yg<>uid://ccev1tr33c537
+Tree_02.png::::-1::0::0::1::::<><>::
+::res://Assets/POLY- Lite Survival Forest/Models/extracted/::1736715429
+SM_Maple_LOD.SM_Maple_LOD2.mesh::ArrayMesh::4922799078683180384::1736715450::0::1::::<><>::
+SM_Maple_LOD.SM_Maple_LOD1.mesh::ArrayMesh::6229961693294218442::1736715450::0::1::::<><>::
+SM_Maple_LOD.SM_Maple_LOD0.mesh::ArrayMesh::8218357975676272151::1736715449::0::1::::<><>::uid://bkabifcqqmsyl
+SM_Maple_LOD.Maple_LOD2.mesh::ArrayMesh::7096400756511163754::1736715449::0::1::::<><>::uid://bkabifcqqmsyl
+SM_Maple_LOD.Maple_LOD1.mesh::ArrayMesh::4159204022096627718::1736715449::0::1::::<><>::uid://bkabifcqqmsyl
+SM_Maple_LOD.Maple_LOD0.mesh::ArrayMesh::7319345369736822608::1736715449::0::1::::<><>::uid://bkabifcqqmsyl
+SM_Maple_LOD.default.material::StandardMaterial3D::3088384389872631523::1736715449::0::1::::<><>::
+SM_Birch_03_LOD.Birch_03_LOD2.mesh::ArrayMesh::1074093818464806521::1736715449::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.SM_Birch_03_LOD2.mesh::ArrayMesh::7119508932808122997::1736715449::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.Birch_03_LOD1.mesh::ArrayMesh::4397240032371757432::1736715448::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.SM_Birch_03_LOD1.mesh::ArrayMesh::4714277110389494770::1736715448::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.SM_Birch_03_LOD0.mesh::ArrayMesh::5750880548560350017::1736715448::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.Birch_03_LOD0.mesh::ArrayMesh::7929107362024136210::1736715448::0::1::::<><>::uid://bmpvbubmtvwv3
+SM_Birch_03_LOD.default.material::StandardMaterial3D::3260930368885661270::1736715449::0::1::::<><>::
+SM_Large_Rock_Round_05.SM_Large_Rock_Round_05.mesh::ArrayMesh::8099241419593112914::1736715448::0::1::::<><>::uid://ds723qbuyi8j3
+SM_Large_Rock_Round_05.default.material::StandardMaterial3D::8490411528587370706::1736715447::0::1::::<><>::
+SM_Grass.SM_Grass_Simple_002.mesh::ArrayMesh::888304580424710996::1736715447::0::1::::<><>::uid://bdfe44h4mt62f
+SM_Grass.default.material::StandardMaterial3D::2607605294697036879::1736715447::0::1::::<><>::
+::res://Assets/POLY- Lite Survival Forest/Prefab/::1736715429
+SM_Birch_03_Green.prefab.scn::PackedScene::5895866458975413701::1736715450::0::1::::<><>::uid://bqcbavwgkh4ae<>uid://b3gwshg21q7lv<>uid://cw10focvbd0k<>uid://b4pxbewr4smjr
+SM_Maple_Red.prefab.scn::PackedScene::7072829822970007459::1736715450::0::1::::<><>::uid://ba8laossby6r6<>uid://cxryniyj3gnph<>uid://cw10focvbd0k
+SM_Grass.prefab.scn::PackedScene::5226108378315022986::1736715450::0::1::::<><>::uid://mwkineugppq7<>uid://bbwimumq25gbl
+SM_Maple_Green_Yellow.prefab.scn::PackedScene::8964314687143577407::1736715450::0::1::::<><>::uid://ba8laossby6r6<>uid://erb66lev5jge<>uid://cw10focvbd0k
+SM_Maple_Green.prefab.scn::PackedScene::8226439356431697243::1736715450::0::1::::<><>::uid://ba8laossby6r6<>uid://erb66lev5jge<>uid://cw10focvbd0k
+SM_Large_Rock_Round_05.prefab.scn::PackedScene::7849782185643736560::1736715450::0::1::::<><>::uid://dnnlk8h7ohyxm<>uid://cswmeluugkk5f
+SM_Birch_03_Green_Yellow.prefab.scn::PackedScene::4389164194428158254::1736715450::0::1::::<><>::uid://bqcbavwgkh4ae<>uid://b3gwshg21q7lv<>uid://cw10focvbd0k<>uid://d06smtn7jbpob
+SM_Birch_03_Red.prefab.scn::PackedScene::6832492209430773269::1736715450::0::1::::<><>::uid://bqcbavwgkh4ae<>uid://crahyg0yxi3l1<>uid://cw10focvbd0k<>uid://b4pxbewr4smjr
+::res://Assets/POLY- Lite Survival Forest/Scene/::1736715429
+Demo.scn::PackedScene::833098679444292069::1736715467::0::1::::<><>::uid://l5wwd3orque4<>uid://cgptihd3ennos<>uid://b3se5mlfgpxes<>uid://dj3q1bgiuhnrc<>uid://dpg7iv8dym5gx<>uid://c4lyfbuwx8dy8<>uid://cqaacaodv64qj<>uid://cxhcd7uncktpk<>uid://ca0nsvjb4pr68<>uid://by8bxd6vbp6m8
+::res://Assets/POLY- Lite Survival Forest/Terrain/::1736715429
+New Terrain.terrain.terrain.material::ShaderMaterial::2792672034438582740::1736715453::0::1::::<><>::uid://dt04xp6wptn8y<>uid://cjvt2x81e14qb
+New Terrain.terrain.terrain.mesh::ArrayMesh::1106520304814560197::1736715454::0::1::::<><>::uid://bf115u4bgxb7y
+New Terrain.terrain.terrain.shape::ConcavePolygonShape3D::4139179393557523357::1736715454::0::1::::<><>::
+New Terrain.terrain.splatmap.res::ImageTexture::4879326666128631001::1736715454::0::1::::<><>::
+New Terrain.terrain.scn::PackedScene::4825273393412340907::1736715454::0::1::::<><>::uid://p1ah0jyc2hov
+::res://Assets/POLY- Lite Survival Forest/Terrain/TerrainLayer/::1736715429
+LiteGrassLayer.terrainlayer.res::StandardMaterial3D::4386767643398427951::1736715446::0::1::::<><>::uid://dt04xp6wptn8y
+LiteDirtLayer.terrainlayer.res::StandardMaterial3D::1417828526836026973::1736715446::0::1::::<><>::uid://cjvt2x81e14qb
+::res://Assets/POLY- Lite Survival Forest/Textures/::1736715430
+Birch_green_M.png::CompressedTexture2D::1708973459580068433::1736715429::1736715444::1::::<><>::
+Birch_red_M.png::CompressedTexture2D::5515720729058937698::1736715429::1736715444::1::::<><>::
+Dirt.png::CompressedTexture2D::5449095992465065253::1736715429::1736715443::1::::<><>::
+Foam.png::CompressedTexture2D::5630253676572080649::1736715429::1736715443::1::::<><>::
+Grass.png::CompressedTexture2D::8546262226863029302::1736715429::1736715443::1::::<><>::
+Grass_Normal.png::CompressedTexture2D::806394096291382324::1736715429::1736715443::1::::<><>::
+Grass_simple.png::CompressedTexture2D::5818198761568555620::1736715429::1736715444::1::::<><>::
+Grass_simple_v2.png::CompressedTexture2D::4668052078199609238::1736715429::1736715444::1::::<><>::
+Maple_Green_M.png::CompressedTexture2D::7998278569815538621::1736715429::1736715444::1::::<><>::
+Maple_red_M.png::CompressedTexture2D::2025028252974885514::1736715430::1736715444::1::::<><>::
+Poly_Texture.png::CompressedTexture2D::3838861513657255620::1736715429::1736715443::1::::<><>::
+Small_Rocks.png::CompressedTexture2D::7595518428622384234::1736715430::1736715443::1::::<><>::
+Tree_01.png::CompressedTexture2D::3270819484961434688::1736715429::1736715443::1::::<><>::
+Tree_02.png::CompressedTexture2D::4758042525340601499::1736715429::1736715443::1::::<><>::
+water-normal.png::CompressedTexture2D::3597974511831269257::1736715429::1736715443::1::::<><>::

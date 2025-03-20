@@ -7,9 +7,8 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : NetworkSingleton<GameManager>
 {
-    [SerializeField]
-    private NetworkVariable<GameState> gameState = new (GameState.PREPARE);
-    public GameState GameState => gameState.Value;
+    private NetworkVariable<GameState> net_gameState = new ();
+    public GameState GameState => net_gameState.Value;
     
     public event EventHandler<GameStateChangedArgs> GameStateChanged;
     public class GameStateChangedArgs : EventArgs
@@ -18,10 +17,10 @@ public class GameManager : NetworkSingleton<GameManager>
     }
     
     [SerializeField] 
-    private InputActionReference moveAction;
+    private InputActionReference m_moveAction;
     
-    public NetworkVariable<List<ulong>> playersIds = new (new List<ulong>());
-    public List<Player> players = new List<Player>();
+    private NetworkVariable<List<ulong>> net_playerInGame = new (new List<ulong>());
+    public ulong[] InGamePlayers => net_playerInGame.Value.ToArray();
     
     [SerializeField]
     private int m_maxPlayers = 4;
@@ -33,29 +32,22 @@ public class GameManager : NetworkSingleton<GameManager>
     protected XRInteractionManager m_interactionManager;
     public XRInteractionManager InteractionManager => m_interactionManager;
     
-    public Game game;
-    public Round round;
-    public Turn turn;
-    
+    public Game Game { get; }
+    public Round Round { get; }
+    public Turn Turn { get; }
+
     public override void OnNetworkSpawn()
     {
-        playersIds.OnValueChanged += OnPlayersIdsValueChanged;
-        gameState.OnValueChanged += OnGameStateChanged;
-        GameStateChanged?.Invoke(this, new GameStateChangedArgs { State = gameState.Value});
+        net_playerInGame.OnValueChanged += OnPlayersIdsValueChanged;
+        net_gameState.OnValueChanged += OnGameStateChanged;
+        GameStateChanged?.Invoke(this, new GameStateChangedArgs { State = net_gameState.Value});
     }
     
     private void OnPlayersIdsValueChanged(List<ulong> _, List<ulong> newPlayerList)
     {
-        if (gameState.Value != GameState.PREPARE)
+        if (net_gameState.Value != GameState.PREPARE)
         {
             return;
-        }
-
-        players.Clear();
-        
-        foreach (var id in newPlayerList)
-        {
-            players.Add(PlayerManager.Instance.Player[id]);
         }
         
         if (!NetworkManager.Singleton.IsServer)
@@ -63,12 +55,12 @@ public class GameManager : NetworkSingleton<GameManager>
             return;
         }
 
-        if (players.Count < m_minPlayers)
+        if (net_playerInGame.Value.Count < m_minPlayers)
         {
             return;
         }
 
-        if (players.Count >= m_maxPlayers || players.Count == NetworkManager.Singleton.ConnectedClients.Count)
+        if (net_playerInGame.Value.Count >= m_maxPlayers || net_playerInGame.Value.Count == NetworkManager.Singleton.ConnectedClients.Count)
         {
             StartGame();
         }
@@ -76,7 +68,7 @@ public class GameManager : NetworkSingleton<GameManager>
     
     private void StartGame()
     {
-        gameState.Value = GameState.IN_PROGRESS;
+        net_gameState.Value = GameState.IN_PROGRESS;
     }
     
     private void OnGameStateChanged(GameState _, GameState value)
@@ -86,15 +78,15 @@ public class GameManager : NetworkSingleton<GameManager>
         switch (value)
         {
             case GameState.PREPARE: 
-                moveAction.action.Enable();
+                m_moveAction.action.Enable();
                 break;
             
             case GameState.IN_PROGRESS:
-                moveAction.action.Disable();
+                m_moveAction.action.Disable();
                 break;
             
             case GameState.FINISHED:
-                moveAction.action.Enable();
+                m_moveAction.action.Enable();
                 break;
             
             default:
@@ -105,13 +97,13 @@ public class GameManager : NetworkSingleton<GameManager>
     [Rpc(SendTo.Server)]
     public void AddPlayerRpc(ulong player)
     {
-        playersIds.Value.Add(player);
-        playersIds.CheckDirtyState();
+        net_playerInGame.Value.Add(player);
+        net_playerInGame.CheckDirtyState();
     }
     
     [Rpc(SendTo.Server)]
     public void EndGameRpc()
     {
-        gameState.Value = GameState.FINISHED;
+        net_gameState.Value = GameState.FINISHED;
     }
 }

@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Unity.Netcode;
-using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
-using UnityEngine.XR.Interaction.Toolkit.Interactables;
-using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using Random = UnityEngine.Random;
 
 public class Gun : NetworkItem
@@ -25,26 +21,26 @@ public class Gun : NetworkItem
     [SerializeField] 
     private LayerMask m_layermask;
     
-    private NetworkVariable<List<bool>> ammo = new (new List<bool>());
+    private NetworkVariable<List<bool>> _ammo = new (new List<bool>());
     
     public event EventHandler AmmoChanged;
     
     public override void OnNetworkSpawn()
     {
-        ammo.OnValueChanged += (_, __) => AmmoChanged?.Invoke(null, null);
+        _ammo.OnValueChanged += (_, __) => AmmoChanged?.Invoke(null, null);
     }
     
     [Rpc(SendTo.Server)]
     public void ChangeMagazineRpc()
     {
-        ammo.Value.Clear();
+        _ammo.Value.Clear();
 
         for (var i = 0; i < Random.Range(m_minAmmo, m_maxAmmo); i++)
         {
-            ammo.Value.Add(Random.Range(0, 2) == 1);
+            _ammo.Value.Add(Random.Range(0, 2) == 1);
         }
 
-        ammo.CheckDirtyState();
+        _ammo.CheckDirtyState();
     }
 
     public void PullTrigger()
@@ -87,35 +83,36 @@ public class Gun : NetworkItem
             return;
         }
         
-        var isBulletLive = ammo.Value[0];
-        RemoveFirstBullet();
+        var isBulletLive = _ammo.Value[0];
+        _ammo.Value.RemoveAt(0);
+        _ammo.CheckDirtyState();
         
         if (isBulletLive)
         {
-            PlayerManager.Instance.Player[target].DealDamageRpc(1);
+            PlayerManager.Instance.ById(target).DealDamageRpc(1);
             m_shootParticles.time = 0;
             m_shootParticles.Play();
         }
 
-        if (isBulletLive || !GameManager.Instance.turn.IsPlayerTurn(target))
+        if (isBulletLive || !GameManager.Instance.Turn.IsPlayerTurn(target))
         {
-            GameManager.Instance.turn.NextTurnRpc();
+            GameManager.Instance.Turn.NextTurnRpc();
         }
         
         if (IsMagazineEmpty())
         {
-            GameManager.Instance.round.StartRoundRpc();
+            GameManager.Instance.Round.StartRoundRpc();
         }
     }
 
     private bool IsMagazineEmpty()
     {
-        return ammo.Value.Count == 0;
+        return _ammo.Value.Count == 0;
     }
 
     public bool[] Magazine()
     {
-        return ammo.Value.ToArray();
+        return _ammo.Value.ToArray();
     }
 
     public void RemoveFirstBullet()

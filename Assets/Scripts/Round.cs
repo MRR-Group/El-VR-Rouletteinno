@@ -1,17 +1,16 @@
 using System;
 using Unity.Netcode;
-using UnityEngine;
 
 public class Round : NetworkBehaviour
 {
     public event EventHandler RoundStared;
-    
-    public Gun gun;
+
+    public Gun Gun { get; }
 
     [Rpc(SendTo.Server)]
     public void StartRoundRpc()
     {
-        gun.ChangeMagazineRpc();
+        Gun.ChangeMagazineRpc();
         InvokeRoundStartedEventRpc();
     }
 
