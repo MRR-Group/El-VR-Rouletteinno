@@ -21,8 +21,11 @@ public class GameManager : NetworkSingleton<GameManager>
     public NetworkVariable<List<ulong>> playersIds = new (new List<ulong>());
     public List<Player> players = new List<Player>();
     
-    private const int MAX_PLAYERS = 4;
-    private const int MIN_PLAYERS = 2;
+    [SerializeField]
+    private int m_maxPlayers = 4;
+    
+    [SerializeField]
+    private int m_minPlayers = 2;
 
     public Game game;
     public Round round;
@@ -53,12 +56,12 @@ public class GameManager : NetworkSingleton<GameManager>
             return;
         }
 
-        if (players.Count < MIN_PLAYERS)
+        if (players.Count < m_minPlayers)
         {
             return;
         }
 
-        if (players.Count >= MAX_PLAYERS || players.Count == NetworkManager.Singleton.ConnectedClients.Count)
+        if (players.Count >= m_maxPlayers || players.Count == NetworkManager.Singleton.ConnectedClients.Count)
         {
             StartGame();
         }

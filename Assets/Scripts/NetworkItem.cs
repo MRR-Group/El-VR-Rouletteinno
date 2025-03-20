@@ -1,6 +1,7 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
@@ -11,7 +12,8 @@ public abstract class NetworkItem : NetworkBehaviour
 {
     protected Rigidbody rb;
     protected XRGrabInteractable interactable;
-
+    protected NetworkObject networkObject;
+    
     [SerializeField]
     protected Transform m_spawnPoint;
     
@@ -27,12 +29,18 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         interactable = GetComponent<XRGrabInteractable>();
         rb = GetComponent<Rigidbody>();
+        networkObject = GetComponent<networkObject>();
     }
-
     protected void Start()
     {
-        interactable.selectEntered.AddListener((_) => HandleGrab());
-        interactable.selectExited.AddListener((_) => HandleDrop());
+        interactable.selectEntered.AddListener(HandleGrab);
+        interactable.selectExited.AddListener(HandleDrop);
+    }
+    
+    public override void OnDestroy()
+    {
+        interactable.selectEntered.RemoveListener(HandleGrab);
+        interactable.selectExited.RemoveListener(HandleDrop);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -82,7 +90,7 @@ public abstract class NetworkItem : NetworkBehaviour
         m_interactionManager.SelectExit(interactable.firstInteractorSelecting, interactable);
     }
 
-    protected void HandleDrop()
+    protected void HandleDrop(SelectExitEventArgs _)
     {
         Debug.Log("Dropped");
         isGrabbed = false;
@@ -100,10 +108,11 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.turn.IsClientTurn();
     }
-
-    public void DestroyItem()
+    
+    [Rpc(SendTo.Server)]
+    public void DestroyItemRpc()
     {
-        Destroy(rb.gameObject);
+        networkObject.Despawn();
     }
     
     public abstract void Use(ulong target);
