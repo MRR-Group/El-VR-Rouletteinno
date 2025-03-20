@@ -3,16 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Game : NetworkBehaviour
 {
     public event EventHandler Win;
-    private NetworkVariable<Dictionary<ulong, uint>> wins = new(new Dictionary<ulong, uint>());
-    public NetworkVariable<List<ulong>> players = new(new List<ulong>());
+    private NetworkVariable<Dictionary<ulong, uint>> _wins = new(new Dictionary<ulong, uint>());
+    private NetworkVariable<List<ulong>> net_alivePlayers = new(new List<ulong>());
+
+    [SerializeField]
+    private int m_minAlivePlayers = 2;
+
+    [SerializeField]
+    private bool m_disableAliveChecker = false;
+    
+    public Player GetRandomPlayer(ulong[] excludedPlayers)
+    {
+        var players = net_alivePlayers.Value.FindAll((id) => !excludedPlayers.Contains(id));
+        var id = players[Random.Range(0, players.Count)];
+        
+        return PlayerManager.Instance.ById(id);
+    }
+    
+    
+    public ulong GetNextPlayer(ulong currentPlayer)
+    {
+        var players = net_alivePlayers.Value;
+        var index = players.IndexOf(currentPlayer);
+        var next = index + 1 >= players.Count ? 0 : index + 1;
+
+        return players[next];
+    }
+
+    public bool ShouldEndGame()
+    {
+        return net_alivePlayers.Value.Count <= m_minAlivePlayers && !m_disableAliveChecker;
+    }
 
     public override void OnNetworkSpawn()
     {
-        wins.OnValueChanged += OnWinsChanged;
+        _wins.OnValueChanged += OnWinsChanged;
         GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
     }
 
@@ -32,17 +62,17 @@ public class Game : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void StartGameRpc()
     {
-        ResetPlayerQueue();
+        ResetPlayerQueue(GameManager.Instance.InGamePlayers);
         
-        GameManager.Instance.round.StartRoundRpc();
+        GameManager.Instance.Round.StartRoundRpc();
     }
     
-    private void ResetPlayerQueue()
+    private void ResetPlayerQueue(ulong[] participants)
     {
-        players.Value = new List<ulong>(GameManager.Instance.playersIds.Value);
-        players.CheckDirtyState();
+        net_alivePlayers.Value = new List<ulong>(participants);
+        net_alivePlayers.CheckDirtyState();
         
-        foreach (var player in GameManager.Instance.players)
+        foreach (var player in PlayerManager.Instance.ByIds(net_alivePlayers.Value.ToArray()))
         {
             player.ResetHealthRpc();
         }
@@ -51,12 +81,12 @@ public class Game : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PlayerWinGameRpc(ulong player)
     {
-        if (!wins.Value.TryAdd(player, 1))
+        if (_wins.Value.TryAdd(player, 1))
         {
-            wins.Value[player] += 1;
+            _wins.Value[player] += 1;
         }
 
-        wins.CheckDirtyState();
+        _wins.CheckDirtyState();
 
         StartGameRpc();
 
@@ -68,18 +98,18 @@ public class Game : NetworkBehaviour
     
     private bool IsGameOver()
     {
-        return wins.Value.Any(win => win.Value >= 2);
+        return _wins.Value.Any(win => win.Value >= 2);
     }
     
     [Rpc(SendTo.Server)]
     public void RemoveDeadPlayerRpc(ulong player)
     {
-        players.Value.Remove(player);
-        players.CheckDirtyState();
+        net_alivePlayers.Value.Remove(player);
+        net_alivePlayers.CheckDirtyState();
     }
 
     public uint GetPlayerWins(ulong player)
     {
-        return wins.Value.TryGetValue(player, out var value) ? value : 0;
+        return _wins.Value.TryGetValue(player, out var value) ? value : 0;
     }
 }
