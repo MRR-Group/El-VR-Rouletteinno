@@ -22,7 +22,7 @@ public class Vape : NetworkItem
         }
         
         HealPlayer(target);
-        DestroyItemRpc();
+        DestroyItemRpc(); 
     }
     
     private void HealPlayer(ulong target)

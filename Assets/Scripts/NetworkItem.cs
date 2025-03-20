@@ -29,7 +29,7 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         interactable = GetComponent<XRGrabInteractable>();
         rb = GetComponent<Rigidbody>();
-        networkObject = GetComponent<networkObject>();
+        networkObject = GetComponent<NetworkObject>();
     }
     protected void Start()
     {
@@ -73,7 +73,7 @@ public abstract class NetworkItem : NetworkBehaviour
         TeleportToSpawnRpc();
     }
 
-    protected void HandleGrab()
+    protected void HandleGrab(SelectEnterEventArgs _)
     {
         Debug.Log("Grabed");
         

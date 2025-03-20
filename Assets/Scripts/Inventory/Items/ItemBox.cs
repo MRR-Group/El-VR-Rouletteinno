@@ -7,7 +7,7 @@ public class ItemBox : NetworkItem
     public override void Use(ulong target)
     {
         if (!CanUse()) return;
-        DestroyItem();
+        DestroyItemRpc();
     }
 
     public void Use()
