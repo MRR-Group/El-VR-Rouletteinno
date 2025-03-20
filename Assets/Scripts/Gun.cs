@@ -69,7 +69,6 @@ public class Gun : NetworkItem
         if (CanUse())
         {
             ShootRpc(target);
-            ForceDrop();
         }
     }
 
