@@ -18,6 +18,7 @@ namespace XRMultiplayer
         public void Open()
         {
             isOpen = true;
+            Invoke(nameof(Close), 10f);
         }
 
         public void Close()
