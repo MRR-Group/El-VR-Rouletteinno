@@ -66,7 +66,7 @@ public class Inventory : NetworkBehaviour
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
         box.SetInventoryRpc(InventoryId);
-        
+        net_hasUnusedItemBox.Value = true;
     }
     
     [Rpc(SendTo.Server)]
@@ -88,7 +88,6 @@ public class Inventory : NetworkBehaviour
         
         slot.OccupyRpc();
         item.SetSpawnPointRpc(slot.SpawnPoint.position);
-        net_hasUnusedItemBox.Value = true;
     }
 
     [Rpc(SendTo.Server)]
