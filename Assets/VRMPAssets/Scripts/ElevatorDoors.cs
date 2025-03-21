@@ -25,6 +25,18 @@ namespace XRMultiplayer
             isOpen = false;
         }
 
+        public void OpenOrClose()
+        {
+            if (isOpen)
+            {
+                Close();
+            }
+            else
+            {
+                Open();
+            }
+        }
+
         void Start()
         {
             startPositionLeft = m_leftDoor.position;
