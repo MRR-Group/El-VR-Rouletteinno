@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8566614594258656198}
+  - component: {fileID: 7564227804069036647}
   m_Layer: 0
   m_Name: Slot
   m_TagString: Untagged
@@ -33,6 +34,20 @@ Transform:
   - {fileID: 1634206390621667964}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7564227804069036647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2348380339346249791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba08012f89c7efc46a9ed5a78a47cbf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Item: {fileID: 0}
+  m_spawnPoint: {fileID: 1634206390621667964}
 --- !u!1 &6720626674226232426
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 8817812822438935734}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.962, y: 0, z: -3.994}
+  m_LocalPosition: {x: 2.962, y: -0.078, z: -3.994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

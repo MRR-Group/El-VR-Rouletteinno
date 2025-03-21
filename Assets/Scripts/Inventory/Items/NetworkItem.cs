@@ -22,7 +22,7 @@ public abstract class NetworkItem : NetworkBehaviour
     
     private const string ITEM_BOX_TAG = "ItemBox";
 
-    private bool _isInBox = false;
+    private bool _isInBox;
     private bool _isGrabbed;
     
     protected void Awake()
@@ -35,6 +35,7 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         _interactable.selectEntered.AddListener(HandleGrab);
         _interactable.selectExited.AddListener(HandleDrop);
+        _interactable.interactionManager = GameManager.Instance.InteractionManager;
     }
     
     public override void OnDestroy()
@@ -110,6 +111,11 @@ public abstract class NetworkItem : NetworkBehaviour
     public void DestroyItemRpc()
     {
         _networkObject.Despawn();
+    }
+
+    public void SetSpawnPoint(Transform spawnPoint)
+    {
+        m_spawnPoint = spawnPoint;
     }
     
     public abstract void Use(ulong target);
