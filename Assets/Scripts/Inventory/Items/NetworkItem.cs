@@ -54,7 +54,13 @@ public abstract class NetworkItem : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (NetworkManager.Singleton.IsClient)
+        {
+            return;
+        }
+        
         net_usages.Value = m_usages;
+        
         if (m_startingSpawnPoint != null)
         {
             net_spawnPoint.Value = m_startingSpawnPoint.position;
