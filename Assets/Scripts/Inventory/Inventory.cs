@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -39,14 +38,20 @@ public class Inventory : MonoBehaviour
         {
             return;
         }
-        Debug.Log(itemPrefab);
-        //var item = NetworkManager.Singleton.SpawnManager.InstantiateAndSpawn(itemPrefab).GetComponent<NetworkItem>();
-        var instance = Instantiate(NetworkManager.Singleton.GetNetworkPrefabOverride(itemPrefab.gameObject));
+        
+        var instance = Instantiate(itemPrefab, slot.SpawnPoint.position + new Vector3(0, 0.1f, 0),  Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
         var item = instance.GetComponent<NetworkItem>();
+        
         slot.Item = item;
         item.SetSpawnPoint(slot.SpawnPoint);
+    }
+
+    [Rpc(SendTo.Server)]
+    private void spawnItem()
+    {
+        
     }
 
     public void SpawnRandomItems()
