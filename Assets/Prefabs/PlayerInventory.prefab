@@ -76,6 +76,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  m_ItemBoxSpawnPoint: {fileID: 6837025054977075960}
+  m_itemBoxPrefab: {fileID: 6125339640637350104, guid: 3e0ac19e9a6a48a4cbe6b71933b7bc4f,
+    type: 3}
+  m_chair: {fileID: 0}
 --- !u!1 &3376673998093851301
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +158,7 @@ Transform:
   m_GameObject: {fileID: 4819076319086877220}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.56, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

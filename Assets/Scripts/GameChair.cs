@@ -9,7 +9,7 @@ public class GameChair : NetworkBehaviour
     
     private NetworkVariable<bool> net_isFree = new (true);
     private NetworkVariable<ulong> net_playerId = new ();
-
+    
     public bool IsFree => net_isFree.Value;
     public Player Player => IsFree ? null : PlayerManager.Instance.ById(net_playerId.Value);
     

@@ -9,6 +9,8 @@ public class Player : NetworkBehaviour
 
     private NetworkVariable<int> net_health = new ();
 
+    public Inventory Inventory { get; set; }
+    
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
     {
@@ -20,11 +22,6 @@ public class Player : NetworkBehaviour
     
     public int Health => net_health.Value;
 
-    public void Awake()
-    {
-        net_health.Value = m_maxHealth;
-    }
-
     public bool IsCurrentPlayer()
     {
         return PlayerId == NetworkManager.Singleton.LocalClientId;
@@ -32,6 +29,11 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        if (NetworkManager.IsServer)
+        {
+            net_health.Value = m_maxHealth;
+        }
+
         PlayerManager.Instance.RegisterPlayer(PlayerId, this);
         net_health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
     }

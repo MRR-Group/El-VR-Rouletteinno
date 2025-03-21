@@ -5,12 +5,19 @@ using UnityEngine;
 
 public class ItemBox : NetworkItem
 {
-    [SerializeField]
-    private Inventory m_inventory;
+    private NetworkVariable<int> net_inventory = new ();
+
+    public Inventory Inventory => GameManager.Instance.GetInventory(net_inventory.Value);
     
+    [Rpc(SendTo.Server)]
+    public void SetInventoryRpc(int inventory)
+    {
+        net_inventory.Value = inventory;
+    }
+
     public override bool Use()
     {
-        m_inventory.SpawnRandomItemsRpc();
+        Inventory.SpawnRandomItemsRpc();
 
         return true;
     }

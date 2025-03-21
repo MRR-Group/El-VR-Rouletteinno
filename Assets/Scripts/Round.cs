@@ -13,7 +13,7 @@ public class Round : NetworkBehaviour
     [MinMaxRange(0, 6)]
     [SerializeField] 
     private Vector2Int m_itemCountRange = new (2, 6);
-
+    
     public int CurrentItemCount { get; private set; }
 
     public void ItemsCountToGenerate()
@@ -26,9 +26,10 @@ public class Round : NetworkBehaviour
     {
         ItemsCountToGenerate();
         Gun.ChangeMagazineRpc();
+        
         InvokeRoundStartedEventRpc();
     }
-
+    
     [Rpc(SendTo.Everyone)]
     private void InvokeRoundStartedEventRpc()
     {

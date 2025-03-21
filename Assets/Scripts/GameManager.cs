@@ -1,15 +1,30 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class GameManager : NetworkSingleton<GameManager>
 {
     private NetworkVariable<GameState> net_gameState = new ();
     public GameState GameState => net_gameState.Value;
-    
+
+    [SerializeField]
+    private List<Inventory> m_inventories;
+
+    public Inventory GetInventory(int index)
+    {
+        return m_inventories[index];
+    }
+
+    public int GetInventoryId(Inventory inventory)
+    {
+        return m_inventories.IndexOf(inventory);
+    }
+
     public event EventHandler<GameStateChangedArgs> GameStateChanged;
     public class GameStateChangedArgs : EventArgs
     {
@@ -20,6 +35,7 @@ public class GameManager : NetworkSingleton<GameManager>
     private InputActionReference m_moveAction;
     
     private NetworkVariable<List<ulong>> net_playerInGame = new (new List<ulong>());
+    
     public ulong[] InGamePlayers => net_playerInGame.Value.ToArray();
     
     [SerializeField]

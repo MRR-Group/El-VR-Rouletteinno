@@ -7,11 +7,29 @@ using Random = UnityEngine.Random;
 public class Inventory : NetworkBehaviour
 {
     private List<Slot> _slots;
-    
 
+    [SerializeField]
+    private Transform m_ItemBoxSpawnPoint;
+    
+    [SerializeField]
+    private ItemBox m_itemBoxPrefab;
+    
+    [SerializeField]
+    private GameChair m_chair;
+    public GameChair Chair => m_chair;
+
+    public int InventoryId => GameManager.Instance.GetInventoryId(this);
+    
     private void Awake()
     {
         _slots = GetComponentsInChildren<Slot>().ToList();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+
+        GameManager.Instance.Round.RoundStared += (sender, args) => SpawnItemBoxRpc();
     }
 
     public List<Slot> GetSlots()
@@ -28,6 +46,23 @@ public class Inventory : NetworkBehaviour
     {
         var freeSlots = from _slot in _slots where _slot.IsFree select _slot ;
         return freeSlots.FirstOrDefault();
+    }
+    
+    [Rpc(SendTo.Server)]
+    private void SpawnItemBoxRpc()
+    {
+        if (m_chair.IsFree || m_chair.Player.IsDead())
+        {
+            return;
+        }
+        
+        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(m_itemBoxPrefab.gameObject), m_ItemBoxSpawnPoint.position,  Quaternion.identity);
+        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
+        instanceNetworkObject.Spawn();
+        var box = instance.GetComponent<ItemBox>();
+
+        box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
+        box.SetInventoryRpc(InventoryId);
     }
     
     [Rpc(SendTo.Server)]
@@ -82,4 +117,6 @@ public class Inventory : NetworkBehaviour
         
         return randomItems.ToArray();
     }
+    
+    
 }

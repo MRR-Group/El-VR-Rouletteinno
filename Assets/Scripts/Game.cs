@@ -20,6 +20,8 @@ public class Game : NetworkBehaviour
     [SerializeField]
     private int m_maxWins;
     public int MaxWins => m_maxWins;
+
+    public ulong[] AlivePlayers => net_alivePlayers.Value.ToArray();
     
     public Player GetRandomPlayer(ulong[] excludedPlayers)
     {
