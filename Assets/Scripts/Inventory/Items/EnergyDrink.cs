@@ -3,23 +3,15 @@ using Unity.Netcode;
 
 public class EnergyDrink : NetworkItem
 {
-    
-    public void Use()
+    protected override bool CanUse()
     {
-        Use(NetworkManager.Singleton.LocalClientId);
+        return base.CanUse() && !GameManager.Instance.Round.Gun.IsMagazineEmpty();
     }
-    
-    public override void Use(ulong target)
+
+    public override bool Use()
     {
-        
-        if (!CanUse())
-        {
-            return;
-        }
-        GameManager.Instance.Round.Gun.RemoveCurrentBullet();
-        
-        Debug.Log("Use EnergyDrink");
-        
-        DestroyItemRpc(); 
+        GameManager.Instance.Round.Gun.SkipCurrentBulletRpc();
+
+        return true;
     }
 }

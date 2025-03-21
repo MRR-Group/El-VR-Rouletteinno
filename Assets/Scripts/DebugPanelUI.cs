@@ -68,12 +68,12 @@ public class DebugPanelUI : MonoBehaviour
 
         if (target)
         {
-            m_gun.Use(target.PlayerId);
+            m_gun.Use(target);
         }
     }
     
     public void ShootSelf()
     {
-        m_gun.Use(NetworkManager.Singleton.LocalClientId);
+        m_gun.Use(PlayerManager.Instance.Client());
     }
 }

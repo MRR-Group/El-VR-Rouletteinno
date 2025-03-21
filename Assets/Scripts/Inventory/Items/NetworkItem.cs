@@ -15,6 +15,7 @@ public abstract class NetworkItem : NetworkBehaviour
 {
     protected Rigidbody _rigidbody;
     protected XRGrabInteractable _interactable;
+    protected NetworkPhysicsInteractable _physicsInteractable;
     protected NetworkObject _networkObject;
     
     [SerializeField]
@@ -22,26 +23,43 @@ public abstract class NetworkItem : NetworkBehaviour
     
     private const string ITEM_BOX_TAG = "ItemBox";
 
-    private bool _isInBox;
-    private bool _isGrabbed;
+    protected bool _isInBox;
+    protected bool _isInUse;
+    protected bool _isGrabbed;
     
-    protected void Awake()
+    [SerializeField]
+    protected int m_usages = 1;
+    
+    protected NetworkVariable<int> net_usages = new();
+    
+    [SerializeField]
+    protected bool m_isIndestructible;
+    
+    protected virtual void Awake()
     {
         _interactable = GetComponent<XRGrabInteractable>();
+        _physicsInteractable = GetComponent<NetworkPhysicsInteractable>();
         _rigidbody = GetComponent<Rigidbody>();
         _networkObject = GetComponent<NetworkObject>();
     }
-    protected void Start()
+    protected virtual void Start()
     {
         _interactable.selectEntered.AddListener(HandleGrab);
         _interactable.selectExited.AddListener(HandleDrop);
         _interactable.interactionManager = GameManager.Instance.InteractionManager;
+        _physicsInteractable.ActivateNetworkedEventAll.AddListener(Network_OnActivate);
     }
-    
+
+    public override void OnNetworkSpawn()
+    {
+        net_usages.Value = m_usages;
+    }
+
     public override void OnDestroy()
     {
         _interactable.selectEntered.RemoveListener(HandleGrab);
         _interactable.selectExited.RemoveListener(HandleDrop);
+        _physicsInteractable.ActivateNetworkedEventAll.RemoveListener(Network_OnActivate);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -102,9 +120,59 @@ public abstract class NetworkItem : NetworkBehaviour
         _rigidbody.MoveRotation(Quaternion.identity);
     }
     
-    protected bool CanUse()
+    public void SetSpawnPoint(Transform spawnPoint)
+    {
+        m_spawnPoint = spawnPoint;
+    }
+
+    protected virtual void Network_OnActivate(bool isActive)
+    {
+        _isInUse = isActive;
+
+        if (!isActive)
+        {
+            return;
+        }
+
+        if (!CanUse())
+        {
+            ForceDrop();
+            
+            return;
+        }
+
+        if (!Use())
+        {
+            return;
+        }
+        
+        if (m_isIndestructible)
+        {
+            ForceDrop();
+        }
+        else
+        {
+            DecrementUsagesRpc();
+        }
+        
+        if (net_usages.Value <= 0)
+        {
+            DestroyItemRpc();
+        }
+    }
+    
+    protected virtual bool CanUse()
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.Turn.IsClientTurn();
+    }
+
+    [Rpc(SendTo.Server)]
+    protected void DecrementUsagesRpc()
+    {
+        if (!m_isIndestructible)
+        {
+            net_usages.Value -= 1;
+        }
     }
     
     [Rpc(SendTo.Server)]
@@ -113,10 +181,5 @@ public abstract class NetworkItem : NetworkBehaviour
         _networkObject.Despawn();
     }
 
-    public void SetSpawnPoint(Transform spawnPoint)
-    {
-        m_spawnPoint = spawnPoint;
-    }
-    
-    public abstract void Use(ulong target);
+    public abstract bool Use();
 }

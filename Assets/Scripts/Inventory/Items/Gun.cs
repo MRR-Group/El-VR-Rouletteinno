@@ -4,22 +4,16 @@ using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Gun : NetworkItem
+public class Gun : TargetableItem<Player>
 {
     [SerializeField]
     private uint m_maxAmmo = 6;
 
     [SerializeField]
     private uint m_minAmmo = 2;
-
-    [SerializeField]
-    private Transform m_raycastStart;
     
     [SerializeField]
     private ParticleSystem m_shootParticles;
-
-    [SerializeField] 
-    private LayerMask m_layermask;
     
     private NetworkVariable<List<bool>> _ammo = new (new List<bool>());
     
@@ -27,6 +21,8 @@ public class Gun : NetworkItem
     
     public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+        
         _ammo.OnValueChanged += (_, __) => AmmoChanged?.Invoke(null, null);
     }
     
@@ -42,43 +38,18 @@ public class Gun : NetworkItem
 
         _ammo.CheckDirtyState();
     }
+    
+    public override bool Use(Player player)
+    {
+        ShootRpc(player.PlayerId);
 
-    public void PullTrigger()
+        return true;
+    }
+    
+    [Rpc(SendTo.Server)]
+    protected void ShootRpc(ulong target)
     {
         if (!CanUse())
-        {
-            return;
-        }
-        
-        var target = StartRayCast();
-        
-        if (target != null)
-        {
-            ShootRpc(target.PlayerId);
-            ForceDrop();
-        }
-    }
-
-    public override void Use(ulong target)
-    {
-        if (CanUse())
-        {
-            ShootRpc(target);
-        }
-    }
-
-    private Player StartRayCast()
-    {
-        RaycastHit hit;
-        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity, m_layermask);
-
-        return success ? hit.transform?.GetComponentInParent<Player>() : null;
-    }
-
-    [Rpc(SendTo.Server)]
-    private void ShootRpc(ulong target)
-    {
-        if (IsMagazineEmpty())
         {
             return;
         }
@@ -90,8 +61,7 @@ public class Gun : NetworkItem
         if (isBulletLive)
         {
             PlayerManager.Instance.ById(target).DealDamageRpc(1);
-            m_shootParticles.time = 0;
-            m_shootParticles.Play();
+            EmitParticlesRpc();
         }
 
         if (isBulletLive || !GameManager.Instance.Turn.IsPlayerTurn(target))
@@ -105,7 +75,19 @@ public class Gun : NetworkItem
         }
     }
 
-    private bool IsMagazineEmpty()
+    [Rpc(SendTo.ClientsAndHost)]
+    protected void EmitParticlesRpc()
+    {
+        m_shootParticles.time = 0;
+        m_shootParticles.Play();
+    }
+
+    protected override bool CanUse()
+    {
+        return base.CanUse() && !IsMagazineEmpty();
+    }
+
+    public bool IsMagazineEmpty()
     {
         return _ammo.Value.Count == 0;
     }
@@ -115,9 +97,20 @@ public class Gun : NetworkItem
         return _ammo.Value.ToArray();
     }
 
-    public void RemoveCurrentBullet()
+    [Rpc(SendTo.Server)]
+    public void SkipCurrentBulletRpc()
     {
+        if (IsMagazineEmpty())
+        {
+            return;
+        }
+
         _ammo.Value.RemoveAt(0);
         _ammo.CheckDirtyState();
+        
+        if (IsMagazineEmpty())
+        {
+            GameManager.Instance.Round.StartRoundRpc();
+        }
     }
 }

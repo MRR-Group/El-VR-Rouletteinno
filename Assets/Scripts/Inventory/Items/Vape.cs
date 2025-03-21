@@ -1,31 +1,49 @@
 using UnityEngine;
-using Unity.Netcode;
 
 public class Vape : NetworkItem
 {
     [SerializeField]
-    private int m_healAmout = 1;
+    private int m_healAmount = 1;
     
-    public void Use()
-    {
-        Use(NetworkManager.Singleton.LocalClientId);
-    }
+    [SerializeField]
+    private Material m_ledOnMaterial;
     
-    public override void Use(ulong target)
+    [SerializeField]
+    private Material m_ledOffMaterial;
+    
+    [SerializeField]
+    private Renderer[] m_usageLed;
+    
+    public override void OnNetworkSpawn()
     {
-        var player = PlayerManager.Instance.ById(target);
+        base.OnNetworkSpawn();
         
-        if (!CanUse() || !player.CanBeHealed(m_healAmout))
+        net_usages.OnValueChanged += UpdateLeds;
+    }
+    private void UpdateLeds(int _, int usages)
+    {
+        for (var i = 0; i < m_usages - usages; i++)
         {
-            return;
+            m_usageLed[i].material = m_ledOnMaterial;
         }
         
-        HealPlayer(target);
-        DestroyItemRpc(); 
+        for (var i = usages; i < m_usages; i++)
+        {
+            m_usageLed[i].material = m_ledOffMaterial;
+        }
     }
-    
-    private void HealPlayer(ulong target)
+
+    public override bool Use()
     {
-        PlayerManager.Instance.ById(target).HealRpc(m_healAmout);
+        var player = PlayerManager.Instance.Client();
+        
+        if (!player.CanBeHealed(m_healAmount))
+        {
+            return false;
+        }
+        
+        player.HealRpc(m_healAmount);
+
+        return true;
     }
 }

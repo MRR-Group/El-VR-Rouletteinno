@@ -8,20 +8,10 @@ public class ItemBox : NetworkItem
     [SerializeField]
     private Inventory m_inventory;
     
-    public override void Use(ulong target)
+    public override bool Use()
     {
-        if (!CanUse())
-        {
-            return;
-        }
-
         m_inventory.SpawnRandomItems();
-        
-        DestroyItemRpc();
-    }
 
-    public void Use()
-    {
-        Use(NetworkManager.Singleton.LocalClientId);
+        return true;
     }
 }
