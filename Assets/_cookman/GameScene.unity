@@ -284,7 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Gun: {fileID: 7607204965593957471}
-  m_itemCountRange: {x: 6, y: 6}
+  m_itemCountRange: {x: 4, y: 6}
 --- !u!114 &26018722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -298,9 +298,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_minAlivePlayers: 2
-  m_disableAliveChecker: 1
-  m_maxWins: 0
+  m_minAlivePlayers: 1
+  m_disableAliveChecker: 0
+  m_maxWins: 2
 --- !u!114 &26018723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_moveAction: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   m_maxPlayers: 4
-  m_minPlayers: 1
+  m_minPlayers: 2
   m_interactionManager: {fileID: 685566213}
   Game: {fileID: 26018722}
   Round: {fileID: 26018721}
@@ -1315,6 +1315,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 874452183138526564, guid: 3967f87296c892e40b57e37bc8601550,
+        type: 3}
+      propertyPath: m_NetworkConfig.Prefabs.NetworkPrefabsLists.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 874452183138526564, guid: 3967f87296c892e40b57e37bc8601550,
+        type: 3}
+      propertyPath: 'm_NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 38351d9830627434195e700d51337273,
+        type: 2}
+    - target: {fileID: 874452183138526564, guid: 3967f87296c892e40b57e37bc8601550,
+        type: 3}
+      propertyPath: 'm_NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c6e842cd7704084fa88682fe4e71ae6,
+        type: 2}
+    - target: {fileID: 874452183138526564, guid: 3967f87296c892e40b57e37bc8601550,
+        type: 3}
+      propertyPath: 'm_NetworkConfig.Prefabs.NetworkPrefabsLists.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 7c6e842cd7704084fa88682fe4e71ae6,
+        type: 2}
     - target: {fileID: 4145292139985048678, guid: 3967f87296c892e40b57e37bc8601550,
         type: 3}
       propertyPath: m_RootOrder
