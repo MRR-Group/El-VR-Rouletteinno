@@ -24,14 +24,7 @@ public class Inventory : NetworkBehaviour
     {
         _slots = GetComponentsInChildren<Slot>().ToList();
     }
-
-    public override void OnNetworkSpawn()
-    {
-        base.OnNetworkSpawn();
-
-        GameManager.Instance.Round.RoundStared += (sender, args) => SpawnItemBoxRpc();
-    }
-
+    
     public List<Slot> GetSlots()
     {
         return _slots;
@@ -49,7 +42,7 @@ public class Inventory : NetworkBehaviour
     }
     
     [Rpc(SendTo.Server)]
-    private void SpawnItemBoxRpc()
+    public void SpawnItemBoxRpc()
     {
         if (m_chair.IsFree || m_chair.Player.IsDead())
         {

@@ -28,8 +28,18 @@ public class Round : NetworkBehaviour
         Gun.ChangeMagazineRpc();
         
         InvokeRoundStartedEventRpc();
+
+        foreach (var player in GameManager.Instance.Game.AlivePlayers)
+        {
+            SpawnItemBox(PlayerManager.Instance.ById(player));
+        }
     }
-    
+
+    private void SpawnItemBox(Player player)
+    {
+        player.Inventory.SpawnItemBoxRpc();
+    }
+
     [Rpc(SendTo.Everyone)]
     private void InvokeRoundStartedEventRpc()
     {
