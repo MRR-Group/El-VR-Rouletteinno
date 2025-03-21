@@ -299,7 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_minAlivePlayers: 1
-  m_disableAliveChecker: 0
+  m_disableAliveChecker: 1
   m_maxWins: 2
 --- !u!114 &26018723
 MonoBehaviour:
