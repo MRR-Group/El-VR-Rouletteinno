@@ -18,7 +18,13 @@ public class ItemBox : NetworkItem
     public override bool Use()
     {
         Inventory.SpawnRandomItemsRpc();
-
+        Inventory.MarkItemBoxAsUsedRpc();
+        
         return true;
+    }
+
+    protected override bool CanUse()
+    {
+        return GameManager.Instance.GameState == GameState.IN_PROGRESS;
     }
 }

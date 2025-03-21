@@ -18,6 +18,10 @@ public class Inventory : NetworkBehaviour
     private GameChair m_chair;
     public GameChair Chair => m_chair;
 
+    private NetworkVariable<bool> net_hasUnusedItemBox = new (false);
+    
+    public bool HasUnusedItemBox => net_hasUnusedItemBox.Value;
+    
     public int InventoryId => GameManager.Instance.GetInventoryId(this);
     
     private void Awake()
@@ -40,7 +44,13 @@ public class Inventory : NetworkBehaviour
         var freeSlots = from _slot in _slots where _slot.IsFree select _slot ;
         return freeSlots.FirstOrDefault();
     }
-    
+
+    [Rpc(SendTo.Server)]
+    public void MarkItemBoxAsUsedRpc()
+    {
+        net_hasUnusedItemBox.Value = false;
+    }
+
     [Rpc(SendTo.Server)]
     public void SpawnItemBoxRpc()
     {
@@ -56,6 +66,7 @@ public class Inventory : NetworkBehaviour
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
         box.SetInventoryRpc(InventoryId);
+        
     }
     
     [Rpc(SendTo.Server)]
@@ -77,6 +88,7 @@ public class Inventory : NetworkBehaviour
         
         slot.OccupyRpc();
         item.SetSpawnPointRpc(slot.SpawnPoint.position);
+        net_hasUnusedItemBox.Value = true;
     }
 
     [Rpc(SendTo.Server)]

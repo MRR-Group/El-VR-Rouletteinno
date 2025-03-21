@@ -18,7 +18,7 @@ public class Turn : NetworkBehaviour
     
     public bool IsPlayerTurn(ulong player)
     {
-        return net_currentPlayerTurn.Value == player;
+        return net_currentPlayerTurn.Value == player && GameManager.Instance.Game.AreAllItemBoxesUsed();
     }
 
     [Rpc(SendTo.Server)]

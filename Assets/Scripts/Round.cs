@@ -34,11 +34,8 @@ public class Round : NetworkBehaviour
     [Rpc(SendTo.Server)]
     private void SpawnItemBoxRpc()
     {
-        foreach (var id in GameManager.Instance.Game.AlivePlayers)
+        foreach (var player in PlayerManager.Instance.ByIds(GameManager.Instance.Game.AlivePlayers))
         {
-            var player = PlayerManager.Instance.ById(id);
-            Debug.Log("id: " + id + ", objs: " + player?.gameObject.name);
-            
             player?.Inventory.SpawnItemBoxRpc();
         }
     }

@@ -22,7 +22,13 @@ public class Game : NetworkBehaviour
     public int MaxWins => m_maxWins;
 
     public ulong[] AlivePlayers => net_alivePlayers.Value.ToArray();
-    
+
+    public bool AreAllItemBoxesUsed()
+    {
+        return PlayerManager.Instance.ByIds(net_alivePlayers.Value.ToArray())
+            .All(player => !player.Inventory.HasUnusedItemBox);
+    }
+
     public Player GetRandomPlayer(ulong[] excludedPlayers)
     {
         var players = net_alivePlayers.Value.FindAll((id) => !excludedPlayers.Contains(id));
@@ -49,7 +55,11 @@ public class Game : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         _wins.OnValueChanged += OnWinsChanged;
-        GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
+        }
     }
 
     private void OnWinsChanged(Dictionary<ulong, uint> _, Dictionary<ulong, uint> __)
@@ -69,7 +79,6 @@ public class Game : NetworkBehaviour
     private void StartGameRpc()
     {
         ResetPlayerQueue(GameManager.Instance.InGamePlayers);
-        
         GameManager.Instance.Round.StartRoundRpc();
     }
     
