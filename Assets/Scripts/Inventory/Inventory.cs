@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class Inventory : MonoBehaviour
+public class Inventory : NetworkBehaviour
 {
     private List<Slot> _slots;
     
@@ -26,11 +26,12 @@ public class Inventory : MonoBehaviour
 
     private Slot GetFreeSlot()
     {
-        var freeSlots = from _slot in _slots where _slot.Item == null select _slot ;
+        var freeSlots = from _slot in _slots where _slot.IsFree select _slot ;
         return freeSlots.FirstOrDefault();
     }
     
-    public void AddItem(NetworkItem itemPrefab)
+    [Rpc(SendTo.Server)]
+    private void AddItemRpc(int prefabIndex)
     {
         var slot = GetFreeSlot();
         
@@ -39,47 +40,44 @@ public class Inventory : MonoBehaviour
             return;
         }
         
+        var itemPrefab = GameManager.Instance.AvailableItems[prefabIndex];
+        
         var instance = Instantiate(itemPrefab, slot.SpawnPoint.position + new Vector3(0, 0.1f, 0),  Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
         var item = instance.GetComponent<NetworkItem>();
         
-        slot.Item = item;
-        item.SetSpawnPoint(slot.SpawnPoint);
+        slot.OccupyRpc();
+        item.SetSpawnPointRpc(slot.SpawnPoint.position);
     }
 
     [Rpc(SendTo.Server)]
-    private void spawnItem()
-    {
-        
-    }
-
-    public void SpawnRandomItems()
+    public void SpawnRandomItemsRpc()
     {
         var itemsCount = GameManager.Instance.Round.CurrentItemCount;
-        var itemsList = GetRandomItems(itemsCount);
+        var itemsList = GetRandomItemIds(itemsCount);
         
         foreach (var item in itemsList)
         {
-            AddItem(item);
+            AddItemRpc(item);
         }
     }
 
-    private NetworkItem GetRandomItem()
+    private int GetRandomItemIndex()
     {
         var items = GameManager.Instance.AvailableItems;
         var randomIndex = Random.Range(0, items.Length);
         
-        return items[randomIndex];
+        return randomIndex;
     }
 
-    private NetworkItem[] GetRandomItems(int count)
+    private int[] GetRandomItemIds(int count)
     {
-        var randomItems = new List<NetworkItem>();
+        var randomItems = new List<int>();
         
         for (var i = 0; i < count; i++)
         {
-            randomItems.Add(GetRandomItem());
+            randomItems.Add(GetRandomItemIndex());
         }
         
         return randomItems.ToArray();

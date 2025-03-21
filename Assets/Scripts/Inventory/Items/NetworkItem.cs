@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
@@ -19,7 +20,8 @@ public abstract class NetworkItem : NetworkBehaviour
     protected NetworkObject _networkObject;
     
     [SerializeField]
-    protected Transform m_spawnPoint;
+    protected Transform m_startingSpawnPoint;
+    protected NetworkVariable<Vector3> net_spawnPoint = new ();
     
     private const string ITEM_BOX_TAG = "ItemBox";
 
@@ -53,6 +55,10 @@ public abstract class NetworkItem : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         net_usages.Value = m_usages;
+        if (m_startingSpawnPoint != null)
+        {
+            net_spawnPoint.Value = m_startingSpawnPoint.position;
+        }
     }
 
     public override void OnDestroy()
@@ -116,13 +122,14 @@ public abstract class NetworkItem : NetworkBehaviour
     [Rpc(SendTo.Owner)]
     public void TeleportToSpawnRpc()
     {
-        _rigidbody.MovePosition(m_spawnPoint.position);
+        _rigidbody.MovePosition(net_spawnPoint.Value);
         _rigidbody.MoveRotation(Quaternion.identity);
     }
     
-    public void SetSpawnPoint(Transform spawnPoint)
+    [Rpc(SendTo.Server)]
+    public void SetSpawnPointRpc(Vector3 spawnPoint)
     {
-        m_spawnPoint = spawnPoint;
+        net_spawnPoint.Value = spawnPoint;
     }
 
     protected virtual void Network_OnActivate(bool isActive)

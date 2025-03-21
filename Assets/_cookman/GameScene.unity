@@ -4527,6 +4527,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInventory (RB)
       objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2845146654
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1467700742
+      objectReference: {fileID: 0}
     - target: {fileID: 7516512045715041578, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}
       propertyPath: m_Name
@@ -5253,6 +5263,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PlayerInventory (RF)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 248276706
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1467700742
       objectReference: {fileID: 0}
     - target: {fileID: 4380104049226905660, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}
@@ -8336,6 +8356,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInventory (LF)
       objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3276099621
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1467700742
+      objectReference: {fileID: 0}
     - target: {fileID: 8921275672000148778, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -9238,6 +9268,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3767511290
+      objectReference: {fileID: 0}
+    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
+        type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 1467700742
       objectReference: {fileID: 0}
     - target: {fileID: 8921275672000148778, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}

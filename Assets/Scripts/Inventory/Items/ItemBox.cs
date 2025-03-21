@@ -10,7 +10,7 @@ public class ItemBox : NetworkItem
     
     public override bool Use()
     {
-        m_inventory.SpawnRandomItems();
+        m_inventory.SpawnRandomItemsRpc();
 
         return true;
     }
