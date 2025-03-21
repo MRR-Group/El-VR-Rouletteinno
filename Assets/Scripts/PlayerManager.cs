@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
+using UnityEngine;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
+    [SerializeField]
     private Dictionary<ulong, Player> _players = new (new Dictionary<ulong, Player>());
     
     public Player Client()
