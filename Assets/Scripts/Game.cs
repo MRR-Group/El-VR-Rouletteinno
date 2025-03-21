@@ -17,6 +17,10 @@ public class Game : NetworkBehaviour
     [SerializeField]
     private bool m_disableAliveChecker = false;
     
+    [SerializeField]
+    private int m_maxWins;
+    public int MaxWins => m_maxWins;
+    
     public Player GetRandomPlayer(ulong[] excludedPlayers)
     {
         var players = net_alivePlayers.Value.FindAll((id) => !excludedPlayers.Contains(id));
@@ -98,7 +102,7 @@ public class Game : NetworkBehaviour
     
     private bool IsGameOver()
     {
-        return _wins.Value.Any(win => win.Value >= 2);
+        return _wins.Value.Any(win => win.Value >= MaxWins);
     }
     
     [Rpc(SendTo.Server)]

@@ -12,6 +12,10 @@ public class GameChair : NetworkBehaviour
 
     public bool IsFree => net_isFree.Value;
     public Player Player => IsFree ? null : PlayerManager.Instance.ById(net_playerId.Value);
+    
+    [SerializeField]
+    private Inventory m_inventory;
+    public Inventory Inventory => m_inventory;
  
     public void SitDown()
     {

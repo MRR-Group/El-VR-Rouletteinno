@@ -37,6 +37,10 @@ public class GameManager : NetworkSingleton<GameManager>
     public Round Round;
 
     public Turn Turn;
+    
+    [SerializeField] 
+    private List<NetworkItem> m_availableItems;
+    public NetworkItem[] AvailableItems => m_availableItems.ToArray();
 
     public override void OnNetworkSpawn()
     {
