@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Gun : TargetableItem<Player>
 {
-    [SerializeField]
+    [SerializeField] 
     private uint m_maxAmmo = 6;
 
     [SerializeField]

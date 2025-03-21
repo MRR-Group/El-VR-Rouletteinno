@@ -54,7 +54,7 @@ public abstract class NetworkItem : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (NetworkManager.Singleton.IsClient)
+        if (!NetworkManager.Singleton.IsServer)
         {
             return;
         }
