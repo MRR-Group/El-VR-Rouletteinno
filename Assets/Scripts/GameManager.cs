@@ -117,10 +117,11 @@ public class GameManager : NetworkSingleton<GameManager>
     }
     
     [Rpc(SendTo.Server)]
-    public void AddPlayerRpc(ulong player)
+    public void AddPlayerRpc(ulong player, int inventory)
     {
         net_playerInGame.Value.Add(player);
         net_playerInGame.CheckDirtyState();
+        PlayerManager.Instance.ById(player).SetInventoryRpc(inventory);
     }
     
     [Rpc(SendTo.Server)]

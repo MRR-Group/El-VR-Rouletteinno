@@ -9,7 +9,7 @@ public class Player : NetworkBehaviour
 
     private NetworkVariable<int> net_health = new ();
 
-    public Inventory Inventory { get; set; }
+    public NetworkVariable<int> net_inventory = new ();
     
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
@@ -21,6 +21,14 @@ public class Player : NetworkBehaviour
     public ulong PlayerId => OwnerClientId;
     
     public int Health => net_health.Value;
+
+    public Inventory Inventory => GameManager.Instance.GetInventory(net_inventory.Value);
+
+    [Rpc(SendTo.Server)]
+    public void SetInventoryRpc(int inventory)
+    {
+        net_inventory.Value = inventory;
+    }
 
     public bool IsCurrentPlayer()
     {
