@@ -6,30 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 13f6f87036926f94ab0417ca1b31725c
-  - enabled: 0
-    path: Assets/Scenes/Unity/BasicScene.unity
-    guid: bc761d9a86b33554f85fd11bb1f87ba3
-  - enabled: 1
-    path: Assets/Scenes/room.unity
-    guid: 2211b822a85848943bfc8484c3182ef9
-  - enabled: 1
-    path: Assets/Scenes/Unity/SampleScene.unity
-    guid: 87a008ba320482b4b8188c2b34a6d868
-  - enabled: 1
-    path: Assets/_amon/working_scene.unity
-    guid: 1f428756e18441641b60bef5c973ac92
-  - enabled: 1
-    path: Assets/_cookman/working_scene.unity
-    guid: ea2fea3d34d706c44863504612dba815
-  - enabled: 1
-    path: Assets/_cookman/working_room.unity
-    guid: 911922a1eff6e904799d67d4496acce1
-  - enabled: 1
-    path: Assets/Scenes/GameScene.unity
-    guid: 106f234c8f7e13f4eb118fe473586d00
-  - enabled: 1
     path: Assets/_cookman/GameScene.unity
     guid: 5bb802df56691184ca8c1edba5102b77
   m_configObjects:

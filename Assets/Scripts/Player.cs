@@ -8,8 +8,7 @@ public class Player : NetworkBehaviour
     private int m_maxHealth = 5;
 
     private NetworkVariable<int> net_health = new ();
-
-    public NetworkVariable<int> net_inventory = new ();
+    public Inventory Inventory => InventoryManager.Instance.ByClientId(PlayerId);
     
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
@@ -22,18 +21,7 @@ public class Player : NetworkBehaviour
     
     public int Health => net_health.Value;
 
-    public Inventory Inventory => GameManager.Instance.GetInventory(net_inventory.Value);
-
-    [Rpc(SendTo.Server)]
-    public void SetInventoryRpc(int inventory)
-    {
-        net_inventory.Value = inventory;
-    }
-
-    public bool IsCurrentPlayer()
-    {
-        return PlayerId == NetworkManager.Singleton.LocalClientId;
-    }
+    public bool isLocalClient => OwnerClientId == NetworkManager.Singleton.LocalClientId;
 
     public override void OnNetworkSpawn()
     {

@@ -38,7 +38,7 @@ public class Round : NetworkBehaviour
         {
             var player = PlayerManager.Instance.ById(index);
             
-            player?.Inventory.SpawnItemBoxRpc();
+            player?.Inventory.SpawnItemBox();
             
             Debug.Log("Spawing box for: " + index);
         }

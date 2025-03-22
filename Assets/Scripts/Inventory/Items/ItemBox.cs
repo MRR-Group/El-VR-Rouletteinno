@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class ItemBox : NetworkItem
 {
-    private NetworkVariable<int> net_inventory = new ();
+    private NetworkVariable<ulong> net_player = new ();
 
-    public Inventory Inventory => GameManager.Instance.GetInventory(net_inventory.Value);
+    public Inventory Inventory => InventoryManager.Instance.ByClientId(net_player.Value);
     
-    [Rpc(SendTo.Server)]
-    public void SetInventoryRpc(int inventory)
+    public void SetPlayer(ulong player)
     {
-        net_inventory.Value = inventory;
+        net_player.Value = player;
     }
 
     public override bool Use()

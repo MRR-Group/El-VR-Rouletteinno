@@ -39,7 +39,8 @@ public class GameChair : NetworkBehaviour
         }
 
         net_isFree.Value = false;
-        GameManager.Instance.AddPlayerRpc(player, Inventory.InventoryId);
+        GameManager.Instance.AddPlayerRpc(player);
+        Inventory.RegisterRpc(player);
         
         net_playerId.Value = player;
     }

@@ -11,20 +11,7 @@ public class GameManager : NetworkSingleton<GameManager>
 {
     private NetworkVariable<GameState> net_gameState = new ();
     public GameState GameState => net_gameState.Value;
-
-    [SerializeField]
-    private List<Inventory> m_inventories;
-
-    public Inventory GetInventory(int index)
-    {
-        return m_inventories[index];
-    }
-
-    public int GetInventoryId(Inventory inventory)
-    {
-        return m_inventories.IndexOf(inventory);
-    }
-
+    
     public event EventHandler<GameStateChangedArgs> GameStateChanged;
     public class GameStateChangedArgs : EventArgs
     {
@@ -117,11 +104,10 @@ public class GameManager : NetworkSingleton<GameManager>
     }
     
     [Rpc(SendTo.Server)]
-    public void AddPlayerRpc(ulong player, int inventory)
+    public void AddPlayerRpc(ulong player)
     {
         net_playerInGame.Value.Add(player);
         net_playerInGame.CheckDirtyState();
-        PlayerManager.Instance.ById(player).SetInventoryRpc(inventory);
     }
     
     [Rpc(SendTo.Server)]

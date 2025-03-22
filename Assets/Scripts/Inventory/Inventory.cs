@@ -22,8 +22,6 @@ public class Inventory : NetworkBehaviour
     
     public bool HasUnusedItemBox => net_hasUnusedItemBox.Value;
     
-    public int InventoryId => GameManager.Instance.GetInventoryId(this);
-    
     private void Awake()
     {
         _slots = GetComponentsInChildren<Slot>().ToList();
@@ -51,8 +49,7 @@ public class Inventory : NetworkBehaviour
         net_hasUnusedItemBox.Value = false;
     }
 
-    [Rpc(SendTo.Server)]
-    public void SpawnItemBoxRpc()
+    public void SpawnItemBox()
     {
         if (m_chair.IsFree || m_chair.Player.IsDead())
         {
@@ -65,12 +62,11 @@ public class Inventory : NetworkBehaviour
         var box = instance.GetComponent<ItemBox>();
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
-        box.SetInventoryRpc(InventoryId);
+        box.SetPlayer(InventoryManager.Instance.GetPlayerId(this));
         net_hasUnusedItemBox.Value = true;
     }
     
-    [Rpc(SendTo.Server)]
-    private void AddItemRpc(int prefabIndex)
+    private void AddItem(int prefabIndex)
     {
         var slot = GetFreeSlot();
         
@@ -98,7 +94,7 @@ public class Inventory : NetworkBehaviour
         
         foreach (var item in itemsList)
         {
-            AddItemRpc(item);
+            AddItem(item);
         }
     }
 
@@ -122,5 +118,9 @@ public class Inventory : NetworkBehaviour
         return randomItems.ToArray();
     }
     
-    
+    [Rpc(SendTo.Everyone)]
+    public void RegisterRpc(ulong player)
+    {
+        InventoryManager.Instance.RegisterInventory(player, this);
+    }
 }

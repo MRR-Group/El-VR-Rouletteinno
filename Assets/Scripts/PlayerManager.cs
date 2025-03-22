@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
     [SerializeField]
-    private Dictionary<ulong, Player> _players = new (new Dictionary<ulong, Player>());
+    [SerializedDictionary("Client Id", "Player")]
+    private SerializedDictionary<ulong, Player> _players = new ();
     
     public Player Client()
     {
