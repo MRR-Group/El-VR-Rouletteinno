@@ -10,6 +10,9 @@ public class Player : NetworkBehaviour
     private NetworkVariable<int> net_health = new ();
     public Inventory Inventory => InventoryManager.Instance.ByClientId(PlayerId);
     
+    [SerializeField]
+    private ParticleSystem m_particleSystem;
+    
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
     {
@@ -70,5 +73,12 @@ public class Player : NetworkBehaviour
     public bool CanBeHealed(int healAmount)
     {
         return Health + healAmount <= GetMaxHealth();
+    }
+    
+    [Rpc(SendTo.Everyone)]
+    public void EmitVapeParticlesRpc()
+    {
+        m_particleSystem.time = 0;
+        m_particleSystem.Play();
     }
 }
