@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -8,6 +9,8 @@ public class Inventory : NetworkBehaviour
 {
     private List<Slot> _slots;
 
+    public event EventHandler ItemBoxUsed;
+    
     [SerializeField]
     private Transform m_ItemBoxSpawnPoint;
     
@@ -47,6 +50,13 @@ public class Inventory : NetworkBehaviour
     public void MarkItemBoxAsUsedRpc()
     {
         net_hasUnusedItemBox.Value = false;
+        EmitItemBoxWasUsedEventRpc();
+    }
+    
+    [Rpc(SendTo.Everyone)]
+    private void EmitItemBoxWasUsedEventRpc()
+    {
+        ItemBoxUsed?.Invoke(this, EventArgs.Empty);
     }
 
     public void SpawnItemBox()

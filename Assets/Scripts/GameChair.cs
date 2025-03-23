@@ -1,9 +1,12 @@
+using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
 
 public class GameChair : NetworkBehaviour
 {
+    
     [SerializeField]
     private TeleportationAnchor m_anchor;
     
@@ -21,7 +24,7 @@ public class GameChair : NetworkBehaviour
     {
         var player = NetworkManager.Singleton.LocalClient.ClientId;
 
-        if (!IsFree && GameManager.Instance.GameState != GameState.PREPARE)
+        if (!IsFree || GameManager.Instance.GameState != GameState.PREPARE)
         {
             return;
         }

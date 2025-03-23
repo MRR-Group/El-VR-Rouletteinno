@@ -5,18 +5,10 @@ using UnityEngine;
 
 public class InventoryManager : Singleton<InventoryManager>
 {
-    [SerializedDictionary("Client Id", "Inventory")]
     public SerializedDictionary<ulong, Inventory> _inventories = new ();
   
     public Inventory ByClientId(ulong client)
     {
-        Debug.Log("Inventory for " + client);
-        Debug.Log("all: ");
-        foreach (var key in _inventories.Keys)
-        {
-            Debug.Log(" KEY: " + key);
-        }
-
         return _inventories[client];
     }
 

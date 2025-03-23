@@ -165,11 +165,14 @@ public abstract class NetworkItem : NetworkBehaviour
         }
         else
         {
+            Debug.Log("ussages before: " + net_usages.Value);
             DecrementUsagesRpc();
+            Debug.Log("ussages after: " + net_usages.Value);
         }
         
         if (net_usages.Value <= 0)
         {
+            Debug.Log("ussages: " + net_usages.Value);
             DestroyItemRpc();
         }
     }
