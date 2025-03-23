@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class Vape : NetworkItem
@@ -42,6 +43,7 @@ public class Vape : NetworkItem
             return false;
         }
         
+        player.EmitVapeParticlesRpc();
         player.HealRpc(m_healAmount);
 
         return true;

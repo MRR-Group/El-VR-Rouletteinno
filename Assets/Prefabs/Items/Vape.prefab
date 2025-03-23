@@ -460,6 +460,7 @@ MonoBehaviour:
   m_usageLed:
   - {fileID: 4158059736417162258}
   - {fileID: 9057130977679358558}
+  m_smokeParticles: {fileID: 0}
 --- !u!1 &2746462030960509050
 GameObject:
   m_ObjectHideFlags: 0
