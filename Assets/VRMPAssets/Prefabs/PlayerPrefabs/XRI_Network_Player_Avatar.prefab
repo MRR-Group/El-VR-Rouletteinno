@@ -1235,7 +1235,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4039720549662310, guid: ba03473dcbf31a44cb8a407076228f8e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.1985684
+      value: 0.062
       objectReference: {fileID: 0}
     - target: {fileID: 4039720549662310, guid: ba03473dcbf31a44cb8a407076228f8e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1427,6 +1427,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
         type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime1
+      value: 3277
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime2
+      value: 17155
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.atime3
+      value: 36044
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.ctime1
+      value: 57440
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
+        type: 3}
       propertyPath: ForceModule.x.maxCurve.m_Curve.Array.data[0].time
       value: 0
       objectReference: {fileID: 0}
@@ -1484,6 +1504,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ForceModule.z.minCurve.m_Curve.Array.data[1].time
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxGradient.m_ColorSpace
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 198252652730714422, guid: ba03473dcbf31a44cb8a407076228f8e,
         type: 3}
