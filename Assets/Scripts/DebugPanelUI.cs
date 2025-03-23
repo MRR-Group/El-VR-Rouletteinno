@@ -29,11 +29,16 @@ public class DebugPanelUI : MonoBehaviour
     {
         GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
         GameManager.Instance.Game.Win += Game_OnWinChanged;
-        GameManager.Instance.Turn.TurnChanged += Turn_OnTurnChanged;
         GameManager.Instance.Round.Gun.AmmoChanged += Round_OnRoundStarted;
         GameManager.Instance.Round.RoundStared += Round_OnRoundStarted;
 
         NetworkManager.Singleton.OnConnectionEvent += (_, __) => PlayerManager.Instance.Client().HealthChanged += Player_OnHealthChanged;
+    }
+
+    public void Update()
+    {
+        // TODO - Convert to event
+        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
     }
 
     private void Round_OnRoundStarted(object sender, EventArgs e)
@@ -46,12 +51,7 @@ public class DebugPanelUI : MonoBehaviour
     {
         m_hp.text = e.Health.ToString();
     }
-
-    private void Turn_OnTurnChanged(object sender, EventArgs e)
-    {
-        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
-    }
-
+    
     private void Game_OnWinChanged(object sender, EventArgs e)
     {
         m_wins.text = GameManager.Instance.Game.GetPlayerWins(NetworkManager.Singleton.LocalClientId).ToString();
