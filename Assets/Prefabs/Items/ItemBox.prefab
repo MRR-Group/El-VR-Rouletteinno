@@ -340,10 +340,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_spawnPoint: {fileID: 0}
+  m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
-  m_inventory: {fileID: 0}
+  m_useAnimationTimeInSecounds: 0
 --- !u!1 &2450368460542309547
 GameObject:
   m_ObjectHideFlags: 0

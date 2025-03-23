@@ -450,9 +450,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_spawnPoint: {fileID: 4821736783814901020}
+  m_startingSpawnPoint: {fileID: 0}
   m_usages: 2
   m_isIndestructible: 0
+  m_useAnimationTimeInSecounds: 0
   m_healAmount: 1
   m_ledOnMaterial: {fileID: 2100000, guid: ce66a8b36432fb049b9cab12cdeb02d9, type: 2}
   m_ledOffMaterial: {fileID: 2100000, guid: 4b79b03b0e98dd4458605c9d6ff888c9, type: 2}

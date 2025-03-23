@@ -140,9 +140,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  m_spawnPoint: {fileID: 0}
+  m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 1
+  m_useAnimationTimeInSecounds: 2
   m_raycastStart: {fileID: 2523513264069679332}
   m_layermask:
     serializedVersion: 2

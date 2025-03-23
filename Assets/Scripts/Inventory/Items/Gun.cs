@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -42,7 +43,7 @@ public class Gun : TargetableItem<Player>
     public override bool Use(Player player)
     {
         ShootRpc(player.PlayerId, NetworkManager.Singleton.LocalClientId);
-
+        
         return true;
     }
     
@@ -60,8 +61,8 @@ public class Gun : TargetableItem<Player>
         
         if (isBulletLive)
         {
-            PlayerManager.Instance.ById(target).DealDamageRpc(1);
             EmitParticlesRpc();
+            PlayerManager.Instance.ById(target).DealDamageRpc(1);
         }
 
         if (isBulletLive || !GameManager.Instance.Turn.IsPlayerTurn(target))
@@ -74,7 +75,7 @@ public class Gun : TargetableItem<Player>
             GameManager.Instance.Round.StartRoundRpc();
         }
     }
-
+    
     [Rpc(SendTo.ClientsAndHost)]
     protected void EmitParticlesRpc()
     {

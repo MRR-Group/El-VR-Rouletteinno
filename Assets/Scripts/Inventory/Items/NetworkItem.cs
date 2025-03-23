@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -26,16 +27,22 @@ public abstract class NetworkItem : NetworkBehaviour
     private const string ITEM_BOX_TAG = "ItemBox";
 
     protected bool _isInBox;
-    protected bool _isInUse;
+    protected bool _isActionButtonPressed;
     protected bool _isGrabbed;
+    protected bool _isAnimatingUsage;
     
     [SerializeField]
     protected int m_usages = 1;
     
     protected NetworkVariable<int> net_usages = new();
+    protected NetworkVariable<ulong> net_used_by = new();
     
     [SerializeField]
     protected bool m_isIndestructible;
+    
+    [SerializeField]
+    protected int m_useAnimationTimeInSecounds = 0;
+
     
     protected virtual void Awake()
     {
@@ -49,7 +56,7 @@ public abstract class NetworkItem : NetworkBehaviour
         _interactable.selectEntered.AddListener(HandleGrab);
         _interactable.selectExited.AddListener(HandleDrop);
         _interactable.interactionManager = GameManager.Instance.InteractionManager;
-        _physicsInteractable.ActivateNetworkedEventAll.AddListener(Network_OnActivate);
+        _interactable.activated.AddListener(Interactable_OnActivate);
     }
 
     public override void OnNetworkSpawn()
@@ -71,7 +78,7 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         _interactable.selectEntered.RemoveListener(HandleGrab);
         _interactable.selectExited.RemoveListener(HandleDrop);
-        _physicsInteractable.ActivateNetworkedEventAll.RemoveListener(Network_OnActivate);
+        _interactable.activated.RemoveListener(Interactable_OnActivate);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -112,10 +119,26 @@ public abstract class NetworkItem : NetworkBehaviour
         {
             ForceDrop();
         }
+        
+        GrabRpc(NetworkManager.Singleton.LocalClientId);
+    }
+
+    [Rpc(SendTo.Server)]
+    private void GrabRpc(ulong grabber)
+    {
+        if (CanUse(grabber))
+        {
+            net_used_by.Value = grabber;
+        }
     }
 
     protected void ForceDrop()
     {
+        if (_interactable.firstInteractorSelecting == null)
+        {
+            return;
+        }
+
         GameManager.Instance.InteractionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
     }
 
@@ -138,52 +161,68 @@ public abstract class NetworkItem : NetworkBehaviour
         net_spawnPoint.Value = spawnPoint;
     }
 
-    protected virtual void Network_OnActivate(bool isActive)
+    protected virtual void Interactable_OnActivate(ActivateEventArgs e)
     {
-        _isInUse = isActive;
-
-        if (!isActive)
+        if (_isAnimatingUsage)
         {
             return;
         }
+        
 
         if (!CanUse(NetworkManager.Singleton.LocalClientId))
         {
             ForceDrop();
-            
+
             return;
         }
-
+        
+        _isAnimatingUsage = true;
+        
         if (!Use())
         {
+            _isAnimatingUsage = false;
             return;
+        }
+        
+        StartCoroutine(UsageAnimation());
+    }
+
+    protected IEnumerator UsageAnimation()
+    {
+        if (m_useAnimationTimeInSecounds > 0)
+        {
+            yield return new WaitForSeconds(m_useAnimationTimeInSecounds);
         }
         
         if (m_isIndestructible)
         {
             ForceDrop();
         }
-        else
-        {
-            Debug.Log("ussages before: " + net_usages.Value);
-            DecrementUsagesRpc();
-            Debug.Log("ussages after: " + net_usages.Value);
-        }
+
+        AfterUseRpc();
+        
+        _isAnimatingUsage = false;
+        
+        yield return null;
+    }
+
+    [Rpc(SendTo.Server)]
+    protected void AfterUseRpc()
+    {
+        DecrementUsages();
         
         if (net_usages.Value <= 0)
         {
-            Debug.Log("ussages: " + net_usages.Value);
-            DestroyItemRpc();
+            DestroyItem();
         }
     }
-    
+
     protected virtual bool CanUse(ulong currentPlayer)
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.Turn.IsPlayerTurn(currentPlayer);
     }
 
-    [Rpc(SendTo.Server)]
-    protected void DecrementUsagesRpc()
+    protected void DecrementUsages()
     {
         if (!m_isIndestructible)
         {
@@ -191,8 +230,7 @@ public abstract class NetworkItem : NetworkBehaviour
         }
     }
     
-    [Rpc(SendTo.Server)]
-    public void DestroyItemRpc()
+    public void DestroyItem()
     {
         _networkObject.Despawn();
     }
