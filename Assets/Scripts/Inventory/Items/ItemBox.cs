@@ -22,7 +22,7 @@ public class ItemBox : NetworkItem
         return true;
     }
 
-    protected override bool CanUse()
+    protected override bool CanUse(ulong _)
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS;
     }

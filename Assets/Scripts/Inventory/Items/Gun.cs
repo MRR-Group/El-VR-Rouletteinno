@@ -41,15 +41,15 @@ public class Gun : TargetableItem<Player>
     
     public override bool Use(Player player)
     {
-        ShootRpc(player.PlayerId);
+        ShootRpc(player.PlayerId, NetworkManager.Singleton.LocalClientId);
 
         return true;
     }
     
     [Rpc(SendTo.Server)]
-    protected void ShootRpc(ulong target)
+    protected void ShootRpc(ulong target, ulong shooter)
     {
-        if (!CanUse())
+        if (!CanUse(shooter))
         {
             return;
         }
@@ -82,9 +82,9 @@ public class Gun : TargetableItem<Player>
         m_shootParticles.Play();
     }
 
-    protected override bool CanUse()
+    protected override bool CanUse(ulong player)
     {
-        return base.CanUse() && !IsMagazineEmpty();
+        return base.CanUse(player) && !IsMagazineEmpty();
     }
 
     public bool IsMagazineEmpty()

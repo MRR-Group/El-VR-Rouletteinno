@@ -108,7 +108,7 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         _isGrabbed = true;
         
-        if (!CanUse())
+        if (!CanUse(NetworkManager.Singleton.LocalClientId))
         {
             ForceDrop();
         }
@@ -147,7 +147,7 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
 
-        if (!CanUse())
+        if (!CanUse(NetworkManager.Singleton.LocalClientId))
         {
             ForceDrop();
             
@@ -174,9 +174,9 @@ public abstract class NetworkItem : NetworkBehaviour
         }
     }
     
-    protected virtual bool CanUse()
+    protected virtual bool CanUse(ulong currentPlayer)
     {
-        return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.Turn.IsClientTurn();
+        return GameManager.Instance.GameState == GameState.IN_PROGRESS && GameManager.Instance.Turn.IsPlayerTurn(currentPlayer);
     }
 
     [Rpc(SendTo.Server)]

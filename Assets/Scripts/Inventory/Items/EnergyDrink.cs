@@ -3,9 +3,9 @@ using Unity.Netcode;
 
 public class EnergyDrink : NetworkItem
 {
-    protected override bool CanUse()
+    protected override bool CanUse(ulong player)
     {
-        return base.CanUse() && !GameManager.Instance.Round.Gun.IsMagazineEmpty();
+        return base.CanUse(player) && !GameManager.Instance.Round.Gun.IsMagazineEmpty();
     }
 
     public override bool Use()
