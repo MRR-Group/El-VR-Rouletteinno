@@ -18,11 +18,24 @@ namespace XRMultiplayer
         public void Open()
         {
             isOpen = true;
+            Invoke(nameof(Close), 10f);
         }
 
         public void Close()
         {
             isOpen = false;
+        }
+
+        public void OpenOrClose()
+        {
+            if (isOpen)
+            {
+                Close();
+            }
+            else
+            {
+                Open();
+            }
         }
 
         void Start()
