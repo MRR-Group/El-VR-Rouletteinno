@@ -14,7 +14,10 @@ public class Gun : TargetableItem<Player>
     private uint m_minAmmo = 2;
     
     [SerializeField]
-    private ParticleSystem m_shootParticles;
+    private ParticleSystem m_shootLiveParticles;
+    
+    [SerializeField]
+    private ParticleSystem m_shootBlankParticles;
     
     private NetworkVariable<List<bool>> _ammo = new (new List<bool>());
     
@@ -61,8 +64,12 @@ public class Gun : TargetableItem<Player>
         
         if (isBulletLive)
         {
-            EmitParticlesRpc();
+            EmitLiveParticlesRpc();
             PlayerManager.Instance.ById(target).DealDamageRpc(1);
+        }
+        else
+        {
+            EmitBlankParticlesRpc();
         }
 
         if (isBulletLive || !GameManager.Instance.Turn.IsPlayerTurn(target))
@@ -75,12 +82,19 @@ public class Gun : TargetableItem<Player>
             GameManager.Instance.Round.StartRoundRpc();
         }
     }
+
+    [Rpc(SendTo.ClientsAndHost)]
+    protected void EmitLiveParticlesRpc()
+    {
+        m_shootLiveParticles.time = 0;
+        m_shootLiveParticles.Play();
+    }
     
     [Rpc(SendTo.ClientsAndHost)]
-    protected void EmitParticlesRpc()
+    protected void EmitBlankParticlesRpc()
     {
-        m_shootParticles.time = 0;
-        m_shootParticles.Play();
+        m_shootBlankParticles.time = 0;
+        m_shootBlankParticles.Play();
     }
 
     protected override bool CanUse(ulong player)
