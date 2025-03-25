@@ -353,7 +353,11 @@ namespace XRMultiplayer
                 // If we are using a World Canvas, reparent name tag and destroy local canvas.
                 Canvas localCanvas = m_PlayerNameTag.GetComponentInParent<Canvas>();
                 worldCanvas.SetupPlayerNameTag(this, m_PlayerNameTag);
-                Destroy(localCanvas.gameObject);
+
+                if (localCanvas)
+                {
+                    Destroy(localCanvas.gameObject);
+                }
             }
             else
             {
