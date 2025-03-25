@@ -15,13 +15,17 @@ public class AmmoIndicator : MonoBehaviour
 
     [SerializeField]
     Gun m_gun;
-    
+
+    private int _lives = 0;
+    private int _all = 0;
+
     public void Start()
     {
          GameManager.Instance.Round.RoundStared += Round_OnRoundStared;
+         m_gun.BulletSkipped += Gun_OnBulletSkipped;
          HideAll();
     }
-
+    
     private void HideAll()
     {
         foreach (var led in m_leds)
@@ -32,17 +36,35 @@ public class AmmoIndicator : MonoBehaviour
 
     private void Round_OnRoundStared(object sender, EventArgs e)
     {
+        _all = m_gun.Magazine().Length;
+        _lives = m_gun.Magazine().Count(bullet => bullet);
+
         HideAll();
+        ShowBullets();
+    }
 
-        var lives = m_gun.Magazine().Count(bullet => bullet);
+    void Gun_OnBulletSkipped(object sender, Gun.BulletSkippedEventArgs e)
+    {
+        _all -= 1;
 
-        for (var i = 0; i < lives; i++)
+        if (e.Bullet)
+        {
+            _lives -= 1;
+        }
+
+        HideAll();
+        ShowBullets();
+    }
+    
+    protected void ShowBullets()
+    {
+        for (var i = 0; i < _lives; i++)
         {
             m_leds[i].gameObject.SetActive(true);
             m_leds[i].material = m_liveMaterial;
         }
         
-        for (var i = lives; i < m_gun.Magazine().Length; i++)
+        for (var i = _lives; i < _all; i++)
         {
             m_leds[i].gameObject.SetActive(true);
             m_leds[i].material = m_blandMaterial;

@@ -22,7 +22,13 @@ public class Gun : TargetableItem<Player>
     private NetworkVariable<List<bool>> _ammo = new (new List<bool>());
     
     public event EventHandler AmmoChanged;
-    
+    public event EventHandler<BulletSkippedEventArgs> BulletSkipped;
+    public class BulletSkippedEventArgs
+    {
+        public bool Bullet;
+    }
+
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -120,12 +126,22 @@ public class Gun : TargetableItem<Player>
             return;
         }
 
+        var bullet = _ammo.Value[0];
+        
         _ammo.Value.RemoveAt(0);
         _ammo.CheckDirtyState();
+        EmitBulletSkippedRpc(bullet);
         
         if (IsMagazineEmpty())
         {
             GameManager.Instance.Round.StartRoundRpc();
         }
+    }
+
+
+    [Rpc(SendTo.Everyone)]
+    protected void EmitBulletSkippedRpc(bool bullet)
+    {
+        BulletSkipped?.Invoke(this, new BulletSkippedEventArgs { Bullet = bullet });
     }
 }
