@@ -7,18 +7,23 @@ namespace XRMultiplayer
 {
     public class ElevatorDoors : NetworkBehaviour
     {
-        private NetworkVariable<bool> isOpen  = new();
-        [SerializeField] private Vector3 m_doorSize;
-        [SerializeField] private Transform m_leftDoor;
-        [SerializeField] private Transform m_rightDoor;
-        [SerializeField] private float m_closingSpeed;
-        [SerializeField] private float m_closeDelay = 10f;
+        private NetworkVariable<bool> isOpen = new();
+        [SerializeField]
+        private Vector3 m_doorSize;
+        [SerializeField] 
+        private Transform m_leftDoor;
+        [SerializeField] 
+        private Transform m_rightDoor;
+        [SerializeField] 
+        private float m_closingSpeed;
+        [SerializeField] 
+        private float m_closeDelay = 10f;
         private Vector3 startPositionLeft;
         private Vector3 startPositionRight;
         private Vector3 endPositionLeft;
         private Vector3 endPositionRight;
         private Coroutine closeCoroutine;
-        
+
         [Rpc(SendTo.Server)]
         private void OpenRpc()
         {
@@ -32,7 +37,7 @@ namespace XRMultiplayer
             {
                 return;
             }
-            
+
 
             if (closeCoroutine != null)
             {
@@ -47,9 +52,10 @@ namespace XRMultiplayer
         {
             isOpen.Value = false;
         }
+
         private IEnumerator AutoClose()
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(m_closeDelay);
             CloseRpc();
         }
 
@@ -66,7 +72,7 @@ namespace XRMultiplayer
             startPositionRight = m_rightDoor.position;
             endPositionLeft = m_leftDoor.position - m_doorSize;
             endPositionRight = m_rightDoor.position + m_doorSize;
-            
+
             NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnOnClientConnectedCallback;
         }
 
@@ -78,10 +84,12 @@ namespace XRMultiplayer
         private void Update()
         {
             var leftTargetPosition = isOpen.Value ? endPositionLeft : startPositionLeft;
-            m_leftDoor.position = Vector3.Lerp(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
-            
+            m_leftDoor.position =
+                Vector3.Lerp(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
+
             var rightTargetPosition = isOpen.Value ? endPositionRight : startPositionRight;
-            m_rightDoor.position = Vector3.Lerp(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
+            m_rightDoor.position =
+                Vector3.Lerp(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
         }
     }
 }
