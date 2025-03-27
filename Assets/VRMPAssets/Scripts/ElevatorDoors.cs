@@ -1,46 +1,86 @@
+using System.Collections;
 using Unity.Mathematics.Geometry;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace XRMultiplayer
 {
-    public class ElevatorDoors : MonoBehaviour
+    public class ElevatorDoors : NetworkBehaviour
     {
-        bool isOpen = false;
+        private NetworkVariable<bool> isOpen  = new();
         [SerializeField] private Vector3 m_doorSize;
         [SerializeField] private Transform m_leftDoor;
         [SerializeField] private Transform m_rightDoor;
         [SerializeField] private float m_closingSpeed;
+        [SerializeField] private float m_closeDelay = 10f;
         private Vector3 startPositionLeft;
         private Vector3 startPositionRight;
         private Vector3 endPositionLeft;
         private Vector3 endPositionRight;
-
-        public void Open()
+        private Coroutine closeCoroutine;
+        
+        [Rpc(SendTo.Server)]
+        private void OpenRpc()
         {
-            isOpen = true;
+            isOpen.Value = true;
+            HandleAutoClose();
         }
 
-        public void Close()
+        private void HandleAutoClose()
         {
-            isOpen = false;
+            if (!isOpen.Value)
+            {
+                return;
+            }
+            
+
+            if (closeCoroutine != null)
+            {
+                StopCoroutine(closeCoroutine);
+            }
+
+            closeCoroutine = StartCoroutine(AutoClose());
         }
 
-        void Start()
+        [Rpc(SendTo.Server)]
+        private void CloseRpc()
+        {
+            isOpen.Value = false;
+        }
+        private IEnumerator AutoClose()
+        {
+            yield return new WaitForSeconds(10f);
+            CloseRpc();
+        }
+
+        [Rpc(SendTo.Server)]
+        public void ToggleDoorStateRpc()
+        {
+            isOpen.Value = !isOpen.Value;
+            HandleAutoClose();
+        }
+
+        private void Start()
         {
             startPositionLeft = m_leftDoor.position;
             startPositionRight = m_rightDoor.position;
             endPositionLeft = m_leftDoor.position - m_doorSize;
             endPositionRight = m_rightDoor.position + m_doorSize;
+            
+            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnOnClientConnectedCallback;
         }
 
-        // Update is called once per frame
-
-        void Update()
+        private void NetworkManager_OnOnClientConnectedCallback(ulong obj)
         {
-            var leftTargetPosition = isOpen ? endPositionLeft : startPositionLeft;
+            OpenRpc();
+        }
+
+        private void Update()
+        {
+            var leftTargetPosition = isOpen.Value ? endPositionLeft : startPositionLeft;
             m_leftDoor.position = Vector3.Lerp(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
             
-            var rightTargetPosition = isOpen ? endPositionRight : startPositionRight;
+            var rightTargetPosition = isOpen.Value ? endPositionRight : startPositionRight;
             m_rightDoor.position = Vector3.Lerp(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
         }
     }
