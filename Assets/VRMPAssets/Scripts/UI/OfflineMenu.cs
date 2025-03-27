@@ -110,11 +110,9 @@ namespace XRMultiplayer
             if (connected)
             {
                 m_CustomizationPanel.SetActive(false);
-                m_doors.Open();
             }
             else
             {
-                m_doors.Close();
                 gameObject.SetActive(true);
                 ShowCustomization();
             }

@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Mathematics.Geometry;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,37 +17,65 @@ namespace XRMultiplayer
         private Vector3 startPositionRight;
         private Vector3 endPositionLeft;
         private Vector3 endPositionRight;
-
-        public void Open()
+        private Coroutine closeCoroutine;
+        
+        [Rpc(SendTo.Server)]
+        private void OpenRpc()
         {
             isOpen.Value = true;
-            Invoke(nameof(Close), 10f);
+            HandleAutoClose();
         }
 
-        public void Close()
+        private void HandleAutoClose()
+        {
+            if (!isOpen.Value)
+            {
+                return;
+            }
+            
+
+            if (closeCoroutine != null)
+            {
+                StopCoroutine(closeCoroutine);
+            }
+
+            closeCoroutine = StartCoroutine(AutoClose());
+        }
+
+        [Rpc(SendTo.Server)]
+        private void CloseRpc()
         {
             isOpen.Value = false;
         }
-
-        public void ToggleDoorState()
+        private IEnumerator AutoClose()
         {
-            isOpen.Value = !isOpen.Value;
-            
-            if (isOpen.Value)
-            {
-                Invoke(nameof(Close), 10f);
-            }
+            yield return new WaitForSeconds(10f);
+            CloseRpc();
         }
 
-        void Start()
+        [Rpc(SendTo.Server)]
+        public void ToggleDoorStateRpc()
+        {
+            isOpen.Value = !isOpen.Value;
+            HandleAutoClose();
+        }
+
+        private void Start()
         {
             startPositionLeft = m_leftDoor.position;
             startPositionRight = m_rightDoor.position;
             endPositionLeft = m_leftDoor.position - m_doorSize;
             endPositionRight = m_rightDoor.position + m_doorSize;
+            
+            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnOnClientConnectedCallback;
         }
-        
-        void Update()
+
+        private void NetworkManager_OnOnClientConnectedCallback(ulong obj)
+        {
+            OpenRpc();
+        }
+
+        private void Update()
         {
             var leftTargetPosition = isOpen.Value ? endPositionLeft : startPositionLeft;
             m_leftDoor.position = Vector3.Lerp(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
