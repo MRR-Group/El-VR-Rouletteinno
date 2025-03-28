@@ -1668,6 +1668,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 171904275}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &205164369 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
+    type: 3}
+  m_PrefabInstance: {fileID: 628907563}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &207839875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2012,6 +2018,12 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
+--- !u!4 &348133349 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
+    type: 3}
+  m_PrefabInstance: {fileID: 486859806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &359048152
 GameObject:
   m_ObjectHideFlags: 0
@@ -2544,22 +2556,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1958180934}
     m_Modifications:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.35
+      value: 1.191
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.972
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.144
+      value: 0.18699992
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -2569,7 +2581,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -2579,7 +2591,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -2599,7 +2611,7 @@ PrefabInstance:
     - target: {fileID: 7438052142457645228, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_Name
-      value: Gun Ammo (1)
+      value: Gun Ammo (RF)
       objectReference: {fileID: 0}
     - target: {fileID: 9046595378128282080, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -2611,6 +2623,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a52eaddb24ebb74a9ed0b511e02bde7, type: 3}
+--- !u!4 &488370385 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1799186718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &490715770
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3313,22 +3331,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1958180934}
     m_Modifications:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.152
+      value: 0.689
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.972
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.642
+      value: 0.68899995
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -3338,7 +3356,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -3348,7 +3366,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -3368,7 +3386,7 @@ PrefabInstance:
     - target: {fileID: 7438052142457645228, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_Name
-      value: Gun Ammo (2)
+      value: Gun Ammo (RB)
       objectReference: {fileID: 0}
     - target: {fileID: 9046595378128282080, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -8141,6 +8159,12 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!4 &1481784235 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4127474198877279364}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1501082738
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9635,22 +9659,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1958180934}
     m_Modifications:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.841
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.972
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.331
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -9660,7 +9684,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -9670,7 +9694,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -9690,7 +9714,7 @@ PrefabInstance:
     - target: {fileID: 7438052142457645228, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_Name
-      value: Gun Ammo (3)
+      value: Gun Ammo (LF)
       objectReference: {fileID: 0}
     - target: {fileID: 9046595378128282080, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -12114,6 +12138,41 @@ Transform:
   - {fileID: 2031221569}
   m_Father: {fileID: 441378033}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1958180933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1958180934}
+  m_Layer: 0
+  m_Name: Ammo indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1958180934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958180933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.841, y: 0.972, z: -1.331}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 348133349}
+  - {fileID: 488370385}
+  - {fileID: 1481784235}
+  - {fileID: 205164369}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2016358154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13156,22 +13215,22 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1958180934}
     m_Modifications:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.287
+      value: 0.554
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.972
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.507
+      value: 0.82399994
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -13181,7 +13240,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -13191,7 +13250,7 @@ PrefabInstance:
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 6384134143934570510, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -13211,7 +13270,7 @@ PrefabInstance:
     - target: {fileID: 7438052142457645228, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
       propertyPath: m_Name
-      value: Gun Ammo
+      value: Gun Ammo (LB)
       objectReference: {fileID: 0}
     - target: {fileID: 9046595378128282080, guid: 2a52eaddb24ebb74a9ed0b511e02bde7,
         type: 3}
@@ -13429,10 +13488,7 @@ SceneRoots:
   - {fileID: 211363636}
   - {fileID: 1121823680}
   - {fileID: 6740397538105171258}
-  - {fileID: 4127474198877279364}
-  - {fileID: 486859806}
-  - {fileID: 628907563}
-  - {fileID: 1799186718}
+  - {fileID: 1958180934}
   - {fileID: 113887856}
   - {fileID: 1807026055}
   - {fileID: 532965477}
