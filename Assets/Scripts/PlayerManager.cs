@@ -15,6 +15,24 @@ public class PlayerManager : Singleton<PlayerManager>
         return _players[NetworkManager.Singleton.LocalClientId];
     }
 
+    public void LoadPlayers()
+    {
+        var players = FindObjectsByType<Player>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        
+        foreach (var player in players)
+        {
+            RegisterPlayer(player.PlayerId, player);
+        }
+    }
+    
+    public void RegisterPlayer(ulong id, Player instance)
+    {
+        if (!_players.ContainsKey(id))
+        {
+            _players.Add(id, instance);
+        }
+    }
+
     public Player[] ByIds(ulong[] ids)
     {
         var query = from player in _players
@@ -27,10 +45,5 @@ public class PlayerManager : Singleton<PlayerManager>
     public Player ById(ulong id)
     {
         return _players[id];
-    }
-
-    public void RegisterPlayer(ulong id, Player instance)
-    {
-        _players.Add(id, instance);
     }
 }

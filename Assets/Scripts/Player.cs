@@ -36,7 +36,16 @@ public class Player : NetworkBehaviour
             net_health.Value = m_maxHealth;
         }
 
-        PlayerManager.Instance.RegisterPlayer(PlayerId, this);
+        if (NetworkManager.Singleton.LocalClientId == PlayerId)
+        {
+            PlayerManager.Instance.LoadPlayers();
+            InventoryManager.Instance.LoadInventories();
+        }
+        else
+        {
+            PlayerManager.Instance.RegisterPlayer(PlayerId, this);
+        }
+        
         net_health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
     }
 

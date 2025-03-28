@@ -21,14 +21,24 @@ public class InventoryManager : Singleton<InventoryManager>
         return query.FirstOrDefault();
     }
 
+    public void LoadInventories()
+    {
+        var inventories = FindObjectsByType<Inventory>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
+        
+        foreach (var inventory in inventories)
+        {
+            if (!inventory.Chair.IsFree)
+            {
+                RegisterInventory(inventory.Chair.Player.PlayerId, inventory);
+            }
+        }
+    }
+
     public void RegisterInventory(ulong client, Inventory instance)
     {
-        if (_inventories.ContainsValue(instance))
+        if (!_inventories.ContainsValue(instance))
         {
-            Debug.LogError("Inventory already registered. Player: " + client + ", Inventory: " + instance.NetworkObjectId);
-            return;
+            _inventories.Add(client, instance);
         }
-
-        _inventories.Add(client, instance);
     }
 }
