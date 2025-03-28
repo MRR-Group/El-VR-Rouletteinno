@@ -317,7 +317,7 @@ MonoBehaviour:
   m_moveAction: {fileID: 6972639530819350904, guid: c348712bda248c246b8c49b3db54643f,
     type: 3}
   m_maxPlayers: 4
-  m_minPlayers: 1
+  m_minPlayers: 2
   m_interactionManager: {fileID: 685566213}
   Game: {fileID: 26018722}
   Round: {fileID: 26018721}
