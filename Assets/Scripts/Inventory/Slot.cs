@@ -9,6 +9,10 @@ public class Slot : NetworkBehaviour
     
     [SerializeField]
     private Transform m_spawnPoint;
+    
+    [SerializeField]
+    private Inventory m_inventory;
+    public Inventory Inventory => m_inventory;
     public Transform SpawnPoint => m_spawnPoint;
 
     [Rpc(SendTo.Server)]
