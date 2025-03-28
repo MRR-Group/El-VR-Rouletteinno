@@ -56,16 +56,14 @@ namespace XRMultiplayer
 
         private void HandleAutoClose()
         {
-            StopCoroutine(closeCoroutine);
-
-            if (!net_isOpen.Value)
-            {
-                return;
-            }
-            
             if (closeCoroutine != null)
             {
                 StopCoroutine(closeCoroutine);
+            }
+            
+            if (!net_isOpen.Value)
+            {
+                return;
             }
 
             closeCoroutine = StartCoroutine(AutoClose());
