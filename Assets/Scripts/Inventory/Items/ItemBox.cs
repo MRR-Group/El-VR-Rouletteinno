@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class ItemBox : NetworkItem
 {
+    [SerializeField]
+    private AudioSource m_openingSound;
+    
     private NetworkVariable<ulong> net_player = new ();
+    
 
     public Inventory Inventory => InventoryManager.Instance.ByClientId(net_player.Value);
     
@@ -16,14 +20,28 @@ public class ItemBox : NetworkItem
 
     public override bool Use()
     {
-        Inventory.SpawnRandomItemsRpc();
-        Inventory.MarkItemBoxAsUsedRpc();
+        PlayOpeningSoundRpc();
+        
+        Invoke(nameof(OpenItemBox), m_useAnimationTimeInSecounds);
         
         return true;
+    }
+
+    private void OpenItemBox()
+    {
+        Inventory.SpawnRandomItemsRpc();
+        Inventory.MarkItemBoxAsUsedRpc();
     }
 
     protected override bool CanUse(ulong _)
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS;
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void PlayOpeningSoundRpc()
+    {
+        m_openingSound.time = 0;
+        m_openingSound.Play();
     }
 }
