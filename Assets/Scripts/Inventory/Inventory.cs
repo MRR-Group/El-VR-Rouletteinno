@@ -10,39 +10,36 @@ public class Inventory : NetworkBehaviour
     private List<Slot> _slots;
 
     public event EventHandler ItemBoxUsed;
-    
-    [SerializeField]
-    private Transform m_ItemBoxSpawnPoint;
-    
-    [SerializeField]
-    private ItemBox m_itemBoxPrefab;
-    
-    [SerializeField]
-    private GameChair m_chair;
+
+    [SerializeField] private Transform m_ItemBoxSpawnPoint;
+
+    [SerializeField] private ItemBox m_itemBoxPrefab;
+
+    [SerializeField] private GameChair m_chair;
     public GameChair Chair => m_chair;
 
-    private NetworkVariable<bool> net_hasUnusedItemBox = new (false);
-    
+    private NetworkVariable<bool> net_hasUnusedItemBox = new(false);
+
     public bool HasUnusedItemBox => net_hasUnusedItemBox.Value;
-    
+
     private void Awake()
     {
         _slots = GetComponentsInChildren<Slot>().ToList();
     }
-    
+
     public List<Slot> GetSlots()
     {
         return _slots;
     }
 
-    public Slot GetSlot(int  slotNumber)
+    public Slot GetSlot(int slotNumber)
     {
         return _slots[slotNumber];
     }
 
     private Slot GetFreeSlot()
     {
-        var freeSlots = from _slot in _slots where _slot.IsFree select _slot ;
+        var freeSlots = from _slot in _slots where _slot.IsFree select _slot;
         return freeSlots.FirstOrDefault();
     }
 
@@ -52,7 +49,7 @@ public class Inventory : NetworkBehaviour
         net_hasUnusedItemBox.Value = false;
         EmitItemBoxWasUsedEventRpc();
     }
-    
+
     [Rpc(SendTo.Everyone)]
     private void EmitItemBoxWasUsedEventRpc()
     {
@@ -65,8 +62,9 @@ public class Inventory : NetworkBehaviour
         {
             return;
         }
-        
-        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(m_itemBoxPrefab.gameObject), m_ItemBoxSpawnPoint.position,  Quaternion.identity);
+
+        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(m_itemBoxPrefab.gameObject),
+            m_ItemBoxSpawnPoint.position, Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
         var box = instance.GetComponent<ItemBox>();
@@ -75,36 +73,38 @@ public class Inventory : NetworkBehaviour
         box.SetPlayer(InventoryManager.Instance.GetPlayerId(this));
         net_hasUnusedItemBox.Value = true;
     }
-    
-    private void AddItem(int prefabIndex)
+
+    private void AddItem(int prefabIndex, ulong clientId)
     {
         var slot = GetFreeSlot();
-        
+
         if (!slot)
         {
             return;
         }
-        
+
         var itemPrefab = GameManager.Instance.AvailableItems[prefabIndex];
-        
-        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(itemPrefab.gameObject), slot.SpawnPoint.position + new Vector3(0, 0.1f, 0),  Quaternion.identity);
+
+        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(itemPrefab.gameObject),
+            slot.SpawnPoint.position + new Vector3(0, 0.1f, 0), Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
         var item = instance.GetComponent<NetworkItem>();
-        
+
         slot.OccupyRpc();
         item.SetSpawnPointRpc(slot.SpawnPoint.position);
+        item.SetItemOwnerRpc(clientId);
     }
 
     [Rpc(SendTo.Server)]
-    public void SpawnRandomItemsRpc()
+    public void SpawnRandomItemsRpc(ulong clientId)
     {
         var itemsCount = GameManager.Instance.Round.CurrentItemCount;
         var itemsList = GetRandomItemIds(itemsCount);
-        
+
         foreach (var item in itemsList)
         {
-            AddItem(item);
+            AddItem(item, clientId);
         }
     }
 
@@ -112,22 +112,22 @@ public class Inventory : NetworkBehaviour
     {
         var items = GameManager.Instance.AvailableItems;
         var randomIndex = Random.Range(0, items.Length);
-        
+
         return randomIndex;
     }
 
     private int[] GetRandomItemIds(int count)
     {
         var randomItems = new List<int>();
-        
+
         for (var i = 0; i < count; i++)
         {
             randomItems.Add(GetRandomItemIndex());
         }
-        
+
         return randomItems.ToArray();
     }
-    
+
     [Rpc(SendTo.Everyone)]
     public void RegisterRpc(ulong player)
     {

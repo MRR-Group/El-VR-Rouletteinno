@@ -29,7 +29,7 @@ public class ItemBox : NetworkItem
 
     private void OpenItemBox()
     {
-        Inventory.SpawnRandomItemsRpc();
+        Inventory.SpawnRandomItemsRpc(NetworkManager.Singleton.LocalClientId);
         Inventory.MarkItemBoxAsUsedRpc();
     }
 
