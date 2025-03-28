@@ -6,8 +6,12 @@ public class StickyHand : TargetableItem<NetworkItem>
 
     public override bool Use(NetworkItem item)
     {
-        item.Use();
+        if (item.OwnerId == NetworkManager.Singleton.LocalClientId)
+        {
+            return false;
+        }
         
+        item.Use();
         return true;
     }
 }
