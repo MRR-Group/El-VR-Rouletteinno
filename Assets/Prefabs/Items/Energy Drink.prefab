@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8127045467698084969}
   - component: {fileID: 1217209972600611623}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Drink Sound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 9208948035579849765}
   - component: {fileID: 2833063691120635449}
   - component: {fileID: 7516872518106223575}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Energy Drink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4227876974149241921}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 5203220344875564653}
   - component: {fileID: 4739344255155934234}
   - component: {fileID: 5754121799998699272}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -665,6 +665,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Soda_Can_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7c294832e6ad08048adae1e6d7eca8ab,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 7c294832e6ad08048adae1e6d7eca8ab,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

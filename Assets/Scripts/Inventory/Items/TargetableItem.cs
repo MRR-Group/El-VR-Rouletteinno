@@ -64,7 +64,7 @@ public abstract class TargetableItem<T>: NetworkItem where T : MonoBehaviour
     
     protected T StartRayCast(out RaycastHit hit)
     {
-        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity, m_layermask);
+        var success= Physics.Raycast(m_raycastStart.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, m_layermask);
         
         return success ? hit.transform?.GetComponentInParent<T>() : null;
     }
