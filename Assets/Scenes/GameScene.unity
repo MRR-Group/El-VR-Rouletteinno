@@ -5723,61 +5723,11 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 248276706
       objectReference: {fileID: 0}
-    - target: {fileID: 2675133569049675328, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: InScenePlacedSourceGlobalObjectIdHash
-      value: 1467700742
-      objectReference: {fileID: 0}
-    - target: {fileID: 2876555419428520289, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2876555419428520289, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 8.21
-      objectReference: {fileID: 0}
-    - target: {fileID: 2876555419428520289, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 13.55
-      objectReference: {fileID: 0}
-    - target: {fileID: 4380104049226905660, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.7486785
-      objectReference: {fileID: 0}
-    - target: {fileID: 4380104049226905660, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_Center.x
-      value: -0.00000014370168
-      objectReference: {fileID: 0}
-    - target: {fileID: 4380104049226905660, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_Center.y
-      value: -0.7061405
-      objectReference: {fileID: 0}
-    - target: {fileID: 4380104049226905660, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_Center.z
-      value: 0.000000059523177
-      objectReference: {fileID: 0}
     - target: {fileID: 7323234607413371606, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}
       propertyPath: m_chair
       value: 
       objectReference: {fileID: 633997599}
-    - target: {fileID: 8921275672000148778, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 8921275672000148778, guid: e9d9955af0243b9489fb9eb466aad408,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.040000007
-      objectReference: {fileID: 0}
     - target: {fileID: 8921275672000148778, guid: e9d9955af0243b9489fb9eb466aad408,
         type: 3}
       propertyPath: m_LocalPosition.x
