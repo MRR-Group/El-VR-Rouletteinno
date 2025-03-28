@@ -13,6 +13,9 @@ public class Player : NetworkBehaviour
     [SerializeField]
     private ParticleSystem m_particleSystem;
     
+    [SerializeField]
+    private AudioSource m_vapeAudio;
+    
     public event EventHandler<HealthChangedArgs> HealthChanged;
     public class HealthChangedArgs : EventArgs
     {
@@ -76,7 +79,15 @@ public class Player : NetworkBehaviour
     }
     
     [Rpc(SendTo.Everyone)]
-    public void EmitVapeParticlesRpc()
+    public void EmitVapeEffectsRpc(float animationTime)
+    {
+        m_vapeAudio.time = 0;
+        m_vapeAudio.Play();
+        
+        Invoke(nameof(ShowVapeParticles), animationTime);
+    }
+
+    private void ShowVapeParticles()
     {
         m_particleSystem.time = 0;
         m_particleSystem.Play();

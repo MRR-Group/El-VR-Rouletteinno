@@ -43,7 +43,7 @@ public class Vape : NetworkItem
             return false;
         }
         
-        player.EmitVapeParticlesRpc();
+        player.EmitVapeEffectsRpc(m_useAnimationTimeInSecounds);
         player.HealRpc(m_healAmount);
 
         return true;
