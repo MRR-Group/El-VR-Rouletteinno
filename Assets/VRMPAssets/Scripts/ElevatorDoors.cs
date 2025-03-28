@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.Mathematics.Geometry;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -7,17 +6,29 @@ namespace XRMultiplayer
 {
     public class ElevatorDoors : NetworkBehaviour
     {
-        private NetworkVariable<bool> isOpen = new();
+        private NetworkVariable<bool> net_isOpen = new();
+        
         [SerializeField]
         private Vector3 m_doorSize;
+        
         [SerializeField] 
         private Transform m_leftDoor;
+        
         [SerializeField] 
         private Transform m_rightDoor;
+        
         [SerializeField] 
-        private float m_closingSpeed;
+        private float m_closingSpeed = 0.5f;
+        
         [SerializeField] 
         private float m_closeDelay = 10f;
+
+        [SerializeField]
+        private AudioSource m_audio;
+        
+        [SerializeField]
+        private AudioSource m_buttonAudio;
+        
         private Vector3 startPositionLeft;
         private Vector3 startPositionRight;
         private Vector3 endPositionLeft;
@@ -27,18 +38,31 @@ namespace XRMultiplayer
         [Rpc(SendTo.Server)]
         private void OpenRpc()
         {
-            isOpen.Value = true;
+            net_isOpen.Value = true;
             HandleAutoClose();
+            PlaySoundEffectRpc();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void PlaySoundEffectRpc()
+        {
+            m_audio.Play();
+            
+            if (m_audio.time >= m_audio.clip.length)
+            {
+                m_audio.time = 0;
+            }
         }
 
         private void HandleAutoClose()
         {
-            if (!isOpen.Value)
+            StopCoroutine(closeCoroutine);
+
+            if (!net_isOpen.Value)
             {
                 return;
             }
-
-
+            
             if (closeCoroutine != null)
             {
                 StopCoroutine(closeCoroutine);
@@ -50,7 +74,9 @@ namespace XRMultiplayer
         [Rpc(SendTo.Server)]
         private void CloseRpc()
         {
-            isOpen.Value = false;
+            net_isOpen.Value = false;
+
+            PlaySoundEffectRpc();
         }
 
         private IEnumerator AutoClose()
@@ -62,8 +88,17 @@ namespace XRMultiplayer
         [Rpc(SendTo.Server)]
         public void ToggleDoorStateRpc()
         {
-            isOpen.Value = !isOpen.Value;
+            net_isOpen.Value = !net_isOpen.Value;
             HandleAutoClose();
+            PlaySoundEffectRpc();
+            PlayButtonSoundRpc();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void PlayButtonSoundRpc()
+        {
+            m_buttonAudio.time = 0;
+            m_buttonAudio.Play();
         }
 
         private void Start()
@@ -83,13 +118,15 @@ namespace XRMultiplayer
 
         private void Update()
         {
-            var leftTargetPosition = isOpen.Value ? endPositionLeft : startPositionLeft;
+            var leftTargetPosition = net_isOpen.Value ? endPositionLeft : startPositionLeft;
+            
             m_leftDoor.position =
-                Vector3.Lerp(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
+                Vector3.MoveTowards(m_leftDoor.position, leftTargetPosition, Time.deltaTime * m_closingSpeed);
 
-            var rightTargetPosition = isOpen.Value ? endPositionRight : startPositionRight;
+            var rightTargetPosition = net_isOpen.Value ? endPositionRight : startPositionRight;
+            
             m_rightDoor.position =
-                Vector3.Lerp(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
+                Vector3.MoveTowards(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
         }
     }
 }
