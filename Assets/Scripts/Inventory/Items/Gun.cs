@@ -160,4 +160,17 @@ public class Gun : TargetableItem<Player>
     {
         BulletSkipped?.Invoke(this, new BulletSkippedEventArgs { Bullet = bullet });
     }
+    
+
+    [Rpc(SendTo.Server)]
+    public void SwitchCurrentBulletRpc()
+    {
+        if (IsMagazineEmpty())
+        {
+            return;
+        }
+
+        _ammo.Value[0] = !_ammo.Value[0];
+        _ammo.CheckDirtyState();
+    }
 }
