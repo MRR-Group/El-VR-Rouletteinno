@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3476276278858131577}
   - component: {fileID: 5819137433523155449}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Collider (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 9208948035579849765}
   - component: {fileID: 2833063691120635449}
   - component: {fileID: 1920572654725567840}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mysterious Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -409,7 +409,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1152617852263915550}
   - component: {fileID: 1985141127105467116}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Audio Source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -537,7 +537,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1677520480173082709}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: AttachPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -641,6 +641,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 823309472da4af047ab6f517a0199dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
