@@ -125,6 +125,12 @@ namespace XRMultiplayer
             
             m_rightDoor.position =
                 Vector3.MoveTowards(m_rightDoor.position, rightTargetPosition, Time.deltaTime * m_closingSpeed);
+
+            if (Vector3.Distance(m_leftDoor.position, leftTargetPosition) <= 0.1f)
+            {
+                m_audio.Stop();
+                m_audio.time = 0;
+            }
         }
     }
 }
