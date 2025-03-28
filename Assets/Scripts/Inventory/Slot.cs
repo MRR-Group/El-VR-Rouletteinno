@@ -12,12 +12,17 @@ public class Slot : NetworkBehaviour
     
     [SerializeField]
     private Inventory m_inventory;
-    public Inventory Inventory => m_inventory;
     public Transform SpawnPoint => m_spawnPoint;
 
     [Rpc(SendTo.Server)]
     public void OccupyRpc()
     {
         isFree.Value = false;
+    }
+    
+    [Rpc(SendTo.Server)]
+    public void vacateRpc()
+    {
+        isFree.Value = true;
     }
 }

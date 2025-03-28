@@ -95,6 +95,7 @@ public class Inventory : NetworkBehaviour
         slot.OccupyRpc();
         item.SetSpawnPointRpc(slot.SpawnPoint.position);
         item.SetItemOwnerRpc(clientId);
+        item.SetInventorySlotIdRpc(_slots.IndexOf(slot));
     }
 
     [Rpc(SendTo.Server)]

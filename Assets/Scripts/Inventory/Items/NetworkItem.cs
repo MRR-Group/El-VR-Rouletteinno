@@ -43,6 +43,8 @@ public abstract class NetworkItem : NetworkBehaviour
     public ulong OwnerId => _ownerId.Value;
     private bool _isOwnerAssigned = false;
 
+    protected int InventorySlotId;
+
 
     protected virtual void Awake()
     {
@@ -168,6 +170,12 @@ public abstract class NetworkItem : NetworkBehaviour
         _ownerId.Value = ownerId;
         _isOwnerAssigned = true;
     }
+    
+    [Rpc(SendTo.Everyone)]
+    public void SetInventorySlotIdRpc(int slotId)
+    {
+        InventorySlotId = slotId;
+    }
 
     protected virtual void Interactable_OnActivate(ActivateEventArgs e)
     {
@@ -176,8 +184,9 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
 
+        var clientId = NetworkManager.Singleton.LocalClientId;
 
-        if (!CanUse(NetworkManager.Singleton.LocalClientId))
+        if (!CanUse(clientId))
         {
             ForceDrop();
 
@@ -192,10 +201,10 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
 
-        StartCoroutine(UsageAnimation());
+        StartCoroutine(UsageAnimation(clientId));
     }
 
-    protected IEnumerator UsageAnimation()
+    protected IEnumerator UsageAnimation(ulong clientId)
     {
         if (m_useAnimationTimeInSecounds > 0)
         {
@@ -207,7 +216,7 @@ public abstract class NetworkItem : NetworkBehaviour
             ForceDrop();
         }
 
-        AfterUseRpc();
+        AfterUseRpc(clientId);
 
         _isAnimatingUsage = false;
 
@@ -215,13 +224,13 @@ public abstract class NetworkItem : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    protected void AfterUseRpc()
+    protected void AfterUseRpc(ulong clientId)
     {
         DecrementUsages();
 
         if (net_usages.Value <= 0)
         {
-            DestroyItem();
+            DestroyItem(clientId);
         }
     }
 
@@ -240,9 +249,12 @@ public abstract class NetworkItem : NetworkBehaviour
         }
     }
 
-    public void DestroyItem()
+    public void DestroyItem(ulong clientId)
     {
         _networkObject.Despawn();
+        var inventory = InventoryManager.Instance.ByClientId(clientId);
+        var slot = inventory.GetSlot(InventorySlotId);
+        slot.vacateRpc();
     }
 
     public abstract bool Use();
