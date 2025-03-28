@@ -18,6 +18,12 @@ public class Gun : TargetableItem<Player>
     
     [SerializeField]
     private ParticleSystem m_shootBlankParticles;
+
+    [SerializeField]
+    private AudioSource m_shootAudio;
+
+    [SerializeField]
+    private AudioSource m_reloadAudio;
     
     private NetworkVariable<List<bool>> _ammo = new (new List<bool>());
     
@@ -67,6 +73,8 @@ public class Gun : TargetableItem<Player>
         var isBulletLive = _ammo.Value[0];
         _ammo.Value.RemoveAt(0);
         _ammo.CheckDirtyState();
+
+        PlayShootAudioRpc();
         
         if (isBulletLive)
         {
@@ -89,18 +97,26 @@ public class Gun : TargetableItem<Player>
         }
     }
 
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.Everyone)]
     protected void EmitLiveParticlesRpc()
     {
         m_shootLiveParticles.time = 0;
         m_shootLiveParticles.Play();
     }
     
-    [Rpc(SendTo.ClientsAndHost)]
+    [Rpc(SendTo.Everyone)]
     protected void EmitBlankParticlesRpc()
     {
         m_shootBlankParticles.time = 0;
         m_shootBlankParticles.Play();
+    }
+
+    [Rpc(SendTo.Everyone)]
+    private void PlayShootAudioRpc()
+    {
+        
+        m_shootAudio.time = 0;
+        m_shootAudio.Play();
     }
 
     protected override bool CanUse(ulong player)
