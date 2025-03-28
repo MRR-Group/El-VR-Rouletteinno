@@ -227,7 +227,6 @@ public abstract class NetworkItem : NetworkBehaviour
 
     protected virtual bool CanUse(ulong currentPlayer)
     {
-        Debug.Log("currentPlayer == _ownerId.Value" + currentPlayer + " x " +  _ownerId.Value);
         return GameManager.Instance.GameState == GameState.IN_PROGRESS &&
                GameManager.Instance.Turn.IsPlayerTurn(currentPlayer) &&
                (!_isOwnerAssigned || _ownerId.Value.Equals(currentPlayer));

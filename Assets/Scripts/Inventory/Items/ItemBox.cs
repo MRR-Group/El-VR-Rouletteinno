@@ -33,9 +33,9 @@ public class ItemBox : NetworkItem
         Inventory.MarkItemBoxAsUsedRpc();
     }
 
-    protected override bool CanUse(ulong _)
+    protected override bool CanUse(ulong currentPlayer)
     {
-        return GameManager.Instance.GameState == GameState.IN_PROGRESS;
+        return GameManager.Instance.GameState == GameState.IN_PROGRESS && OwnerId == currentPlayer;
     }
 
     [Rpc(SendTo.Everyone)]

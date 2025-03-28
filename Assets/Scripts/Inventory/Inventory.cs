@@ -56,7 +56,7 @@ public class Inventory : NetworkBehaviour
         ItemBoxUsed?.Invoke(this, EventArgs.Empty);
     }
 
-    public void SpawnItemBox()
+    public void SpawnItemBox(ulong clientId)
     {
         if (m_chair.IsFree || m_chair.Player.IsDead())
         {
@@ -71,6 +71,7 @@ public class Inventory : NetworkBehaviour
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
         box.SetPlayer(InventoryManager.Instance.GetPlayerId(this));
+        box.SetItemOwnerRpc(clientId);
         net_hasUnusedItemBox.Value = true;
     }
 
