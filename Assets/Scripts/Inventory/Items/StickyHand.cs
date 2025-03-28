@@ -11,7 +11,7 @@ public class StickyHand : TargetableItem<NetworkItem>
             return false;
         }
         
-        item.Use();
+        item.StealItem();
         return true;
     }
 }

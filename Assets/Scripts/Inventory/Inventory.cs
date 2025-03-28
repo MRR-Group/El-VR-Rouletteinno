@@ -71,7 +71,7 @@ public class Inventory : NetworkBehaviour
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
         box.SetPlayer(InventoryManager.Instance.GetPlayerId(this));
-        box.SetItemOwnerRpc(clientId);
+        box.SetOwnerRpc(clientId);
         net_hasUnusedItemBox.Value = true;
     }
 
@@ -94,7 +94,7 @@ public class Inventory : NetworkBehaviour
 
         slot.OccupyRpc();
         item.SetSpawnPointRpc(slot.SpawnPoint.position);
-        item.SetItemOwnerRpc(clientId);
+        item.SetOwnerRpc(clientId);
         item.SetInventorySlotIdRpc(_slots.IndexOf(slot));
     }
 

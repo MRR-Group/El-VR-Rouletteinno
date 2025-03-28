@@ -39,8 +39,8 @@ public abstract class NetworkItem : NetworkBehaviour
 
     [SerializeField] protected int m_useAnimationTimeInSecounds = 0;
 
-    private NetworkVariable<ulong> _ownerId = new ();
-    public ulong OwnerId => _ownerId.Value;
+    private NetworkVariable<ulong> net_ownerId = new ();
+    public ulong OwnerId => net_ownerId.Value;
     private bool _isOwnerAssigned = false;
 
     protected int InventorySlotId;
@@ -165,9 +165,9 @@ public abstract class NetworkItem : NetworkBehaviour
     }
 
     [Rpc(SendTo.Server)]
-    public void SetItemOwnerRpc(ulong ownerId)
+    public void SetOwnerRpc(ulong ownerId)
     {
-        _ownerId.Value = ownerId;
+        net_ownerId.Value = ownerId;
         _isOwnerAssigned = true;
     }
     
@@ -238,7 +238,7 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         return GameManager.Instance.GameState == GameState.IN_PROGRESS &&
                GameManager.Instance.Turn.IsPlayerTurn(currentPlayer) &&
-               (!_isOwnerAssigned || _ownerId.Value.Equals(currentPlayer));
+               (!_isOwnerAssigned || OwnerId.Equals(currentPlayer));
     }
 
     protected void DecrementUsages()
@@ -256,6 +256,39 @@ public abstract class NetworkItem : NetworkBehaviour
         var slot = inventory.GetSlot(InventorySlotId);
         slot.vacateRpc();
     }
+
+    public void StealItem()
+    {
+        if (_isAnimatingUsage)
+        {
+            return;
+        }
+
+        var newOwnerId = NetworkManager.Singleton.LocalClientId;
+        var oldOwner = OwnerId;
+        
+        SetOwnerRpc(newOwnerId);
+
+        if (!CanUse(newOwnerId))
+        {
+            ForceDrop();
+
+            return;
+        }
+
+        _isAnimatingUsage = true;
+
+        if (!Use())
+        {
+            _isAnimatingUsage = false;
+            return;
+        }
+
+        StartCoroutine(UsageAnimation(newOwnerId));
+        
+        SetOwnerRpc(oldOwner);
+    }
+
 
     public abstract bool Use();
 }
