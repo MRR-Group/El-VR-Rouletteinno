@@ -10,6 +10,9 @@ public class GameChair : NetworkBehaviour
     [SerializeField]
     private TeleportationAnchor m_anchor;
     
+    [SerializeField]
+    private GameObject m_cage;
+    
     private NetworkVariable<bool> net_isFree = new (true);
     private NetworkVariable<ulong> net_playerId = new ();
     
@@ -46,5 +49,17 @@ public class GameChair : NetworkBehaviour
         GameManager.Instance.AddPlayerRpc(player);
         
         net_playerId.Value = player;
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void ActivateCageRpc()
+    {
+        m_cage.SetActive(true);
+    }
+    
+    [Rpc(SendTo.Everyone)]
+    public void DeactivateCageRpc()
+    {
+        m_cage.SetActive(true);
     }
 }

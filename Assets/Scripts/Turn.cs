@@ -30,7 +30,16 @@ public class Turn : NetworkBehaviour
             game.PlayerWinGameRpc(net_currentPlayerTurn.Value);
             return;
         }
+
+        var nextPlayerId = game.GetNextPlayer(net_currentPlayerTurn.Value);
+        var nextPlayer = PlayerManager.Instance.ById(nextPlayerId);
         
-        net_currentPlayerTurn.Value = game.GetNextPlayer(net_currentPlayerTurn.Value);
+        net_currentPlayerTurn.Value = nextPlayerId;
+        
+        if (nextPlayer.IsHandcuffed)
+        {
+            NextTurnRpc();
+            nextPlayer.UncuffRpc();
+        }
     }
 }
