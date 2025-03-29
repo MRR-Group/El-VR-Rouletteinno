@@ -85,7 +85,7 @@ public class Inventory : NetworkBehaviour
         }
 
         var itemPrefab = GameManager.Instance.AvailableItems[prefabIndex];
-
+        Debug.Log(itemPrefab);
         var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(itemPrefab.gameObject),
             slot.SpawnPoint.position + new Vector3(0, 0.1f, 0), Quaternion.identity);
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
