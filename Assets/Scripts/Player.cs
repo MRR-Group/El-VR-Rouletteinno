@@ -109,10 +109,12 @@ public class Player : NetworkBehaviour
     public void CuffRpc()
     {
         net_isHandcuffed.Value = true;
+        Inventory.Chair.ActivateCageRpc();
     }
     [Rpc(SendTo.Server)]
     public void UncuffRpc()
     {
         net_isHandcuffed.Value = false;
+        Inventory.Chair.DeactivateCageRpc();
     }
 }
