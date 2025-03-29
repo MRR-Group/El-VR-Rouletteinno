@@ -43,7 +43,8 @@ public abstract class NetworkItem : NetworkBehaviour
     public ulong OwnerId => net_ownerId.Value;
     private bool _isOwnerAssigned = false;
 
-    protected int InventorySlotId = -1;
+    private const int EMPTY_SLOT = -1;
+    protected int InventorySlotId = EMPTY_SLOT;
 
 
     protected virtual void Awake()
