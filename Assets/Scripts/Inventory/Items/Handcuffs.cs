@@ -14,8 +14,9 @@ public class Handcuffs : TargetableItem<Player>
             return false;
         }
         
-        
         PlayHandcuffsAudioRpc();
+        target.CuffRpc();
+        
         return true;
     }
 

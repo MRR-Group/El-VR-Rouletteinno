@@ -28,6 +28,9 @@ public class Player : NetworkBehaviour
     public int Health => net_health.Value;
 
     public bool isLocalClient => OwnerClientId == NetworkManager.Singleton.LocalClientId;
+    
+    private NetworkVariable<bool> net_isHandcuffed = new ();
+    public bool IsHandcuffed => net_isHandcuffed.Value;
 
     public override void OnNetworkSpawn()
     {
@@ -100,5 +103,16 @@ public class Player : NetworkBehaviour
     {
         m_particleSystem.time = 0;
         m_particleSystem.Play();
+    }
+
+    [Rpc(SendTo.Server)]
+    public void CuffRpc()
+    {
+        net_isHandcuffed.Value = true;
+    }
+    [Rpc(SendTo.Server)]
+    public void UncuffRpc()
+    {
+        net_isHandcuffed.Value = false;
     }
 }
