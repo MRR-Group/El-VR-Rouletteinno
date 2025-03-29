@@ -43,7 +43,7 @@ public abstract class NetworkItem : NetworkBehaviour
     public ulong OwnerId => net_ownerId.Value;
     private bool _isOwnerAssigned = false;
 
-    protected int InventorySlotId;
+    protected int InventorySlotId = -1;
 
 
     protected virtual void Awake()
@@ -252,8 +252,15 @@ public abstract class NetworkItem : NetworkBehaviour
     public void DestroyItem(ulong clientId)
     {
         _networkObject.Despawn();
+
+        if (InventorySlotId < 0)
+        {
+            return;
+        }
+        
         var inventory = InventoryManager.Instance.ByClientId(clientId);
         var slot = inventory.GetSlot(InventorySlotId);
+        
         slot.vacateRpc();
     }
 
