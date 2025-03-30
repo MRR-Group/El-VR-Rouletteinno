@@ -71,6 +71,7 @@ public class Player : NetworkBehaviour
         if (IsDead())
         {
             GameManager.Instance.Game.RemoveDeadPlayerRpc(PlayerId);
+            Inventory.Chair.DisplayDeathParticlesRpc();
         }
     }
 

@@ -22,6 +22,9 @@ public class GameChair : NetworkBehaviour
     [SerializeField]
     private Inventory m_inventory;
     public Inventory Inventory => m_inventory;
+    
+    [SerializeField]
+    private ParticleSystem m_deathParticles;
  
     public void SitDown()
     {
@@ -61,5 +64,12 @@ public class GameChair : NetworkBehaviour
     public void DeactivateCageRpc()
     {
         m_cage.SetActive(true);
+    }
+
+    [Rpc(SendTo.Everyone)]
+    public void DisplayDeathParticlesRpc()
+    {
+        m_deathParticles.time = 0;
+        m_deathParticles.Play();
     }
 }
