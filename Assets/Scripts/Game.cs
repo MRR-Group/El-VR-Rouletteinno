@@ -102,6 +102,8 @@ public class Game : NetworkBehaviour
         }
 
         _wins.CheckDirtyState();
+        
+        InventoryManager.Instance.ByClientId(player).Chair.DisplayWinParticlesRpc();
 
         StartGameRpc();
 

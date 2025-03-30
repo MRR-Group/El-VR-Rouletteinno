@@ -25,7 +25,10 @@ public class GameChair : NetworkBehaviour
     
     [SerializeField]
     private ParticleSystem m_deathParticles;
- 
+    
+    [SerializeField]
+    private ParticleSystem m_winParticles;
+
     public void SitDown()
     {
         var player = NetworkManager.Singleton.LocalClient.ClientId;
@@ -72,4 +75,12 @@ public class GameChair : NetworkBehaviour
         m_deathParticles.time = 0;
         m_deathParticles.Play();
     }
+    
+    [Rpc(SendTo.Everyone)]
+    public void DisplayWinParticlesRpc()
+    {
+        m_winParticles.time = 0;
+        m_winParticles.Play();
+    }
+    
 }
