@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 1295978887093715784}
   - component: {fileID: 7264793173713672684}
   - component: {fileID: 6125339640637350104}
+  - component: {fileID: 6523278083029147488}
   m_Layer: 0
   m_Name: ItemBox
   m_TagString: Untagged
@@ -344,8 +345,25 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
-  m_useAnimationTimeInSecounds: 5
+  m_useAnimationTimeInSecounds: 2
+  m_dissolve: {fileID: 6523278083029147488}
   m_openingSound: {fileID: 2739953529880871396}
+--- !u!114 &6523278083029147488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363951224607632655}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f6b6e4eb844c4b8191876b939f122f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
+  m_dissolvingTime: 1
+  m_renderer: {fileID: 6610473538286045193}
 --- !u!1 &2450368460542309547
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,6 +637,12 @@ PrefabInstance:
 --- !u!4 &6610473538284152147 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 481586, guid: c3f71b31346a61e4a9ccb5d91997fb60,
+    type: 3}
+  m_PrefabInstance: {fileID: 6610473538284207201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6610473538286045193 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2389096, guid: c3f71b31346a61e4a9ccb5d91997fb60,
     type: 3}
   m_PrefabInstance: {fileID: 6610473538284207201}
   m_PrefabAsset: {fileID: 0}

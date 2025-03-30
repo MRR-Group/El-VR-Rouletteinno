@@ -102,6 +102,7 @@ GameObject:
   - component: {fileID: 6372117781873542430}
   - component: {fileID: 1152358307968707395}
   - component: {fileID: 4237679160402369996}
+  - component: {fileID: 5398571735579306569}
   - component: {fileID: 4096913785069562213}
   m_Layer: 10
   m_Name: PapugaPhone
@@ -432,6 +433,7 @@ MonoBehaviour:
   m_usages: 1
   m_isIndestructible: 0
   m_useAnimationTimeInSecounds: 3
+  m_dissolve: {fileID: 5398571735579306569}
   m_screen: {fileID: 692426027098381675}
   m_ringtone: {fileID: 8300000, guid: e06dd871fbc70c8499768b9825fe1dc3, type: 3}
   m_blankSound:
@@ -458,6 +460,22 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a022443ef1e1b644ca2a2ddfa56f80ab, type: 3}
   m_noAnswer: {fileID: 8300000, guid: 350f60ae040e200408ed50da0161b163, type: 3}
   m_audioSource: {fileID: 4096913785069562213}
+--- !u!114 &5398571735579306569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780507342329415378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f6b6e4eb844c4b8191876b939f122f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
+  m_dissolvingTime: 1
+  m_renderer: {fileID: 2488030375068003740}
 --- !u!82 &4096913785069562213
 AudioSource:
   m_ObjectHideFlags: 0
@@ -737,6 +755,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4944337257893991536}
   m_SourcePrefab: {fileID: 100100000, guid: 0f943aceeafda3f43897b4f84d8a7123, type: 3}
+--- !u!23 &2488030375068003740 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 0f943aceeafda3f43897b4f84d8a7123,
+    type: 3}
+  m_PrefabInstance: {fileID: 3838993022795510040}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3660422286526158579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 0f943aceeafda3f43897b4f84d8a7123,

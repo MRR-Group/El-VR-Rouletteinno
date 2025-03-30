@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 9208948035579849765}
   - component: {fileID: 2833063691120635449}
   - component: {fileID: 3895332423620955863}
+  - component: {fileID: 8927250706388341452}
   m_Layer: 10
   m_Name: Vape
   m_TagString: Untagged
@@ -454,12 +455,29 @@ MonoBehaviour:
   m_usages: 2
   m_isIndestructible: 0
   m_useAnimationTimeInSecounds: 4
+  m_dissolve: {fileID: 0}
   m_healAmount: 1
   m_ledOnMaterial: {fileID: 2100000, guid: ce66a8b36432fb049b9cab12cdeb02d9, type: 2}
   m_ledOffMaterial: {fileID: 2100000, guid: 4b79b03b0e98dd4458605c9d6ff888c9, type: 2}
   m_usageLed:
   - {fileID: 4158059736417162258}
   - {fileID: 9057130977679358558}
+--- !u!114 &8927250706388341452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371973704486377483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f6b6e4eb844c4b8191876b939f122f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
+  m_dissolvingTime: 1
+  m_renderer: {fileID: 633664903659040563}
 --- !u!1 &2746462030960509050
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,17 +681,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.05
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.05
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.05
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
@@ -693,12 +711,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071271
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.70708656
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
@@ -713,7 +731,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,
         type: 3}
@@ -795,6 +813,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e07635018759b1242966b7d4a19380fd, type: 3}
+--- !u!23 &633664903659040563 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: e07635018759b1242966b7d4a19380fd,
+    type: 3}
+  m_PrefabInstance: {fileID: 2236793123656709047}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1765435259511723100 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e07635018759b1242966b7d4a19380fd,

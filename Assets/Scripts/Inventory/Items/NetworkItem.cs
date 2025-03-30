@@ -22,7 +22,9 @@ public abstract class NetworkItem : NetworkBehaviour
     protected NetworkPhysicsInteractable _physicsInteractable;
     protected NetworkObject _networkObject;
 
-    [SerializeField] protected Transform m_startingSpawnPoint;
+    [SerializeField] 
+    protected Transform m_startingSpawnPoint;
+    
     protected NetworkVariable<Vector3> net_spawnPoint = new();
 
     private const string ITEM_BOX_TAG = "ItemBox";
@@ -32,23 +34,28 @@ public abstract class NetworkItem : NetworkBehaviour
     protected bool _isGrabbed;
     protected bool _isAnimatingUsage;
 
-    [SerializeField] protected int m_usages = 1;
+    [SerializeField] 
+    protected int m_usages = 1;
 
     protected NetworkVariable<int> net_usages = new();
     protected NetworkVariable<ulong> net_used_by = new();
 
-    [SerializeField] protected bool m_isIndestructible;
+    [SerializeField] 
+    protected bool m_isIndestructible;
 
-    [SerializeField] protected int m_useAnimationTimeInSecounds = 0;
-
+    [SerializeField] 
+    protected int m_useAnimationTimeInSecounds = 0;
+    
+    [SerializeField] 
+    protected Dissolve m_dissolve;
+    
     private NetworkVariable<ulong> net_ownerId = new ();
     public ulong OwnerId => net_ownerId.Value;
     private bool _isOwnerAssigned = false;
 
     private const int EMPTY_SLOT = -1;
     protected int InventorySlotId = EMPTY_SLOT;
-
-
+    
     protected virtual void Awake()
     {
         _interactable = GetComponent<XRGrabInteractable>();
@@ -224,14 +231,20 @@ public abstract class NetworkItem : NetworkBehaviour
         {
             yield return new WaitForSeconds(m_useAnimationTimeInSecounds);
         }
+        
+        if (m_dissolve && m_usages <= 1 && !m_isIndestructible)
+        {
+            m_dissolve.DissolveRpc();
+            yield return new WaitForSeconds(m_dissolve.DissolvingTime);
+        }
+        
+        _isAnimatingUsage = false;
 
         if (m_isIndestructible)
         {
             ForceDrop();
         }
-
-        _isAnimatingUsage = false;
-
+        
         AfterUseRpc(clientId);
 
         yield return null;
@@ -306,7 +319,6 @@ public abstract class NetworkItem : NetworkBehaviour
         }
 
         ForceGrab(interactor);
-        
         StartCoroutine(UsageAnimation(newOwnerId));
         
         SetOwnerRpc(oldOwner);

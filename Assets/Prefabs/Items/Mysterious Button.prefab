@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 9208948035579849765}
   - component: {fileID: 2833063691120635449}
   - component: {fileID: 1920572654725567840}
+  - component: {fileID: 4603732525380932965}
   m_Layer: 10
   m_Name: Mysterious Button
   m_TagString: Untagged
@@ -397,8 +398,25 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
-  m_useAnimationTimeInSecounds: 2
+  m_useAnimationTimeInSecounds: 1
+  m_dissolve: {fileID: 4603732525380932965}
   m_buttonAudio: {fileID: 1985141127105467116}
+--- !u!114 &4603732525380932965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1371973704486377483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f6b6e4eb844c4b8191876b939f122f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
+  m_dissolvingTime: 1
+  m_renderer: {fileID: 1379758528073742225}
 --- !u!1 &2133969776705016003
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +673,12 @@ PrefabInstance:
 --- !u!4 &247363515398573310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 823309472da4af047ab6f517a0199dc6,
+    type: 3}
+  m_PrefabInstance: {fileID: 352537186291428117}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1379758528073742225 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 823309472da4af047ab6f517a0199dc6,
     type: 3}
   m_PrefabInstance: {fileID: 352537186291428117}
   m_PrefabAsset: {fileID: 0}
