@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 using XRMultiplayer;
 
@@ -145,9 +147,20 @@ public abstract class NetworkItem : NetworkBehaviour
 
         GameManager.Instance.InteractionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
     }
-
-    protected void HandleDrop(SelectExitEventArgs _)
+    
+    protected void ForceGrab(IXRSelectInteractor interactor)
     {
+        GameManager.Instance.InteractionManager.SelectEnter(interactor, _interactable);
+    }
+
+    protected void HandleDrop(SelectExitEventArgs e)
+    {
+        if (_isAnimatingUsage)
+        {
+            ForceGrab(e.interactorObject);
+            return;
+        }
+        
         _isGrabbed = false;
         ReturnToSpawnIfDropped();
     }
@@ -217,9 +230,9 @@ public abstract class NetworkItem : NetworkBehaviour
             ForceDrop();
         }
 
-        AfterUseRpc(clientId);
-
         _isAnimatingUsage = false;
+
+        AfterUseRpc(clientId);
 
         yield return null;
     }
@@ -265,7 +278,7 @@ public abstract class NetworkItem : NetworkBehaviour
         slot.vacateRpc();
     }
 
-    public void StealItem()
+    public void StealItem(IXRSelectInteractor interactor)
     {
         if (_isAnimatingUsage)
         {
@@ -292,6 +305,8 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
 
+        ForceGrab(interactor);
+        
         StartCoroutine(UsageAnimation(newOwnerId));
         
         SetOwnerRpc(oldOwner);
