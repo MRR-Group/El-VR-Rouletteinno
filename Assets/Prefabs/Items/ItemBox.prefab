@@ -345,6 +345,7 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
+  m_disableDropWhileInUse: 0
   m_useAnimationTimeInSecounds: 2
   m_dissolve: {fileID: 6523278083029147488}
   m_openingSound: {fileID: 2739953529880871396}
@@ -362,7 +363,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
-  m_dissolvingTime: 1
+  m_dissolvingTime: 0.5
   m_renderer: {fileID: 6610473538286045193}
 --- !u!1 &2450368460542309547
 GameObject:

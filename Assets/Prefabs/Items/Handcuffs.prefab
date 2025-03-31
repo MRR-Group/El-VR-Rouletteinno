@@ -562,6 +562,7 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
+  m_disableDropWhileInUse: 1
   m_useAnimationTimeInSecounds: 1
   m_dissolve: {fileID: 1028425572511757879}
   m_raycastStart: {fileID: 3908483638373967824}
@@ -586,7 +587,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
-  m_dissolvingTime: 1
+  m_dissolvingTime: 0.5
   m_renderer: {fileID: 9158291049031340447}
 --- !u!1 &3158959300842755971
 GameObject:

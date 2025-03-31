@@ -219,7 +219,7 @@ namespace XRMultiplayer
             {
                 string failureMessage = "Failed to Create Lobby. Please try again.";
                 Utils.Log($"{k_DebugPrepend}{failureMessage}\n\n{e}", 1);
-                // Debug.LogWarning($"[XRMPT] {failureMessage}\n\n{e}");
+
                 OnLobbyFailed?.Invoke(failureMessage);
                 return null;
             }

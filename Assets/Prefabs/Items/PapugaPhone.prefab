@@ -432,6 +432,7 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 1
   m_isIndestructible: 0
+  m_disableDropWhileInUse: 1
   m_useAnimationTimeInSecounds: 3
   m_dissolve: {fileID: 5398571735579306569}
   m_screen: {fileID: 692426027098381675}
@@ -474,7 +475,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
-  m_dissolvingTime: 1
+  m_dissolvingTime: 0.5
   m_renderer: {fileID: 2488030375068003740}
 --- !u!82 &4096913785069562213
 AudioSource:
