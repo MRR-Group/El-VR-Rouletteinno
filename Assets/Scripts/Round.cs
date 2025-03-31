@@ -27,7 +27,6 @@ public class Round : NetworkBehaviour
         ItemsCountToGenerate();
         Gun.ChangeMagazineRpc();
         SpawnItemBoxRpc();
-        
         InvokeRoundStartedEventRpc();
     }
 

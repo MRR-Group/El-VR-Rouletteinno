@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 public class AmmoIndicator : MonoBehaviour
@@ -21,7 +22,7 @@ public class AmmoIndicator : MonoBehaviour
 
     public void Start()
     {
-         GameManager.Instance.Round.RoundStared += Round_OnRoundStared;
+         m_gun.Reloaded += Gun_OnReloaded;
          m_gun.BulletSkipped += Gun_OnBulletSkipped;
          HideAll();
     }
@@ -34,10 +35,10 @@ public class AmmoIndicator : MonoBehaviour
         }
     }
 
-    private void Round_OnRoundStared(object sender, EventArgs e)
+    private void Gun_OnReloaded(object sender, Gun.ReloadedEventArgs e)
     {
-        _all = m_gun.Magazine().Length;
-        _lives = m_gun.Magazine().Count(bullet => bullet);
+        _all = e.Bullets.Length;
+        _lives = e.Bullets.Count(bullet => bullet);
 
         HideAll();
         ShowBullets();

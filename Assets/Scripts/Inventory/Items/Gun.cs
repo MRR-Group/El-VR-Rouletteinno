@@ -29,12 +29,17 @@ public class Gun : TargetableItem<Player>
     
     public event EventHandler AmmoChanged;
     public event EventHandler<BulletSkippedEventArgs> BulletSkipped;
-    public class BulletSkippedEventArgs
+    public class BulletSkippedEventArgs : EventArgs
     {
         public bool Bullet;
     }
-
-
+    
+    public event EventHandler<ReloadedEventArgs> Reloaded;
+    public class ReloadedEventArgs : EventArgs
+    {
+        public bool[] Bullets;
+    }
+    
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
@@ -53,6 +58,13 @@ public class Gun : TargetableItem<Player>
         }
 
         _ammo.CheckDirtyState();
+        EmitReloadedRpc(_ammo.Value.ToArray());
+    }
+    
+    [Rpc(SendTo.Everyone)]
+    protected void EmitReloadedRpc(bool[] bullets)
+    {
+        Reloaded?.Invoke(this, new ReloadedEventArgs { Bullets = bullets });
     }
     
     public override bool Use(Player player)
@@ -153,14 +165,12 @@ public class Gun : TargetableItem<Player>
             GameManager.Instance.Round.StartRoundRpc();
         }
     }
-
-
+    
     [Rpc(SendTo.Everyone)]
     protected void EmitBulletSkippedRpc(bool bullet)
     {
         BulletSkipped?.Invoke(this, new BulletSkippedEventArgs { Bullet = bullet });
     }
-    
 
     [Rpc(SendTo.Server)]
     public void SwitchCurrentBulletRpc()
