@@ -91,7 +91,5 @@ public class Dissolve : NetworkBehaviour
         {
             mat.SetFloat(Value, progress);
         }
-        
-        Debug.Log("PROGRESS: " + progress);
     }
 }

@@ -19,7 +19,6 @@ public abstract class NetworkItem : NetworkBehaviour
 {
     protected Rigidbody _rigidbody;
     protected XRGrabInteractable _interactable;
-    protected NetworkPhysicsInteractable _physicsInteractable;
     protected NetworkObject _networkObject;
 
     [SerializeField] 
@@ -32,6 +31,7 @@ public abstract class NetworkItem : NetworkBehaviour
     protected bool _isInBox;
     protected bool _isActionButtonPressed;
     protected bool _isGrabbed;
+    protected bool _wasForceGrabbed;
     protected bool _isAnimatingUsage;
 
     [SerializeField] 
@@ -62,7 +62,6 @@ public abstract class NetworkItem : NetworkBehaviour
     protected virtual void Awake()
     {
         _interactable = GetComponent<XRGrabInteractable>();
-        _physicsInteractable = GetComponent<NetworkPhysicsInteractable>();
         _rigidbody = GetComponent<Rigidbody>();
         _networkObject = GetComponent<NetworkObject>();
     }
@@ -130,17 +129,17 @@ public abstract class NetworkItem : NetworkBehaviour
     protected void HandleGrab(SelectEnterEventArgs _)
     {
         _isGrabbed = true;
-
+        
         if (!CanUse(NetworkManager.Singleton.LocalClientId))
         {
             ForceDrop();
         }
 
-        GrabRpc(NetworkManager.Singleton.LocalClientId);
+        UpdateUserRpc(NetworkManager.Singleton.LocalClientId);
     }
 
     [Rpc(SendTo.Server)]
-    private void GrabRpc(ulong grabber)
+    private void UpdateUserRpc(ulong grabber)
     {
         if (CanUse(grabber))
         {
@@ -161,22 +160,21 @@ public abstract class NetworkItem : NetworkBehaviour
     
     protected void ForceGrab(IXRSelectInteractor interactor)
     {
+        _wasForceGrabbed = true;
         GameManager.Instance.InteractionManager.SelectEnter(interactor, _interactable);
     }
 
     protected void HandleDrop(SelectExitEventArgs e)
     {
-        if (_isAnimatingUsage)
+        if (_isAnimatingUsage && m_disableDropWhileInUse)
         {
-            if (m_disableDropWhileInUse)
-            {
-                ForceGrab(e.interactorObject);
-            }
-
+            ForceGrab(e.interactorObject);
             return;
         }
         
         _isGrabbed = false;
+        _wasForceGrabbed = false;
+
         ReturnToSpawnIfDropped();
     }
 
@@ -248,7 +246,7 @@ public abstract class NetworkItem : NetworkBehaviour
         
         _isAnimatingUsage = false;
 
-        if (m_isIndestructible)
+        if (m_isIndestructible || _wasForceGrabbed)
         {
             ForceDrop();
         }

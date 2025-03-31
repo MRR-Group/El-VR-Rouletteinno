@@ -454,8 +454,9 @@ MonoBehaviour:
   m_startingSpawnPoint: {fileID: 0}
   m_usages: 2
   m_isIndestructible: 0
+  m_disableDropWhileInUse: 1
   m_useAnimationTimeInSecounds: 4
-  m_dissolve: {fileID: 0}
+  m_dissolve: {fileID: 8927250706388341452}
   m_healAmount: 1
   m_ledOnMaterial: {fileID: 2100000, guid: ce66a8b36432fb049b9cab12cdeb02d9, type: 2}
   m_ledOffMaterial: {fileID: 2100000, guid: 4b79b03b0e98dd4458605c9d6ff888c9, type: 2}
@@ -476,7 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_dissolveMaterial: {fileID: 2100000, guid: 90709c38ac8220e44a2d276f05841789, type: 2}
-  m_dissolvingTime: 1
+  m_dissolvingTime: 0.5
   m_renderer: {fileID: 633664903659040563}
 --- !u!1 &2746462030960509050
 GameObject:
