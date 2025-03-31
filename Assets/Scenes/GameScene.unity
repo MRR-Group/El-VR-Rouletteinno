@@ -13614,23 +13614,28 @@ PrefabInstance:
       objectReference: {fileID: 1720673137}
     - target: {fileID: 1536476880367223086, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
+      propertyPath: m_disableDropWhileInUse
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1536476880367223086, guid: 37d529bde0fc50d419d48f8121b79353,
+        type: 3}
       propertyPath: m_useAnimationTimeInSecounds
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2339621226442624228, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.384
+      value: 1.705
       objectReference: {fileID: 0}
     - target: {fileID: 2339621226442624228, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.9735
+      value: 0.922
       objectReference: {fileID: 0}
     - target: {fileID: 2339621226442624228, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.624
+      value: 1.436
       objectReference: {fileID: 0}
     - target: {fileID: 2339621226442624228, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
