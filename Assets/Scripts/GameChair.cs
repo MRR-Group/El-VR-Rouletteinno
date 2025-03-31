@@ -66,7 +66,7 @@ public class GameChair : NetworkBehaviour
     [Rpc(SendTo.Everyone)]
     public void DeactivateCageRpc()
     {
-        m_cage.SetActive(true);
+        m_cage.SetActive(false);
     }
 
     [Rpc(SendTo.Everyone)]
