@@ -44,6 +44,9 @@ public abstract class NetworkItem : NetworkBehaviour
     protected bool m_isIndestructible;
 
     [SerializeField] 
+    protected bool m_disableDropWhileInUse = true;
+
+    [SerializeField] 
     protected int m_useAnimationTimeInSecounds = 0;
     
     [SerializeField] 
@@ -153,6 +156,7 @@ public abstract class NetworkItem : NetworkBehaviour
         }
 
         GameManager.Instance.InteractionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
+        ReturnToSpawnIfDropped();
     }
     
     protected void ForceGrab(IXRSelectInteractor interactor)
@@ -164,7 +168,11 @@ public abstract class NetworkItem : NetworkBehaviour
     {
         if (_isAnimatingUsage)
         {
-            ForceGrab(e.interactorObject);
+            if (m_disableDropWhileInUse)
+            {
+                ForceGrab(e.interactorObject);
+            }
+
             return;
         }
         
@@ -318,7 +326,11 @@ public abstract class NetworkItem : NetworkBehaviour
             return;
         }
 
-        ForceGrab(interactor);
+        if (m_disableDropWhileInUse)
+        {
+            ForceGrab(interactor);
+        }
+        
         StartCoroutine(UsageAnimation(newOwnerId));
         
         SetOwnerRpc(oldOwner);
