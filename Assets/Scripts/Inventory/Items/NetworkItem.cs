@@ -333,7 +333,7 @@ public abstract class NetworkItem : NetworkBehaviour
             ForceGrab(interactor);
         }
         
-        StartCoroutine(UsageAnimation(newOwnerId));
+        StartCoroutine(UsageAnimation(oldOwner));
         
         SetOwnerRpc(oldOwner);
     }
