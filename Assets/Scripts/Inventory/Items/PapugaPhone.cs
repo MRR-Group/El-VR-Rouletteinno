@@ -75,6 +75,7 @@ public class PapugaPhone : NetworkItem
         if (magazine.Length <= m_minAmmo)
         {
             PlayerHudNotification.Instance.ShowText($"Try again later...");
+            return;
         }
         
         PlayerHudNotification.Instance.ShowText($"{_ammoSlotNames[bulletSlot]} bullet is {bulletType}");
