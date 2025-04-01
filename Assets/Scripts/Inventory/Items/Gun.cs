@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -57,6 +58,15 @@ public class Gun : TargetableItem<Player>
             _ammo.Value.Add(Random.Range(0, 2) == 1);
         }
 
+        if (_ammo.Value.All(bullet => bullet))
+        {
+            _ammo.Value[Random.Range(0, _ammo.Value.Count)] = false;
+        }
+        else if (_ammo.Value.All(bullet => !bullet))
+        {
+            _ammo.Value[Random.Range(0, _ammo.Value.Count)] = true;
+        }
+        
         _ammo.CheckDirtyState();
         EmitReloadedRpc(_ammo.Value.ToArray());
     }
