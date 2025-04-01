@@ -96,9 +96,11 @@ public class PapugaPhone : NetworkItem
     private IEnumerator PlayProphecy(AudioClip prophecyClip, float delay)
     {
         yield return new WaitForSeconds(delay);
+        m_screen.SetActive(false);
         
         m_audioSource.clip = prophecyClip;
         m_audioSource.time = 0;
+        m_audioSource.volume = 1;
         m_audioSource.Play();
     }
 

@@ -461,6 +461,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a022443ef1e1b644ca2a2ddfa56f80ab, type: 3}
   m_noAnswer: {fileID: 8300000, guid: 350f60ae040e200408ed50da0161b163, type: 3}
   m_audioSource: {fileID: 4096913785069562213}
+  m_minAmmo: 2
 --- !u!114 &5398571735579306569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -491,7 +492,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
   Mute: 0
