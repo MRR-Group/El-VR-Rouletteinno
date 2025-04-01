@@ -1,6 +1,7 @@
 using System;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 
 public class Player : NetworkBehaviour
 {
@@ -9,7 +10,17 @@ public class Player : NetworkBehaviour
 
     private NetworkVariable<int> net_health = new ();
     public Inventory Inventory => InventoryManager.Instance.ByClientId(PlayerId);
-    
+
+    public String Name
+    {
+        get
+        {
+            XRINetworkGameManager.Instance.GetPlayerByID(PlayerId, out XRINetworkPlayer player);
+            
+            return player.playerName;
+        }
+    }
+
     [SerializeField]
     private ParticleSystem m_particleSystem;
     

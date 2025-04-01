@@ -17,9 +17,6 @@ public class DebugPanelUI : MonoBehaviour
     private TextMeshProUGUI m_isMyTurn;
     
     [SerializeField]
-    private TextMeshProUGUI m_hp;
-    
-    [SerializeField]
     private TextMeshProUGUI m_bullets;
 
     [SerializeField]
@@ -32,9 +29,14 @@ public class DebugPanelUI : MonoBehaviour
         GameManager.Instance.Round.Gun.AmmoChanged += Round_OnRoundStarted;
         GameManager.Instance.Round.RoundStared += Round_OnRoundStarted;
 
-        NetworkManager.Singleton.OnConnectionEvent += (_, __) => PlayerManager.Instance.Client().HealthChanged += Player_OnHealthChanged;
     }
-
+    
+    private void GameManager_OnGameStateChanged(object sender, GameManager.GameStateChangedArgs e)
+    {
+        m_gameState.text = e.State.ToString();
+        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
+    }
+    
     public void Update()
     {
         // TODO - Convert to event
@@ -46,23 +48,12 @@ public class DebugPanelUI : MonoBehaviour
         m_bullets.text = m_gun.Magazine().Select(value => value ? "1" : "0").ToArray().ToString("");  
         m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
     }
-
-    private void Player_OnHealthChanged(object sender, Player.HealthChangedArgs e)
-    {
-        m_hp.text = e.Health.ToString();
-    }
     
     private void Game_OnWinChanged(object sender, EventArgs e)
     {
         m_wins.text = GameManager.Instance.Game.GetPlayerWins(NetworkManager.Singleton.LocalClientId).ToString();
     }
-
-    private void GameManager_OnGameStateChanged(object sender, GameManager.GameStateChangedArgs e)
-    {
-        m_gameState.text = e.State.ToString();
-        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
-    }
-
+    
     public void ShootEnemy()
     {
         var target = GameManager.Instance.Game.GetRandomPlayer(new [] { NetworkManager.Singleton.LocalClientId });

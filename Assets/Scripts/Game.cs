@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 using Random = UnityEngine.Random;
 
 public class Game : NetworkBehaviour
@@ -99,6 +100,7 @@ public class Game : NetworkBehaviour
         if (_wins.Value.TryAdd(player, 1))
         {
             _wins.Value[player] += 1;
+            ShowWinnerNotificationRpc(player, "the round!");
         }
 
         _wins.CheckDirtyState();
@@ -109,10 +111,18 @@ public class Game : NetworkBehaviour
 
         if (IsGameOver())
         {
+            ShowWinnerNotificationRpc(player, "the game!");
             GameManager.Instance.EndGameRpc();
         }
     }
-    
+
+    [Rpc(SendTo.Everyone)]
+    private void ShowWinnerNotificationRpc(ulong playerId, string message)
+    {
+        var player = PlayerManager.Instance.ById(playerId);
+        PlayerHudNotification.Instance.ShowText($"{player.Name} won {message}");
+    }
+
     private bool IsGameOver()
     {
         return _wins.Value.Any(win => win.Value >= MaxWins);
