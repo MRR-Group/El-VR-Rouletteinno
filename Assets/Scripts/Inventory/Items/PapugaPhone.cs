@@ -1,7 +1,9 @@
+using System.Collections;
 using System.Xml.Serialization;
 using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 
 public class PapugaPhone : NetworkItem
 {
@@ -23,38 +25,66 @@ public class PapugaPhone : NetworkItem
     [SerializeField]
     private AudioSource m_audioSource;
 
-    private int _selectedBullet;
+    [SerializeField]
+    private int m_minAmmo = 2;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
+    private int _selectedBullet;
+    
+    private string[] _ammoSlotNames = 
+    { 
+        "First", "Second", "Third", "Fourth", "Fifth", 
+        "Sixth", "Seventh", "Eighth", "Ninth", "Tenth" 
+    };
 
     public override bool Use()
     {
+        var magazine = GameManager.Instance.Round.Gun.Magazine();
+        
         Invoke(nameof(DisplayPapugaRpc), 1.5f);
         PlayRingtoneRpc();
+        SelectRandomBullet(magazine);
+        
+        var prophecyClip = GetProphecyClip(magazine);
 
-        SelectRandomBullet();
-
-        AdjustAnimationTime(GetProphecyClip());
-        Invoke(nameof(PlayProphecy), m_ringtone.length);
+        AdjustAnimationTime(prophecyClip);
+        
+        StartCoroutine(PlayProphecy(prophecyClip, m_ringtone.length));
+        StartCoroutine(DelayedDisplayAnswerNotification(magazine, m_ringtone.length + 4.0f));
        
         return true;
     }
 
-    private void SelectRandomBullet()
+    private void SelectRandomBullet(bool[] magazine)
     {
-        var magazine = GameManager.Instance.Round.Gun.Magazine();
         _selectedBullet = UnityEngine.Random.Range(0, magazine.Length);
     }
 
-    private AudioClip GetProphecyClip()
+    private IEnumerator DelayedDisplayAnswerNotification(bool[] magazine, float delay)
     {
-        var magazine = GameManager.Instance.Round.Gun.Magazine();
+        yield return new WaitForSeconds(delay);
+        DisplayAnswerNotification(magazine);
+    }
+    
+    private void DisplayAnswerNotification(bool[] magazine)
+    {
+        var bullet = magazine[_selectedBullet];
+        
+        var bulletType = bullet ? "live" : "blank";
+        var bulletSlot = _selectedBullet;
+
+        if (magazine.Length <= m_minAmmo)
+        {
+            PlayerHudNotification.Instance.ShowText($"Try again later...");
+        }
+        
+        PlayerHudNotification.Instance.ShowText($"{_ammoSlotNames[bulletSlot]} bullet is {bulletType}");
+    }
+
+    private AudioClip GetProphecyClip(bool[] magazine)
+    {
         var bullet = magazine[_selectedBullet];
 
-        if(magazine.Length <= 2)
+        if(magazine.Length <= m_minAmmo)
         {
             return m_noAnswer;
         }
@@ -62,9 +92,11 @@ public class PapugaPhone : NetworkItem
         return bullet ? m_liveSound[_selectedBullet] : m_blankSound[_selectedBullet];
     }
 
-    private void PlayProphecy()
+    private IEnumerator PlayProphecy(AudioClip prophecyClip, float delay)
     {
-        m_audioSource.clip = GetProphecyClip();
+        yield return new WaitForSeconds(delay);
+        
+        m_audioSource.clip = prophecyClip;
         m_audioSource.time = 0;
         m_audioSource.Play();
     }
