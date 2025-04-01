@@ -98,7 +98,9 @@ public abstract class NetworkItem : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(ITEM_BOX_TAG))
+        var isFirstCollider = GetComponentsInChildren<Collider>()[0] == other;
+        
+        if (isFirstCollider && other.CompareTag(ITEM_BOX_TAG))
         {
             _isInBox = true;
         }
@@ -106,11 +108,13 @@ public abstract class NetworkItem : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag(ITEM_BOX_TAG))
+        var isFirstCollider = GetComponentsInChildren<Collider>()[0] == other;
+        
+        if (!isFirstCollider && !other.CompareTag(ITEM_BOX_TAG))
         {
             return;
         }
-
+        
         _isInBox = false;
 
         ReturnToSpawnIfDropped();
@@ -153,7 +157,7 @@ public abstract class NetworkItem : NetworkBehaviour
         {
             return;
         }
-
+        
         GameManager.Instance.InteractionManager.SelectExit(_interactable.firstInteractorSelecting, _interactable);
         ReturnToSpawnIfDropped();
     }
