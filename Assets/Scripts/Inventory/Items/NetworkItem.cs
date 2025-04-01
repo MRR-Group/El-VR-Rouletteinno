@@ -25,9 +25,7 @@ public abstract class NetworkItem : NetworkBehaviour
     protected Transform m_startingSpawnPoint;
     
     protected NetworkVariable<Vector3> net_spawnPoint = new();
-
-    private const string ITEM_BOX_TAG = "ItemBox";
-
+    
     protected bool _isInBox;
     protected bool _isActionButtonPressed;
     protected bool _isGrabbed;
@@ -58,7 +56,27 @@ public abstract class NetworkItem : NetworkBehaviour
 
     private const int EMPTY_SLOT = -1;
     protected int InventorySlotId = EMPTY_SLOT;
-    
+
+    public void EnterInventoryBox(InventoryBox box)
+    {
+        if (box.Player?.PlayerId == net_ownerId.Value)
+        {
+            return;
+        }
+
+        _isInBox = true;
+    }
+
+    public void ExitInventoryBox(InventoryBox box)
+    {
+        if (box.Player?.PlayerId == net_ownerId.Value)
+        {
+            _isInBox = false;
+        }
+        
+        ReturnToSpawnIfDropped();
+    }
+
     protected virtual void Awake()
     {
         _interactable = GetComponent<XRGrabInteractable>();
@@ -95,38 +113,15 @@ public abstract class NetworkItem : NetworkBehaviour
         _interactable.selectExited.RemoveListener(HandleDrop);
         _interactable.activated.RemoveListener(Interactable_OnActivate);
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        var isFirstCollider = GetComponentsInChildren<Collider>()[0] == other;
-        
-        if (isFirstCollider && other.CompareTag(ITEM_BOX_TAG))
-        {
-            _isInBox = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        var isFirstCollider = GetComponentsInChildren<Collider>()[0] == other;
-        
-        if (!isFirstCollider && !other.CompareTag(ITEM_BOX_TAG))
-        {
-            return;
-        }
-        
-        _isInBox = false;
-
-        ReturnToSpawnIfDropped();
-    }
-
+    
     private void ReturnToSpawnIfDropped()
     {
         if (_isGrabbed || _isInBox)
         {
             return;
         }
-
+        
+        Debug.Log("Teleport to spawn!!!!");
         TeleportToSpawnRpc();
     }
 
