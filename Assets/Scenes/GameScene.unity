@@ -284,7 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   Gun: {fileID: 7607204965593957471}
-  m_itemCountRange: {x: 4, y: 6}
+  m_itemCountRange: {x: 1, y: 3}
 --- !u!114 &26018722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,13 +322,20 @@ MonoBehaviour:
   Game: {fileID: 26018722}
   Round: {fileID: 26018721}
   Turn: {fileID: 26018720}
-  m_availableItems:
-  - {fileID: 7516872518106223575, guid: d1c664748bc198b42b1743b506828c36, type: 3}
-  - {fileID: 3895332423620955863, guid: 8a2d1c3ab5bf3d244a46385b0bdaff22, type: 3}
-  - {fileID: 513520005765084447, guid: b0cc8682996dfcb43a81d253d324a26f, type: 3}
-  - {fileID: 1920572654725567840, guid: 1b9b53d2922e7ea429c9fb9df78a1769, type: 3}
-  - {fileID: 4237679160402369996, guid: d19bd05e44ed99d4d89707d88e2c41aa, type: 3}
-  - {fileID: 1156478698715162822, guid: d7b86536ac724444b9f384d3899b4397, type: 3}
+  m_itemsDropChance:
+    _serializedList:
+    - Key: 10
+      Value:
+      - {fileID: 3895332423620955863, guid: 8a2d1c3ab5bf3d244a46385b0bdaff22, type: 3}
+    - Key: 30
+      Value:
+      - {fileID: 1156478698715162822, guid: d7b86536ac724444b9f384d3899b4397, type: 3}
+      - {fileID: 4237679160402369996, guid: d19bd05e44ed99d4d89707d88e2c41aa, type: 3}
+      - {fileID: 513520005765084447, guid: b0cc8682996dfcb43a81d253d324a26f, type: 3}
+    - Key: 60
+      Value:
+      - {fileID: 7516872518106223575, guid: d1c664748bc198b42b1743b506828c36, type: 3}
+      - {fileID: 1920572654725567840, guid: 1b9b53d2922e7ea429c9fb9df78a1769, type: 3}
 --- !u!114 &26018724
 MonoBehaviour:
   m_ObjectHideFlags: 0

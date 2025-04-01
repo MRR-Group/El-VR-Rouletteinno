@@ -115,10 +115,13 @@ public class Inventory : NetworkBehaviour
 
     private int GetRandomItemIndex()
     {
-        var items = GameManager.Instance.AvailableItems;
-        var randomIndex = Random.Range(0, items.Length);
+        var itemsByDropChance = GameManager.Instance.ItemsDropChance;
+        var dropChance = ItemGroupMethods.FromInt(Random.Range(0, 100));
 
-        return randomIndex;
+        var items = itemsByDropChance[dropChance];        
+        var randomItem = Random.Range(0, items.Length);
+        
+        return Array.IndexOf(GameManager.Instance.AvailableItems, items[randomItem]);
     }
 
     private int[] GetRandomItemIds(int count)

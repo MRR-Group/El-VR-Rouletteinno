@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AYellowpaper.SerializedCollections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,9 +42,19 @@ public class GameManager : NetworkSingleton<GameManager>
 
     public Turn Turn;
     
-    [SerializeField] 
-    private List<NetworkItem> m_availableItems;
-    public NetworkItem[] AvailableItems => m_availableItems.ToArray();
+    [SerializedDictionary]
+    [SerializeField]
+    private SerializedDictionary<ItemGroup, NetworkItem[]> m_itemsDropChance = new ();
+    
+    private NetworkItem[] _availableItems;
+    
+    public Dictionary<ItemGroup, NetworkItem[]> ItemsDropChance => m_itemsDropChance;
+    public NetworkItem[] AvailableItems => _availableItems;
+
+    void Start()
+    {
+        _availableItems = m_itemsDropChance.Values.SelectMany(value => value).ToArray();
+    }
 
     public override void OnNetworkSpawn()
     {
