@@ -29,6 +29,8 @@ public abstract class TargetableItem<T>: NetworkItem where T : MonoBehaviour
 
     public virtual void Update()
     {
+        base.Update();
+        
         if (!_isGrabbed)
         {
             m_laser.SetActive(false);

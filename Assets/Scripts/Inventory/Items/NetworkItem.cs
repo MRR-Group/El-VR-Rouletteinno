@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Linq;
 using Unity.Netcode;
@@ -31,7 +32,8 @@ public abstract class NetworkItem : NetworkBehaviour
     protected bool _isGrabbed;
     protected bool _wasForceGrabbed;
     protected bool _isAnimatingUsage;
-
+    protected bool _shouldBeInSpawn;
+    
     [SerializeField] 
     protected int m_usages = 1;
 
@@ -57,7 +59,21 @@ public abstract class NetworkItem : NetworkBehaviour
     private const int EMPTY_SLOT = -1;
     protected int InventorySlotId = EMPTY_SLOT;
 
-    public void EnterInventoryBox(InventoryBox box)
+    protected void Update()
+    {
+        if (IsOwner && Vector3.Distance(transform.position, net_spawnPoint.Value) <= 0.1f)
+        {
+            _shouldBeInSpawn = false;
+        }
+        
+        if (IsOwner && _shouldBeInSpawn)
+        {
+            _rigidbody.MovePosition(net_spawnPoint.Value);
+            _rigidbody.MoveRotation(Quaternion.identity);   
+        }
+    }
+
+    public virtual void EnterInventoryBox(InventoryBox box)
     {
         if (box.Player?.PlayerId != net_ownerId.Value)
         {
@@ -67,7 +83,7 @@ public abstract class NetworkItem : NetworkBehaviour
         _isInBox = true;
     }
 
-    public void ExitInventoryBox(InventoryBox box)
+    public virtual void ExitInventoryBox(InventoryBox box)
     {
         if (box.Player?.PlayerId == net_ownerId.Value)
         {
@@ -114,7 +130,7 @@ public abstract class NetworkItem : NetworkBehaviour
         _interactable.activated.RemoveListener(Interactable_OnActivate);
     }
     
-    private void ReturnToSpawnIfDropped()
+    protected void ReturnToSpawnIfDropped()
     {
         if (_isGrabbed || _isInBox)
         {
@@ -184,8 +200,7 @@ public abstract class NetworkItem : NetworkBehaviour
     [Rpc(SendTo.Owner)]
     public void TeleportToSpawnRpc()
     {
-        _rigidbody.MovePosition(net_spawnPoint.Value);
-        _rigidbody.MoveRotation(Quaternion.identity);
+        _shouldBeInSpawn = true;
     }
 
     [Rpc(SendTo.Server)]

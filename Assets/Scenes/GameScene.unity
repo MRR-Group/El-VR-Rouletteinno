@@ -299,8 +299,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   m_minAlivePlayers: 1
-  m_disableAliveChecker: 1
-  m_maxWins: 2
+  m_disableAliveChecker: 0
+  m_maxWins: 1
 --- !u!114 &26018723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6795,7 +6795,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 452192, guid: 94f4620a533a8bc4cbd53f07b8a1e05e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.67
+      value: 4.25
       objectReference: {fileID: 0}
     - target: {fileID: 452192, guid: 94f4620a533a8bc4cbd53f07b8a1e05e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8937,7 +8937,7 @@ PrefabInstance:
     - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13141,7 +13141,7 @@ PrefabInstance:
     - target: {fileID: 1536476880367223086, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}
       propertyPath: m_disableDropWhileInUse
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1536476880367223086, guid: 37d529bde0fc50d419d48f8121b79353,
         type: 3}

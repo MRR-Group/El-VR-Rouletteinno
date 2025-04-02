@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 using Random = UnityEngine.Random;
 
 public class Gun : TargetableItem<Player>
@@ -192,5 +193,16 @@ public class Gun : TargetableItem<Player>
 
         _ammo.Value[0] = !_ammo.Value[0];
         _ammo.CheckDirtyState();
+    }
+    
+    public override void EnterInventoryBox(InventoryBox box)
+    {
+        _isInBox = false;
+    }
+
+    public override void ExitInventoryBox(InventoryBox box)
+    {
+        _isInBox = false;
+        ReturnToSpawnIfDropped();
     }
 }
