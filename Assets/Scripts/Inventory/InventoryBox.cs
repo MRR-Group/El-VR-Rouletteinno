@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using XRMultiplayer;
 
 [RequireComponent(typeof(Collider))]
 public class InventoryBox : MonoBehaviour
@@ -21,7 +22,9 @@ public class InventoryBox : MonoBehaviour
         var isFirstCollider = itemCollider.transform.parent?.GetComponentsInChildren<Collider>()[0] == itemCollider;
         var item = itemCollider.GetComponentInParent<NetworkItem>();
 
-        Debug.Log($"is first collider: {isFirstCollider}: item {item}, Object: {itemCollider.transform.parent?.name}");
+        Debug.Log($"Exit - is first collider: {isFirstCollider}: item {item}, Object: {itemCollider.transform.parent?.name}");
+        PlayerHudNotification.Instance.ShowText($"Exit");
+
         
         if (!isFirstCollider || !item)
         {
@@ -35,7 +38,8 @@ public class InventoryBox : MonoBehaviour
     {
         var isFirstCollider = itemCollider.transform.parent?.GetComponentsInChildren<Collider>()[0] == itemCollider;
         var item = itemCollider.GetComponentInParent<NetworkItem>();
-        Debug.Log($"is first collider: {isFirstCollider}: item {item}, Object: {itemCollider.transform.parent?.name}");
+        Debug.Log($"Enter - is first collider: {isFirstCollider}: item {item}, Object: {itemCollider.transform.parent?.name}");
+        PlayerHudNotification.Instance.ShowText("Enter");
 
         if (isFirstCollider && item)
         {

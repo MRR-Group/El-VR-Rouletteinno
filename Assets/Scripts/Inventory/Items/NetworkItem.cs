@@ -59,7 +59,7 @@ public abstract class NetworkItem : NetworkBehaviour
 
     public void EnterInventoryBox(InventoryBox box)
     {
-        if (box.Player?.PlayerId == net_ownerId.Value)
+        if (box.Player?.PlayerId != net_ownerId.Value)
         {
             return;
         }
