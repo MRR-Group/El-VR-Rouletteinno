@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DamageAnimation : MonoBehaviour
@@ -12,7 +13,12 @@ public class DamageAnimation : MonoBehaviour
     {
         m_player.HealthChanged += Player_OnHealthChanged;
     }
-    
+
+    public void OnDestroy()
+    {
+        m_player.HealthChanged -= Player_OnHealthChanged;
+    }
+
     private void Player_OnHealthChanged(object sender, Player.HealthChangedArgs e)
     {
         if (e.Delta > -1)

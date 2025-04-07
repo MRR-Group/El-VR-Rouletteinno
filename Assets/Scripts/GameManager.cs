@@ -1,12 +1,13 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.XR.Interaction.Toolkit;
+using XRMultiplayer;
 
 public class GameManager : NetworkSingleton<GameManager>
 {
@@ -58,42 +59,44 @@ public class GameManager : NetworkSingleton<GameManager>
 
     public override void OnNetworkSpawn()
     {
-        net_playerInGame.OnValueChanged += OnPlayersIdsValueChanged;
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_gameState.Value = GameState.PREPARE;
+            
+            net_playerInGame.Value.Clear();
+            net_playerInGame.CheckDirtyState();
+            XRINetworkGameManager.Instance.playerStateChanged += XRINetworkGameManager_OnPlayerConnectionChanged;
+        }
+
         net_gameState.OnValueChanged += OnGameStateChanged;
         GameStateChanged?.Invoke(this, new GameStateChangedArgs { State = net_gameState.Value});
     }
-    
-    private void OnPlayersIdsValueChanged(List<ulong> _, List<ulong> newPlayerList)
+
+    public override void OnNetworkDespawn()
     {
-        if (net_gameState.Value != GameState.PREPARE)
-        {
-            return;
-        }
+        net_gameState.OnValueChanged -= OnGameStateChanged;
         
-        if (!NetworkManager.Singleton.IsServer)
+        if (NetworkManager.Singleton.IsServer)
         {
-            return;
-        }
-
-        if (net_playerInGame.Value.Count < m_minPlayers)
-        {
-            return;
-        }
-
-        if (net_playerInGame.Value.Count >= m_maxPlayers || net_playerInGame.Value.Count == NetworkManager.Singleton.ConnectedClients.Count)
-        {
-            StartGame();
+            XRINetworkGameManager.Instance.playerStateChanged -= XRINetworkGameManager_OnPlayerConnectionChanged;
         }
     }
     
-    private void StartGame()
+    private void XRINetworkGameManager_OnPlayerConnectionChanged(ulong playerId, bool isConnected)
     {
-        net_gameState.Value = GameState.IN_PROGRESS;
+        if (!isConnected && NetworkManager.Singleton.IsServer)
+        {
+            net_playerInGame.Value.Remove(playerId);
+            net_playerInGame.CheckDirtyState();
+            
+            Game.RemovePlayer(playerId);
+        }
     }
     
     private void OnGameStateChanged(GameState _, GameState value)
     {
         GameStateChanged?.Invoke(this, new GameStateChangedArgs { State =  value });
+        Debug.Log("GameStateChanged: " + value.ToString());
         
         switch (value)
         {
@@ -107,18 +110,49 @@ public class GameManager : NetworkSingleton<GameManager>
             
             case GameState.FINISHED:
                 m_moveAction.action.Enable();
+                StartCoroutine(nameof(ForceDisconnect));
+                
                 break;
             
             default:
                 throw new ArgumentOutOfRangeException(nameof(value), value, null);
         }
     }
-    
+
+    private IEnumerator ForceDisconnect()
+    {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            yield return new WaitForSeconds(1.0f);
+            
+            foreach (var player in PlayerManager.Instance.ByIds(new ulong[] { NetworkManager.Singleton.LocalClientId }))
+            {
+                NetworkManager.Singleton.DisconnectClient(player.PlayerId);
+            }
+            
+            yield return new WaitForSeconds(1.0f);
+            
+            XRINetworkGameManager.Instance.Disconnect();
+
+            yield return null;
+        }
+    }
+
     [Rpc(SendTo.Server)]
     public void AddPlayerRpc(ulong player)
     {
         net_playerInGame.Value.Add(player);
         net_playerInGame.CheckDirtyState();
+        
+        Debug.Log("net_playerInGame: PLAYER: " + player + " added!!!");
+    }
+
+    public void TryStartGame()
+    {
+        if (net_playerInGame.Value.Count >= m_minPlayers)
+        {
+            net_gameState.Value = GameState.IN_PROGRESS;
+        }
     }
     
     [Rpc(SendTo.Server)]

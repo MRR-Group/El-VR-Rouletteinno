@@ -16,6 +16,7 @@ public abstract class TargetableItem<T>: NetworkItem where T : MonoBehaviour
     
     [SerializeField]
     protected Material m_successLaserMaterial;
+    
     protected Material _defaultLaserMaterial;
 
     protected override void Start()
@@ -27,7 +28,7 @@ public abstract class TargetableItem<T>: NetworkItem where T : MonoBehaviour
         _defaultLaserMaterial = m_laserRenderer.material;
     }
 
-    public virtual void Update()
+    protected override void Update()
     {
         base.Update();
         

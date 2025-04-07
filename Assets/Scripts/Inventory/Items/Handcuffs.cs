@@ -5,8 +5,7 @@ public class Handcuffs : TargetableItem<Player>
 {
     [SerializeField]
     private AudioSource m_handcuffsAudio;
-
-
+    
     public override bool Use(Player target)
     {
         if (target.PlayerId == NetworkManager.Singleton.LocalClientId)

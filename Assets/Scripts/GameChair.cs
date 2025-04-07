@@ -3,6 +3,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation;
+using XRMultiplayer;
 
 public class GameChair : NetworkBehaviour
 {
@@ -28,18 +29,66 @@ public class GameChair : NetworkBehaviour
     
     [SerializeField]
     private ParticleSystem m_winParticles;
+    
+    public override void OnNetworkSpawn()
+    {
+        XRINetworkGameManager.Instance.playerStateChanged += XRINetworkGameManager_OnPlayerConnectionChanged;
+        
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_isFree.Value = true;
+            net_playerId.Value = 0;
+        }
+    }
+    
+    public override void OnNetworkDespawn()
+    {
+        XRINetworkGameManager.Instance.playerStateChanged -= XRINetworkGameManager_OnPlayerConnectionChanged;
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_isFree.Value = true;
+            net_playerId.Value = 0;
+        }
+    }
+    
+    private void XRINetworkGameManager_OnPlayerConnectionChanged(ulong playerId, bool isConnected)
+    {
+        Debug.Log($"Chair Player: {playerId} is Connected: {isConnected}");
+        
+        if (isConnected || net_isFree.Value)
+        {
+            return;
+        }
+
+        if (playerId == net_playerId.Value && NetworkManager.Singleton.IsServer)
+        {
+            net_isFree.Value = true;
+            net_playerId.Value = 0;
+        }
+    }
 
     public void SitDown()
     {
         var player = NetworkManager.Singleton.LocalClient.ClientId;
-
-        if (!IsFree || GameManager.Instance.GameState != GameState.PREPARE)
+        Debug.Log($"Is Free: {IsFree}, player: {player}, netPlayer: {net_playerId.Value}, state: {GameManager.Instance.GameState}");
+        
+        if (!IsFree && net_playerId.Value == player)
         {
+            m_anchor.RequestTeleport();
+            Debug.Log("Exit 1");
+            return;
+        }
+        
+        if (!IsFree || GameManager.Instance.GameState != GameState.PREPARE || InventoryManager.Instance.HasPlayerUi(player) )
+        {
+            Debug.Log("Exit 2");
             return;
         }
         
         m_anchor.RequestTeleport();
         RegisterChairRpc(player);
+        Debug.Log("Exit 3");
     }
     
     [Rpc(SendTo.Server)]
@@ -47,16 +96,23 @@ public class GameChair : NetworkBehaviour
     {
         if (!IsFree || GameManager.Instance.GameState != GameState.PREPARE)
         {
+            Debug.Log("Exit 4");
             return;
         }
 
         net_isFree.Value = false;
         Inventory.RegisterRpc(player);
         GameManager.Instance.AddPlayerRpc(player);
+        Debug.Log("Player added! RPC called");
         
         net_playerId.Value = player;
+        
+        if (NetworkManager.Singleton.LocalClientId == player)
+        {
+            Inventory.SpawnStartGameButton(player);
+        }
     }
-
+    
     [Rpc(SendTo.Everyone)]
     public void ActivateCageRpc()
     {

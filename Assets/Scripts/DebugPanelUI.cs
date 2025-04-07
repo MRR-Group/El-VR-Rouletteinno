@@ -4,6 +4,7 @@ using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using WebSocketSharp;
+using XRMultiplayer;
 
 public class DebugPanelUI : MonoBehaviour
 {
@@ -29,8 +30,26 @@ public class DebugPanelUI : MonoBehaviour
         GameManager.Instance.Round.Gun.AmmoChanged += Round_OnRoundStarted;
         GameManager.Instance.Round.RoundStared += Round_OnRoundStarted;
 
+        XRINetworkGameManager.Connected.Subscribe(XRINetworkGameManager_OnConnectionUpdated);
     }
-    
+
+    public void OnDestroy()
+    {
+        GameManager.Instance.GameStateChanged -= GameManager_OnGameStateChanged;
+        GameManager.Instance.Game.Win -= Game_OnWinChanged;
+        GameManager.Instance.Round.Gun.AmmoChanged -= Round_OnRoundStarted;
+        GameManager.Instance.Round.RoundStared -= Round_OnRoundStarted;
+
+        XRINetworkGameManager.Connected.Unsubscribe(XRINetworkGameManager_OnConnectionUpdated);    }
+
+    private void XRINetworkGameManager_OnConnectionUpdated(bool isConnected)
+    {
+        m_isMyTurn.text = GameManager.Instance.Turn.IsClientTurn() ? "true" : "false";
+        m_gameState.text = GameManager.Instance.GameState.ToString();
+        m_bullets.text = m_gun.Magazine().Select(value => value ? "1" : "0").ToArray().ToString("");  
+        m_wins.text = GameManager.Instance.Game.GetPlayerWins(NetworkManager.Singleton.LocalClientId).ToString();
+    }
+
     private void GameManager_OnGameStateChanged(object sender, GameManager.GameStateChangedArgs e)
     {
         m_gameState.text = e.State.ToString();

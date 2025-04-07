@@ -8,16 +8,8 @@ public class ItemBox : NetworkItem
     [SerializeField]
     private AudioSource m_openingSound;
     
-    private NetworkVariable<ulong> net_player = new ();
+    public Inventory Inventory => InventoryManager.Instance.ByClientId(OwnerId);
     
-
-    public Inventory Inventory => InventoryManager.Instance.ByClientId(net_player.Value);
-    
-    public void SetPlayer(ulong player)
-    {
-        net_player.Value = player;
-    }
-
     public override bool Use()
     {
         PlayOpeningSoundRpc();
@@ -35,6 +27,7 @@ public class ItemBox : NetworkItem
 
     protected override bool CanUse(ulong currentPlayer)
     {
+        Debug.Log($"Can use box: Owener {OwnerId}, currwetnPlayer: {currentPlayer}");
         return GameManager.Instance.GameState == GameState.IN_PROGRESS && OwnerId == currentPlayer;
     }
 

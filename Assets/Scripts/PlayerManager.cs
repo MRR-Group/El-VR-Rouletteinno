@@ -3,12 +3,39 @@ using System.Linq;
 using AYellowpaper.SerializedCollections;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 
 public class PlayerManager : Singleton<PlayerManager>
 {
-    [SerializeField]
-    [SerializedDictionary("Client Id", "Player")]
-    private SerializedDictionary<ulong, Player> _players = new ();
+    [SerializeField] [SerializedDictionary("Client Id", "Player")]
+    private SerializedDictionary<ulong, Player> _players = new();
+
+    protected void Start()
+    {
+        XRINetworkGameManager.Connected.Subscribe(HandleDisconnect);
+        XRINetworkGameManager.Instance.playerStateChanged += XRINetworkGameManager_OnPlayerConnectionChanged;
+    }
+
+    private void XRINetworkGameManager_OnPlayerConnectionChanged(ulong playerId, bool isConnected)
+    {
+        if (isConnected)
+        {
+            return;
+        }
+
+        if (_players.ContainsKey(playerId))
+        {
+            _players.Remove(playerId);
+        }
+    }
+
+    protected void HandleDisconnect(bool status)
+    {
+        if (!status)
+        {
+            _players = new ();
+        }
+    }
     
     public Player Client()
     {
@@ -18,13 +45,13 @@ public class PlayerManager : Singleton<PlayerManager>
     public void LoadPlayers()
     {
         var players = FindObjectsByType<Player>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
-        
+
         foreach (var player in players)
         {
             RegisterPlayer(player.PlayerId, player);
         }
     }
-    
+
     public void RegisterPlayer(ulong id, Player instance)
     {
         if (!_players.ContainsKey(id))
@@ -44,6 +71,11 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public Player ById(ulong id)
     {
-        return _players[id];
+        return IsPlayerConnected(id) ? _players[id] : null;
+    }
+
+    public bool IsPlayerConnected(ulong id)
+    {
+        return _players.ContainsKey(id);
     }
 }

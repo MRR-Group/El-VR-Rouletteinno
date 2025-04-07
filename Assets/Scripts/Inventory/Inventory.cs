@@ -11,11 +11,17 @@ public class Inventory : NetworkBehaviour
 
     public event EventHandler ItemBoxUsed;
 
-    [SerializeField] private Transform m_ItemBoxSpawnPoint;
+    [SerializeField] 
+    private Transform m_ItemBoxSpawnPoint;
 
-    [SerializeField] private ItemBox m_itemBoxPrefab;
+    [SerializeField] 
+    private ItemBox m_itemBoxPrefab;
 
-    [SerializeField] private GameChair m_chair;
+    [SerializeField] 
+    private StartGameButton m_startButtonPrefab;
+    
+    [SerializeField] 
+    private GameChair m_chair;
     public GameChair Chair => m_chair;
 
     private NetworkVariable<bool> net_hasUnusedItemBox = new(false);
@@ -26,6 +32,14 @@ public class Inventory : NetworkBehaviour
     {
         _slots = GetComponentsInChildren<Slot>().ToList();
     }
+    
+    public override void OnNetworkSpawn()
+    {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_hasUnusedItemBox.Value = false;
+        }
+    }
 
     public List<Slot> GetSlots()
     {
@@ -35,6 +49,14 @@ public class Inventory : NetworkBehaviour
     public Slot GetSlot(int slotNumber)
     {
         return _slots[slotNumber];
+    }
+
+    public void ClearSlots()
+    {
+        foreach (var slot in _slots)
+        {
+            slot.vacateRpc();
+        }
     }
 
     private Slot GetFreeSlot()
@@ -56,6 +78,30 @@ public class Inventory : NetworkBehaviour
         ItemBoxUsed?.Invoke(this, EventArgs.Empty);
     }
 
+    public void SpawnStartGameButton(ulong clientId)
+    {
+        Debug.Log("Spaw start button");
+        
+        if (m_chair.IsFree || m_chair.Player.IsDead() || !NetworkManager.Singleton.IsHost)
+        {
+            Debug.Log("Maybe not! xd");
+
+            return;
+        }
+
+        var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(m_startButtonPrefab.gameObject), m_ItemBoxSpawnPoint.position, Quaternion.identity);
+        var instanceNetworkObject = instance.GetComponent<NetworkObject>();
+        
+        instanceNetworkObject.Spawn();
+        
+        var button = instance.GetComponent<StartGameButton>();
+
+        button.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
+        button.SetOwnerRpc(clientId);
+        
+        Debug.Log("sPAWNED!! " + button.gameObject.name);
+    }
+    
     public void SpawnItemBox(ulong clientId)
     {
         if (m_chair.IsFree || m_chair.Player.IsDead())
@@ -65,13 +111,15 @@ public class Inventory : NetworkBehaviour
 
         var instance = Instantiate(NetworkManager.GetNetworkPrefabOverride(m_itemBoxPrefab.gameObject),
             m_ItemBoxSpawnPoint.position, Quaternion.identity);
+        
         var instanceNetworkObject = instance.GetComponent<NetworkObject>();
         instanceNetworkObject.Spawn();
+        
         var box = instance.GetComponent<ItemBox>();
 
         box.SetSpawnPointRpc(m_ItemBoxSpawnPoint.position);
-        box.SetPlayer(InventoryManager.Instance.GetPlayerId(this));
         box.SetOwnerRpc(clientId);
+        
         net_hasUnusedItemBox.Value = true;
     }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -9,7 +10,7 @@ using Random = UnityEngine.Random;
 public class Game : NetworkBehaviour
 {
     public event EventHandler Win;
-    private NetworkVariable<Dictionary<ulong, uint>> _wins = new(new Dictionary<ulong, uint>());
+    private NetworkVariable<Dictionary<ulong, uint>> net_wins = new(new Dictionary<ulong, uint>());
     private NetworkVariable<List<ulong>> net_alivePlayers = new(new List<ulong>());
 
     [SerializeField]
@@ -27,7 +28,7 @@ public class Game : NetworkBehaviour
     public bool AreAllItemBoxesUsed()
     {
         return PlayerManager.Instance.ByIds(net_alivePlayers.Value.ToArray())
-            .All(player => !player.Inventory.HasUnusedItemBox);
+            .All(player => !(player.Inventory?.HasUnusedItemBox ?? false));
     }
 
     public Player GetRandomPlayer(ulong[] excludedPlayers)
@@ -44,7 +45,7 @@ public class Game : NetworkBehaviour
         var players = net_alivePlayers.Value;
         var index = players.IndexOf(currentPlayer);
         var next = index + 1 >= players.Count ? 0 : index + 1;
-
+        
         return players[next];
     }
 
@@ -55,11 +56,33 @@ public class Game : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        _wins.OnValueChanged += OnWinsChanged;
+        net_wins.OnValueChanged += OnWinsChanged;
 
         if (NetworkManager.Singleton.IsServer)
         {
+            net_alivePlayers.Value.Clear();
+            net_alivePlayers.CheckDirtyState();
+            
+            net_wins.Value.Clear();
+            net_wins.CheckDirtyState();
+            
             GameManager.Instance.GameStateChanged += GameManager_OnGameStateChanged;
+        }
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        net_wins.OnValueChanged -= OnWinsChanged;
+        
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_alivePlayers.Value.Clear();
+            net_alivePlayers.CheckDirtyState();
+            
+            net_wins.Value.Clear();
+            net_wins.CheckDirtyState();
+            
+            GameManager.Instance.GameStateChanged -= GameManager_OnGameStateChanged;
         }
     }
 
@@ -72,10 +95,28 @@ public class Game : NetworkBehaviour
     {
         if (e.State == GameState.IN_PROGRESS)
         {
+            Debug.Log("Should start da gaem1!!!");
             StartGameRpc();
         }
     }
 
+    public void RemovePlayer(ulong player)
+    {
+        net_alivePlayers.Value.Remove(player);
+        net_wins.Value.Remove(player);
+
+        if (GameManager.Instance.Turn.IsPlayerTurn(player))
+        {
+            GameManager.Instance.Turn.NextTurnRpc();
+        }
+        else if (ShouldEndGame()) {
+            PlayerWinGameRpc(GameManager.Instance.Turn.CurrentPlayerId);
+            return;
+        }
+        
+        GameManager.Instance.Turn.NextTurnRpc();
+    }
+    
     [Rpc(SendTo.Server)]
     private void StartGameRpc()
     {
@@ -97,13 +138,13 @@ public class Game : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void PlayerWinGameRpc(ulong player)
     {
-        if (_wins.Value.TryAdd(player, 1))
+        if (net_wins.Value.TryAdd(player, 1))
         {
-            _wins.Value[player] += 1;
+            net_wins.Value[player] += 1;
             ShowWinnerNotificationRpc(player, "the round!");
         }
 
-        _wins.CheckDirtyState();
+        net_wins.CheckDirtyState();
         
         InventoryManager.Instance.ByClientId(player).Chair.DisplayWinParticlesRpc();
 
@@ -125,7 +166,7 @@ public class Game : NetworkBehaviour
 
     private bool IsGameOver()
     {
-        return _wins.Value.Any(win => win.Value >= MaxWins);
+        return net_wins.Value.Any(win => win.Value >= MaxWins);
     }
     
     [Rpc(SendTo.Server)]
@@ -137,6 +178,6 @@ public class Game : NetworkBehaviour
 
     public uint GetPlayerWins(ulong player)
     {
-        return _wins.Value.TryGetValue(player, out var value) ? value : 0;
+        return net_wins.Value.TryGetValue(player, out var value) ? value : 0;
     }
 }

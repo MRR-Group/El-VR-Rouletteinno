@@ -106,9 +106,19 @@ namespace XRMultiplayer
             endPositionLeft = m_leftDoor.position - m_doorSize;
             endPositionRight = m_rightDoor.position + m_doorSize;
 
+        }
+
+        public override void OnNetworkSpawn()
+        {
             NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnOnClientConnectedCallback;
         }
 
+        public override void OnNetworkDespawn()
+        {
+            NetworkManager.Singleton.OnClientConnectedCallback -= NetworkManager_OnOnClientConnectedCallback;
+        }
+
+        
         private void NetworkManager_OnOnClientConnectedCallback(ulong obj)
         {
             OpenRpc();

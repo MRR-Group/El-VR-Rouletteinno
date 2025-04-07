@@ -32,6 +32,18 @@ public class HpIndicator : MonoBehaviour
             _inventory.Chair.Player.HealthChanged += Player_OnHealthChanged;
             UpdateLeds(_inventory.Chair.Player.Health);
         }
+
+        if (e.State != GameState.FINISHED || _inventory.Chair.IsFree)
+        {
+            return;
+        }
+        
+        if (_inventory.Chair.Player)
+        {
+            _inventory.Chair.Player.HealthChanged -= Player_OnHealthChanged;
+        }
+
+        UpdateLeds(0);
     }
 
     private void Player_OnHealthChanged(object sender, Player.HealthChangedArgs e)

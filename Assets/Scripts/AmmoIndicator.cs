@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
+using XRMultiplayer;
 
 public class AmmoIndicator : MonoBehaviour
 {
@@ -25,8 +26,27 @@ public class AmmoIndicator : MonoBehaviour
          m_gun.Reloaded += Gun_OnReloaded;
          m_gun.BulletSkipped += Gun_OnBulletSkipped;
          HideAll();
+
+         XRINetworkGameManager.Connected.Subscribe(XRINetworkGameManager_OnConnectionUpdate);
     }
-    
+
+    private void OnDestroy()
+    {
+        XRINetworkGameManager.Connected.Unsubscribe(XRINetworkGameManager_OnConnectionUpdate);
+    }
+
+    private void XRINetworkGameManager_OnConnectionUpdate(bool connected)
+    {
+        if (!connected)
+        {
+            HideAll();
+        }
+        else
+        {
+            Gun_OnReloaded(null, new Gun.ReloadedEventArgs { Bullets = m_gun.Magazine() });
+        }
+    }
+
     private void HideAll()
     {
         foreach (var led in m_leds)

@@ -1,16 +1,30 @@
 using System;
 using Unity.Netcode;
+using XRMultiplayer;
 
 public class Turn : NetworkBehaviour
 {
     private NetworkVariable<ulong> net_currentPlayerTurn = new ();
     public event EventHandler TurnChanged;
+
+    public ulong CurrentPlayerId => net_currentPlayerTurn.Value;
     
     public override void OnNetworkSpawn()
     {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            net_currentPlayerTurn.Value = 0;
+        }
+
         net_currentPlayerTurn.OnValueChanged += (_, __) => TurnChanged?.Invoke(null, null);
     }
-    
+
+    public override void OnNetworkDespawn()
+    {
+        net_currentPlayerTurn.OnValueChanged -= (_, __) => TurnChanged?.Invoke(null, null);
+    }
+
+
     public bool IsClientTurn()
     {
         return IsPlayerTurn(NetworkManager.Singleton.LocalClient.ClientId);
@@ -30,7 +44,7 @@ public class Turn : NetworkBehaviour
             game.PlayerWinGameRpc(net_currentPlayerTurn.Value);
             return;
         }
-
+        
         var nextPlayerId = game.GetNextPlayer(net_currentPlayerTurn.Value);
         var nextPlayer = PlayerManager.Instance.ById(nextPlayerId);
         

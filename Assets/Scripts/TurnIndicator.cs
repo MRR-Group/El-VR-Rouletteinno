@@ -29,7 +29,7 @@ public class TurnIndicator : MonoBehaviour
     // TODO - Convert to events        
     private void Update()
     {
-        if (_chair.IsFree)
+        if (_chair.IsFree || !_chair.Player)
         {
             m_led.material = _offMaterial;
             return;

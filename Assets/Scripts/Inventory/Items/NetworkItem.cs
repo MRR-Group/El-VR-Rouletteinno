@@ -59,7 +59,7 @@ public abstract class NetworkItem : NetworkBehaviour
     private const int EMPTY_SLOT = -1;
     protected int InventorySlotId = EMPTY_SLOT;
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (IsOwner && Vector3.Distance(transform.position, net_spawnPoint.Value) <= 0.1f)
         {
@@ -121,8 +121,32 @@ public abstract class NetworkItem : NetworkBehaviour
         {
             net_spawnPoint.Value = m_startingSpawnPoint.position;
         }
+        
+        XRINetworkGameManager.Instance.playerStateChanged += XRINetworkGameManager_OnPlayerConnectionChanged;
     }
 
+    public override void OnNetworkDespawn()
+    {
+        if (!m_isIndestructible)
+        {
+            Destroy(gameObject);
+        }
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            XRINetworkGameManager.Instance.playerStateChanged -= XRINetworkGameManager_OnPlayerConnectionChanged;
+        }
+    }
+    
+    private void XRINetworkGameManager_OnPlayerConnectionChanged(ulong playerId, bool isConnected)
+    {
+        if (!isConnected && OwnerId == playerId && NetworkManager.Singleton.IsServer)
+        {
+            StopAllCoroutines();
+            _networkObject.Despawn();
+        }
+    }
+    
     public override void OnDestroy()
     {
         _interactable.selectEntered.RemoveListener(HandleGrab);
@@ -302,17 +326,17 @@ public abstract class NetworkItem : NetworkBehaviour
 
     public void DestroyItem(ulong clientId)
     {
-        _networkObject.Despawn();
-
-        if (InventorySlotId < 0)
+        StopAllCoroutines();
+        
+        if (InventorySlotId >= 0)
         {
-            return;
+            var inventory = InventoryManager.Instance.ByClientId(clientId);
+            var slot = inventory.GetSlot(InventorySlotId);
+        
+            slot.vacateRpc();
         }
         
-        var inventory = InventoryManager.Instance.ByClientId(clientId);
-        var slot = inventory.GetSlot(InventorySlotId);
-        
-        slot.vacateRpc();
+        _networkObject.Despawn();
     }
 
     public void StealItem(IXRSelectInteractor interactor)

@@ -46,9 +46,25 @@ public class Gun : TargetableItem<Player>
     {
         base.OnNetworkSpawn();
         
-        _ammo.OnValueChanged += (_, __) => AmmoChanged?.Invoke(null, null);
+        if (NetworkManager.Singleton.IsServer)
+        {
+            _ammo.Value.Clear();
+            _ammo.CheckDirtyState();
+        }
+
+        _ammo.OnValueChanged += InvokeAmmoChanged;
     }
-    
+
+    public override void OnNetworkDespawn()
+    {
+        _ammo.OnValueChanged -= InvokeAmmoChanged;
+    }
+
+    private void InvokeAmmoChanged(List<bool> _, List<bool> __)
+    {
+        AmmoChanged?.Invoke(this, EventArgs.Empty);
+    }
+
     [Rpc(SendTo.Server)]
     public void ChangeMagazineRpc()
     {

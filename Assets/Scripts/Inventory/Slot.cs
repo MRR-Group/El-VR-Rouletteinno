@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Slot : NetworkBehaviour
 {
-    public NetworkItem Item = null;
     private NetworkVariable<bool> isFree = new (true);
     public bool IsFree => isFree.Value;
     
@@ -13,6 +12,14 @@ public class Slot : NetworkBehaviour
     [SerializeField]
     private Inventory m_inventory;
     public Transform SpawnPoint => m_spawnPoint;
+
+    public override void OnNetworkSpawn()
+    {
+        if (NetworkManager.Singleton.IsServer)
+        {
+            isFree.Value = true;
+        }
+    }
 
     [Rpc(SendTo.Server)]
     public void OccupyRpc()

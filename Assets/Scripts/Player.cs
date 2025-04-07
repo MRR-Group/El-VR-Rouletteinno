@@ -1,14 +1,14 @@
 using System;
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using XRMultiplayer;
 
 public class Player : NetworkBehaviour
 {
-    [SerializeField]
-    private int m_maxHealth = 5;
+    [SerializeField] private int m_maxHealth = 5;
 
-    private NetworkVariable<int> net_health = new ();
+    private NetworkVariable<int> net_health = new();
     public Inventory Inventory => InventoryManager.Instance.ByClientId(PlayerId);
 
     public String Name
@@ -16,31 +16,30 @@ public class Player : NetworkBehaviour
         get
         {
             XRINetworkGameManager.Instance.GetPlayerByID(PlayerId, out XRINetworkPlayer player);
-            
+
             return player.playerName;
         }
     }
 
-    [SerializeField]
-    private ParticleSystem m_particleSystem;
-    
-    [SerializeField]
-    private AudioSource m_vapeAudio;
-    
+    [SerializeField] private ParticleSystem m_particleSystem;
+
+    [SerializeField] private AudioSource m_vapeAudio;
+
     public event EventHandler<HealthChangedArgs> HealthChanged;
+
     public class HealthChangedArgs : EventArgs
     {
         public int Delta;
         public int Health;
     }
-    
+
     public ulong PlayerId => OwnerClientId;
-    
+
     public int Health => net_health.Value;
 
     public bool isLocalClient => OwnerClientId == NetworkManager.Singleton.LocalClientId;
-    
-    private NetworkVariable<bool> net_isHandcuffed = new ();
+
+    private NetworkVariable<bool> net_isHandcuffed = new();
     public bool IsHandcuffed => net_isHandcuffed.Value;
 
     public override void OnNetworkSpawn()
@@ -48,8 +47,18 @@ public class Player : NetworkBehaviour
         if (NetworkManager.IsServer)
         {
             net_health.Value = m_maxHealth;
+            net_isHandcuffed.Value = false;
         }
 
+        StartCoroutine(nameof(AfterNetworkSpawn));
+
+        net_health.OnValueChanged += InvokeHealthChanged;
+    }
+
+    protected IEnumerator AfterNetworkSpawn()
+    {
+        yield return null;
+        
         if (NetworkManager.Singleton.LocalClientId == PlayerId)
         {
             PlayerManager.Instance.LoadPlayers();
@@ -59,8 +68,16 @@ public class Player : NetworkBehaviour
         {
             PlayerManager.Instance.RegisterPlayer(PlayerId, this);
         }
-        
-        net_health.OnValueChanged += (oldValue, value) => HealthChanged?.Invoke(this, new HealthChangedArgs { Health = value, Delta = value - oldValue});
+    }
+
+    public override void OnNetworkDespawn()
+    {
+        net_health.OnValueChanged -= InvokeHealthChanged;
+    }
+
+    private void InvokeHealthChanged(int oldValue, int newValue)
+    {
+        HealthChanged?.Invoke(this, new HealthChangedArgs { Health = newValue, Delta = newValue - oldValue});
     }
 
     public bool IsDead()

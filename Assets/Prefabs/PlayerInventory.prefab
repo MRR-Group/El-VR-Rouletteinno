@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3276099621
+  GlobalObjectIdHash: 1467700742
   InScenePlacedSourceGlobalObjectIdHash: 1467700742
   DeferredDespawnTick: 0
   Ownership: 1
@@ -82,6 +82,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   m_ItemBoxSpawnPoint: {fileID: 6837025054977075960}
   m_itemBoxPrefab: {fileID: 6125339640637350104, guid: 3e0ac19e9a6a48a4cbe6b71933b7bc4f,
+    type: 3}
+  m_startButtonPrefab: {fileID: -6523387796736163935, guid: 77274b3991adaac41a34642bff1ef539,
     type: 3}
   m_chair: {fileID: 0}
 --- !u!114 &5792968311822352022

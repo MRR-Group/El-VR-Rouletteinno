@@ -6,7 +6,6 @@ public class MysteriousButton : NetworkItem
     [SerializeField]
     private AudioSource m_buttonAudio;
     
-
     public override bool Use()
     {
         GameManager.Instance.Round.Gun.SwitchCurrentBulletRpc();
