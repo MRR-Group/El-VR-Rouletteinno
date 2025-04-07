@@ -1,7 +1,9 @@
-# El VR Rouletteinno
+# El Rouletteinno
+![Frame 1](https://github.com/user-attachments/assets/20c1fa75-5849-46ee-8059-e7ad9c9effcf)
 
 ## Project Description
-**El VR Rouletteinno** is an innovative VR game focusing on risk-based gameplay. Players take part in an intense game of Russian roulette, making tough decisions to survive the rounds. The game features unique mechanics, an item system, and an immersive VR environment.
+**El VR Rouletteinno** is a VR game focusing on risk-based gameplay. Players take part in an intense game of Russian roulette, making tough decisions to survive the rounds. The game features unique mechanics, an item system, and an immersive VR environment.
+  ![image](https://github.com/user-attachments/assets/3243e7b0-7e28-44f7-ad12-ef62b6861a29)
 
 ## Features
 - **Game to 2 Wins** - The game continues until one player achieves two victories.
@@ -15,21 +17,9 @@
   - *Sticky hand* - Steals an item from another player.
   - *Energy drink* - Removes the currently loaded bullet.
   - *Vape* - Heals HP.
-  - *Axe* - Doubles the damage.
   - *Handcuffs* - Blocks a player's turn.
   - *Mysterious Button* - Changes the type of the loaded bullet.
-  - *Phone Call* - Provides a hint about whether the next bullet is live or blank.
-    
-- **VR Interaction** - Intuitive interaction with items:
-  - Pointing at an item displays its description.
-  - Picking up an item automatically uses it.
-    
-- **Locations**:
-  - *Lobby* - Elevator
-  - *Game Room* - Conference room with a central table.
+  - *Phone* - Provides a hint about whether the next bullet is live or blank.
 
-## Technologies
-- **Game Engine**: Unity
-- **Graphics**: Low poly style
-- **Platform**: VR
-
+## Links
+Longplay:  [https://youtu.be/wQtIOLwaN2A](https://youtu.be/wQtIOLwaN2A)
